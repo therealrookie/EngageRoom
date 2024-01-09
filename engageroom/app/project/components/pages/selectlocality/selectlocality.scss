@@ -1,0 +1,82 @@
+$main-background-color: #1a1a1a;
+$secondary-background-color: #2a2a2a;
+
+#selectlocality-page {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+
+    .column {
+        background-color: $secondary-background-color;
+        color: white;
+        text-align: center;
+        float: left;
+        padding: 10px;
+        margin: 1% 0 0 1%;
+        border-radius: 20px;
+        width: 48.5%;
+        height: 75% !important;
+    }
+
+    .column img {
+        margin-top: 150px;
+        height: 85px;
+        margin-bottom: 50px;
+    }
+
+    #navButton {
+        background-color: $secondary-background-color;
+        color: white;
+        text-align: center;
+        border-radius: 20px;
+        margin: 1% 0 0 1%;
+        width: 98%;
+        height: 20% !important;
+        float: left;
+    }
+
+    h1 {
+        padding-top: 8px;
+    }
+
+    .buttonPressed {
+        background-color: white !important;
+        color: $main-background-color !important;
+        img {
+            filter: invert(100%);
+        }
+        transition: background-color 0.1s ease;
+    }
+
+    #localUseColumn:active,
+    #meetingColumn:active,
+    #navButton:active {
+        background-color: white !important;
+        color: $main-background-color !important;
+
+        img {
+            filter: invert(100%);
+        }
+
+        transition: background-color 0.1s ease;
+    }
+
+    #returnToHomePage {
+        float: left;
+        margin-left: 5%;
+        width: 90%;
+        height: 50px;
+        color: white;
+        text-align: center;
+        transition: background-color 0.3s ease;
+        cursor: pointer;
+    }
+
+    #returnToHomePage img {
+        height: 100%;
+        padding: 5px;
+    }
+
+}

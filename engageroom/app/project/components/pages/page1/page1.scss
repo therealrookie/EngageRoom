@@ -1,0 +1,128 @@
+$main-background-color: #1a1a1a;
+$secondary-background-color: #2a2a2a;
+
+#page1-page {
+    .container {
+        display: grid;
+        place-items: center;
+        height: 70vh;
+    }
+
+    #adidasLogo3x {
+        width: 60%;
+        margin: 5%;
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 300%;
+        color: white;
+        margin-bottom: 20px;
+    }
+
+    p {
+        color: white;
+        margin-top: 0;
+        margin-bottom: 0;
+        font-size: 130%;
+    }
+
+    .buttonPressed {
+        background-color: white !important;
+        color: $main-background-color !important;
+        img {
+            filter: invert(100%);
+        }
+        transition: background-color 0.1s ease;
+    
+    }
+
+    #startButton {
+        width: 25%;
+        height: auto;
+        display: inline-block;
+        padding: 1% 5%;
+        margin: 3% 0;
+        border: 2px solid white;
+        border-radius: 8px;
+        background-color: transparent;
+        color: white;
+        text-align: center;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+        font-size: 180%;
+    }
+
+    .datetime-wrapper {
+        display: flex;
+        align-items: center;
+        p {
+            font-size: 100% !important;
+        }
+    }
+
+    ch5-datetime {
+        color: white;
+        display: inline-block;
+        margin-right: 5%;
+        vertical-align: middle;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    #startButton:active {
+        background-color: white !important;
+        color: $main-background-color !important;
+
+        img {
+            filter: invert(100%);
+        }
+
+        transition: background-color 0.1s ease;
+    }
+
+    #languageButtonWrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #chooseEnglish,
+    #chooseFrench {
+        width: 20%;
+        font-size: 130%;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        background-color: #1a1a1a;
+        color: #FFF;
+        padding: 1%;
+        margin: 2%;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        text-align: center;
+    }
+
+    #chooseEnglish img,
+    #chooseFrench img {
+        width: 25%;
+        padding: 0 5% 0 2%;
+    }
+
+    .active {
+        background-color: white !important;
+        color: #1a1a1a !important;
+    }
+
+    #currentRoom {
+        position: fixed;
+        color: white;
+        font-size: 140%;
+        bottom: 10px;
+        left: 10px;
+        padding: 5px 10px;
+    }
+
+}

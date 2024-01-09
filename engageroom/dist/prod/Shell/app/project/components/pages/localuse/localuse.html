@@ -1,0 +1,84 @@
+<section id="localuse-page" class="details-container" aria-labelledby="Localuse">
+
+    <div class="column source" id="sourceColumn">
+
+        <h1 data-lang-key="controlHeader"></h1>
+
+        <p data-lang-key="controlHint"></p>
+
+        <div id="ledControlButton" class="sourceButton" data-lang-key="ledControlButton"></div>
+        <div id="monitorControlButton" class="sourceButton" data-lang-key="monitorControlButton"></div>
+        <div id="cameraControlButton" class="sourceButton" data-lang-key="cameraControlButton"></div>
+
+    </div>
+
+    <div class="column volume" id="volumeColumn">
+
+        <h1 data-lang-key="volumeHeader"></h1>
+
+        <div class="sliderContainer">
+            <p data-lang-key="brandMusicHeader"></p>
+            <div class="slider-wrapper">
+                <ch5-slider min="0" max="65535" orientation="vertical"
+                    ticks='{"0":"0", "25":"16384", "50":"32768", "75":"49151", "100": "65535" }' showTickValues="false"
+                    handleSize="x-small" size="large" tapSettable="true" handleShape="circle"
+                    sendEventOnChange="localUse.brandMusicVolume" receiveStateValue="localUse.brandMusicVolumeFb">
+                </ch5-slider>
+                <div class="tick-values">
+                    <span>100</span>
+                    <span>75</span>
+                    <span>50</span>
+                    <span>25</span>
+                    <span>0</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="sliderContainer">
+            <p data-lang-key="micLevelHeader"></p>
+            <div class="slider-wrapper">
+                <ch5-slider min="0" max="65535" orientation="vertical"
+                    ticks='{"0":"0", "25":"16384", "50":"32768", "75":"49151", "100": "65535" }' showTickValues="false"
+                    handleSize="x-small" size="large" tapSettable="true" handleShape="circle"
+                    sendEventOnChange="localUse.micVolume" receiveStateValue="localUse.micVolumeFb">
+                </ch5-slider>
+                <div class="tick-values">
+                    <span>100</span>
+                    <span>75</span>
+                    <span>50</span>
+                    <span>25</span>
+                    <span>0</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="sliderContainer">
+            <p data-lang-key="mediaLevelHeader"></p>
+            <div class="slider-wrapper">
+                <ch5-slider min="0" max="65535" orientation="vertical"
+                    ticks='{"0":"0", "25":"16384", "50":"32768", "75":"49151", "100": "65535" }' showTickValues="false"
+                    handleSize="x-small" size="large" tapSettable="true" handleShape="circle"
+                    sendEventOnChange="localUse.mediaLevel" receiveStateValue="localUse.mediaLevelFb">
+                </ch5-slider>
+                <div class="tick-values">
+                    <span>100</span>
+                    <span>75</span>
+                    <span>50</span>
+                    <span>25</span>
+                    <span>0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="backButtonColumn" class="column">
+        <h1 data-lang-key="backButtonHeader"></h1>
+        <div id="backButtonImageContainer"> <img src="./app/template/assets/img/arrow-back.svg"> </div>
+    </div>
+
+    <div id="homeButtonColumn" class="column">
+        <h1 data-lang-key="homeButtonHeader"></h1>
+        <div id="homeButtonImageContainer"> <img src="./app/template/assets/img/house-fill.svg"> </div>
+    </div>
+
+</section>

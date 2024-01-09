@@ -1,0 +1,16 @@
+<template id="EngageRoomContract.localUse.localUse">
+	<div id="localUse.localUse">
+	 		<ch5-slider sendEventOnChange="localUse.brandMusicVolume" receiveStateValue="localUse.brandMusicVolumeFb">
+        	</ch5-slider>
+	 		<ch5-slider sendEventOnChange="localUse.micVolume" receiveStateValue="localUse.micVolumeFb">
+        	</ch5-slider>
+	 		<ch5-slider sendEventOnChange="localUse.mediaLevel" receiveStateValue="localUse.mediaLevelFb">
+        	</ch5-slider>
+	 		<ch5-button sendEventOnClick="localUse.volumeChangedBrandMusic" receiveStateSelected="localUse.volumeChangedBrandMusicFb">
+        	</ch5-button>
+	 		<ch5-button sendEventOnClick="localUse.volumeChangedMicVolume" receiveStateSelected="localUse.volumeChangedMicVolumeFb">
+        	</ch5-button>
+	 		<ch5-button sendEventOnClick="localUse.volumeChangedMediaLevel" receiveStateSelected="localUse.volumeChangedMediaLevelFb">
+        	</ch5-button>
+	 </div>
+</template>

@@ -1,0 +1,62 @@
+<section id="meeting-page" class="details-container" aria-labelledby="Meeting">
+
+    <div class="column source" id="sourceColumn">
+
+        <h1 data-lang-key="cameraHeader"></h1>
+
+        <p data-lang-key="cameraHint"></p>
+
+        <div id="preset01Button" class="sourceButton" data-lang-key="preset01Button"></div>
+        <div id="preset02Button" class="sourceButton" data-lang-key="preset02Button"></div>
+        <div id="preset03Button" class="sourceButton" data-lang-key="preset03Button"></div>
+
+    </div>
+
+
+
+    <div class="column" id="cameraColumn">
+        <div id="camControllerContainer">
+            <ch5-dpad type="primary" shape="circle" stretch="height" contractName="meetingControl"></ch5-dpad>
+        </div>
+        <h3 data-lang-key="zoomHeader"></h3>
+        <div id="zoomButtons">
+            <div id="zoomPlus">+</div>
+            <div id="zoomMinus">-</div>
+        </div>
+    </div>
+
+    <div class="column" id="volumeColumn">
+        <h1 data-lang-key="volumeHeader"></h1>
+        <div class="sliderContainer">
+            <p data-lang-key="roomSoundVolume"></p>
+            <div class="slider-wrapper">
+                <ch5-slider size="large" min="0" max="65535" orientation="vertical"
+                    ticks='{"0":"0", "25":"16384", "50":"32768", "75":"49151", "100": "65535" }' showTickValues="false"
+                    handleSize="x-small" tapSettable="true" handleShape="circle"
+                    sendEventOnChange="meetingControl.roomSoundVolume"
+                    receiveStateValue="meetingControl.roomSoundVolumeFb">
+                </ch5-slider>
+                <div class="tick-values">
+                    <span>100</span>
+                    <span>75</span>
+                    <span>50</span>
+                    <span>25</span>
+                    <span>0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="backButtonColumn" class="column">
+        <h1 data-lang-key="backButtonHeader"></h1>
+        <div id="backButtonImageContainer"> <img src="./app/template/assets/img/arrow-back.svg" class="navButtonIcon">
+        </div>
+    </div>
+
+    <div id="homeButtonColumn" class="column">
+        <h1 data-lang-key="homeButtonHeader"></h1>
+        <div id="homeButtonImageContainer"> <img src="./app/template/assets/img/house-fill.svg" class="navButtonIcon">
+        </div>
+    </div>
+</section>

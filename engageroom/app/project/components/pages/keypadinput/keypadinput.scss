@@ -1,0 +1,132 @@
+$main-background-color: #1a1a1a;
+$secondary-background-color: #2a2a2a;
+
+
+// ------------------------------- GENERAL -------------------------------
+
+
+#keypadinput-page {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+
+    .column {
+        position: relative;
+        background-color: $secondary-background-color;
+        color: white;
+        text-align: center;
+        float: left;
+        margin: 1% 0 0 1%;
+        border-radius: 20px;
+    }
+
+    h1 {
+        padding-top: 8px;
+    }
+
+    .buttonPressed {
+        background-color: white !important;
+        color: $main-background-color !important;
+
+        img {
+            filter: invert(100%);
+        }
+
+        transition: background-color 0.1s ease;
+    }
+
+    #touchpadColumn {
+        height: 75%;
+        width: 98%;
+    }
+
+    .touchpad {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        width: 50%;
+        margin: 55px 25%;
+    }
+
+    .number,
+    .deleteButton {
+        font-size: 150%;
+        background-color: $main-background-color;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        padding: 22px 50px;
+        text-align: center;
+        cursor: pointer;
+
+        img {
+            height: 30px;
+        }
+    }
+
+    .number:active,
+    .deleteButton:active {
+        background-color: white !important;
+        color: $main-background-color !important;
+
+        img {
+            filter: invert(100%);
+        }
+
+        transition: background-color 0.1s ease;
+    }
+
+    #dummyInput {
+        font-size: 500%;
+        letter-spacing: 2px;
+        grid-column: span 2;
+        text-align: center;
+        border-radius: 10px;
+        background-color: $main-background-color;
+        color: white;
+        height: 82px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        /* Center vertically */
+        justify-content: center;
+        /* Center horizontally */
+    }
+
+    #backButtonColumn,
+    #homeButtonColumn {
+        height: 20%;
+        width: 48.5%;
+    }
+
+    #backButtonColumn:active,
+    #homeButtonColumn:active {
+        background-color: white !important;
+        color: $main-background-color !important;
+
+        img {
+            filter: invert(100%);
+        }
+
+        transition: background-color 0.1s ease;
+    }
+
+    #backButtonImgContainer,
+    #homeButtonImgContainer {
+        float: left;
+        margin-left: 5%;
+        width: 90%;
+        height: 100%;
+        color: white;
+        text-align: center;
+        transition: background-color 0.3s ease;
+        cursor: pointer;
+    }
+
+    .navButtonIcon {
+        height: 50px !important;
+        padding: 5px;
+    }
+}

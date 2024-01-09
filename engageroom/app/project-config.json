@@ -1,0 +1,269 @@
+{
+  "projectName": "engageroom",
+  "version": "0.0.1",
+  "faviconPath": "favicon.ico",
+  "menuOrientation": "none",
+  "selectedTheme": "dark-theme",
+  "useWebXPanel": true,
+  "themes": [
+    {
+      "name": "light-theme",
+      "extends": "light-theme",
+      "brandLogo": {
+        "url": "./app/template/assets/img/ch5-logo-light.svg",
+        "alt": "Crestron Logo",
+        "receiveStateUrl": ""
+      },
+      "backgroundProperties": {
+        "backgroundColor": [
+          "#f8f8f8"
+        ]
+      }
+    },
+    {
+      "name": "dark-theme",
+      "extends": "dark-theme",
+      "brandLogo": {
+        "url": "./app/template/assets/img/adidas-logo-font-bw.svg",
+        "alt": "Crestron Logo",
+        "receiveStateUrl": ""
+      },
+      "backgroundProperties": {
+        "backgroundColor": [
+          "#1a1a1a"
+        ]
+      }
+    },
+    {
+      "name": "project-light-theme",
+      "extends": "light-theme",
+      "brandLogo": {
+        "url": "./app/template/assets/img/ch5-logo-light.svg",
+        "alt": "Crestron Logo",
+        "receiveStateUrl": ""
+      },
+      "backgroundProperties": {
+        "backgroundColor": [
+          "#f8f8f8"
+        ]
+      }
+    },
+    {
+      "name": "project-dark-theme",
+      "extends": "dark-theme",
+      "brandLogo": {
+        "url": "./app/template/assets/img/ch5-logo-dark.svg",
+        "alt": "Crestron Logo",
+        "receiveStateUrl": ""
+      },
+      "backgroundProperties": {
+        "backgroundColor": [
+          "#1a1a1a"
+        ]
+      }
+    },
+    {
+      "name": "project-custom-theme",
+      "extends": "light-theme",
+      "brandLogo": {
+        "url": "./app/template/assets/img/ch5-logo-light.svg",
+        "alt": "Crestron Logo",
+        "receiveStateUrl": ""
+      },
+      "backgroundProperties": {
+        "backgroundColor": [
+          "#f8f8f8"
+        ]
+      }
+    }
+  ],
+  "config": {
+    "controlSystem": {}
+  },
+  "header": {
+    "display": true,
+    "displayInfo": false,
+    "diagnostics": {
+      "logs": {
+        "logAfterProjectLoad": true,
+        "receiveStateLogDiagnostics": "",
+        "logDiagnostics": "none"
+      }
+    },
+    "$component": ""
+  },
+  "footer": {
+    "display": false,
+    "$component": ""
+  },
+  "content": {
+    "$defaultView": "page1",
+    "triggerViewProperties": {
+      "gestureable": false,
+      "disableAnimation": true
+    },
+    "pages": [
+      {
+        "pageName": "page1",
+        "fullPath": "./app/project/components/pages/page1/",
+        "fileName": "page1.html",
+        "preloadPage": true,
+        "cachePage": false,
+        "standAloneView": false,
+        "navigation": {
+          "sequence": 0,
+          "label": "",
+          "isI18nLabel": true,
+          "iconClass": "fas fa-file-alt",
+          "iconUrl": "",
+          "iconPosition": "first"
+        }
+      },
+      {
+        "pageName": "fire",
+        "fullPath": "./app/project/components/pages/fire/",
+        "fileName": "fire.html",
+        "preloadPage": true,
+        "cachePage": false,
+        "standAloneView": false,
+        "navigation": {
+          "sequence": 1,
+          "label": "",
+          "isI18nLabel": false,
+          "iconClass": "fas fa-file-alt",
+          "iconUrl": "",
+          "iconPosition": "bottom"
+        }
+      },
+      {
+        "pageName": "selectlocality",
+        "fullPath": "./app/project/components/pages/selectlocality/",
+        "fileName": "selectlocality.html",
+        "preloadPage": true,
+        "cachePage": false,
+        "standAloneView": false,
+        "navigation": {
+          "sequence": 2,
+          "label": "selectlocality",
+          "isI18nLabel": false,
+          "iconClass": "",
+          "iconUrl": "",
+          "iconPosition": ""
+        }
+      },
+      {
+        "pageName": "localuse",
+        "fullPath": "./app/project/components/pages/localuse/",
+        "fileName": "localuse.html",
+        "preloadPage": true,
+        "cachePage": false,
+        "standAloneView": false,
+        "navigation": {
+          "sequence": 3,
+          "label": "localuse",
+          "isI18nLabel": false,
+          "iconClass": "",
+          "iconUrl": "",
+          "iconPosition": ""
+        }
+      },
+      {
+        "pageName": "ledcontrol",
+        "fullPath": "./app/project/components/pages/ledcontrol/",
+        "fileName": "ledcontrol.html",
+        "preloadPage": true,
+        "cachePage": false,
+        "standAloneView": false,
+        "navigation": {
+          "sequence": 4,
+          "label": "ledcontrol",
+          "isI18nLabel": false,
+          "iconClass": "",
+          "iconUrl": "",
+          "iconPosition": ""
+        }
+      },
+      {
+        "pageName": "monitorcontrol",
+        "fullPath": "./app/project/components/pages/monitorcontrol/",
+        "fileName": "monitorcontrol.html",
+        "preloadPage": true,
+        "cachePage": false,
+        "standAloneView": false,
+        "navigation": {
+          "sequence": 5,
+          "label": "monitorcontrol",
+          "isI18nLabel": false,
+          "iconClass": "",
+          "iconUrl": "",
+          "iconPosition": ""
+        }
+      },
+      {
+        "pageName": "cameracontrol",
+        "fullPath": "./app/project/components/pages/cameracontrol/",
+        "fileName": "cameracontrol.html",
+        "preloadPage": true,
+        "cachePage": false,
+        "standAloneView": false,
+        "navigation": {
+          "sequence": 6,
+          "label": "cameracontrol",
+          "isI18nLabel": false,
+          "iconClass": "",
+          "iconUrl": "",
+          "iconPosition": ""
+        }
+      },
+      {
+        "pageName": "meeting",
+        "fullPath": "./app/project/components/pages/meeting/",
+        "fileName": "meeting.html",
+        "preloadPage": true,
+        "cachePage": false,
+        "standAloneView": false,
+        "navigation": {
+          "sequence": 7,
+          "label": "meeting",
+          "isI18nLabel": false,
+          "iconClass": "",
+          "iconUrl": "",
+          "iconPosition": ""
+        }
+      },
+      {
+        "pageName": "keypadinput",
+        "fullPath": "./app/project/components/pages/keypadinput/",
+        "fileName": "keypadinput.html",
+        "preloadPage": true,
+        "cachePage": false,
+        "standAloneView": false,
+        "navigation": {
+          "sequence": 8,
+          "label": "keypadinput",
+          "isI18nLabel": false,
+          "iconClass": "",
+          "iconUrl": "",
+          "iconPosition": ""
+        }
+      },
+      {
+        "pageName": "loading",
+        "fullPath": "./app/project/components/pages/loading/",
+        "fileName": "loading.html",
+        "preloadPage": true,
+        "cachePage": false,
+        "standAloneView": false,
+        "navigation": {
+          "sequence": 9,
+          "label": "loading",
+          "isI18nLabel": false,
+          "iconClass": "",
+          "iconUrl": "",
+          "iconPosition": ""
+        }
+      }
+    ],
+    "widgets": []
+  }
+}

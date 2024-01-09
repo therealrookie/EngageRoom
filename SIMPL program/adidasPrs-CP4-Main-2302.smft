@@ -1,0 +1,28 @@
+<Device Model="CP4N">
+   <Network Type="Cresnet" Id="01">
+      <Device Model="DIN-DALI-2" DeviceId="11" Name="DIN-DALI-2 (Cresnet) (Firmware v3.xxx.xxxx)"/>
+      <Device Model="DIN-8SW8-I" DeviceId="12"/>
+   </Network>
+   <Network Type="Ethernet" Id="02">
+      <Device Model="Crestron One" DeviceId="0A"/>
+      <Device Model="Crestron One" DeviceId="0B"/>
+      <Device Model="Crestron One" DeviceId="0C"/>
+      <Device Model="Crestron One" DeviceId="0D"/>
+      <Device Model="Crestron One" DeviceId="0E"/>
+      <Device Model="TS-1070" DeviceId="11" Name="WE"/>
+      <Device Model="TSW-770" DeviceId="12" Name="EN"/>
+      <Device Model="TSW-770" DeviceId="13" Name="SP"/>
+      <Device Model="TSW-770" DeviceId="14" Name="NR"/>
+      <Device Model="TSW-770" DeviceId="15" Name="KH"/>
+      <Device Model="TS-770" DeviceId="16" Name="Robin"/>
+      <Device Model="DIN-DALI-2" DeviceId="18" Name="DIN-DALI-2 (Ethernet) (Firmware v3.xxx.xxxx)"/>
+      <Device Model="DM-NVX-35x" DeviceId="31" Name="DM-NVX-35x WELCOME SCREEN"/>
+      <Device Model="DM-NVX-36x" DeviceId="35" Name="DM-NVX-36x ENGAGE LED"/>
+      <Device Model="DM-NVX-D30" DeviceId="38" Name="DM-NVX-D30 ENGAGE PREVIEW"/>
+      <Device Model="DM-NVX-35x" DeviceId="41"/>
+      <Device Model="DM-NVX-35x" DeviceId="42"/>
+      <Device Model="DM-NVX-35x" DeviceId="45"/>
+      <Device Model="DM-NVX-D30" DeviceId="46"/>
+      <Device Model="DM-NVX-35x" DeviceId="47"/>
+   </Network>
+</Device>

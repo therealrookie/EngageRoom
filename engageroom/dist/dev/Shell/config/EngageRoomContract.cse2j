@@ -1,0 +1,46 @@
+{
+	"name": "EngageRoomContract",
+	"timestamp": "2023-10-31 10:54:55.004",
+	"version": "1.0.0.0",
+	"schema_version": 1,
+	"extra_value": "",
+	"signals": {
+		"states": {
+			"numeric": {
+				"2": {
+					"1": "controlPages.pageFb"
+				}
+			}
+		},
+		"events": {
+			"boolean": {
+				"controlCamera.Left": {
+					"joinId": 1,
+					"smartObjectId": 1
+				},
+				"controlCamera.Right": {
+					"joinId": 2,
+					"smartObjectId": 1
+				},
+				"controlCamera.Up": {
+					"joinId": 3,
+					"smartObjectId": 1
+				},
+				"controlCamera.Down": {
+					"joinId": 4,
+					"smartObjectId": 1
+				},
+				"controlCamera.Center": {
+					"joinId": 5,
+					"smartObjectId": 1
+				}
+			},
+			"numeric": {
+				"controlPages.page": {
+					"joinId": 1,
+					"smartObjectId": 2
+				}
+			}
+		}
+	}
+}

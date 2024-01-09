@@ -1,0 +1,42 @@
+<section id="cameracontrol-page" class="details-container" aria-labelledby="Cameracontrol">
+
+    <div class="column source" id="sourceColumn">
+
+        <h1 data-lang-key="cameraHeader"></h1>
+
+        <p data-lang-key="cameraHint"></p>
+
+        <div id="preset01Button" class="sourceButton" data-lang-key="preset01Button"></div>
+        <div id="preset02Button" class="sourceButton" data-lang-key="preset02Button"></div>
+        <div id="preset03Button" class="sourceButton" data-lang-key="preset03Button"></div>
+        <div id="callsetButtonContainer">
+            <div id="callButton" data-lang-key="previewButton"></div>
+            <div id="setButton" data-lang-key="setButton"></div>
+        </div>
+
+    </div>
+
+    <div class="column volume" id="volumeColumn">
+        <div id="camControllerContainer">
+            <ch5-dpad type="primary" shape="circle" stretch="height" contractName="cameraControl"></ch5-dpad>
+        </div>
+        <h3 data-lang-key="zoomHeader"></h3>
+        <div id="zoomButtons">
+            <div id="zoomPlus">+</div>
+            <div id="zoomMinus">-</div>
+        </div>
+
+    </div>
+
+    <div id="backButtonColumn" class="column">
+        <h1 data-lang-key="backButtonHeader"></h1>
+        <div id="backButtonImageContainer"> <img src="./app/template/assets/img/arrow-back.svg" class="navButtonIcon">
+        </div>
+    </div>
+
+    <div id="homeButtonColumn" class="column">
+        <h1 data-lang-key="homeButtonHeader"></h1>
+        <div id="homeButtonImageContainer"> <img src="./app/template/assets/img/house-fill.svg" class="navButtonIcon">
+        </div>
+    </div>
+</section>

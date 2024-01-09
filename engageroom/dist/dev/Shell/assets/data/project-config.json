@@ -1,0 +1,141 @@
+{
+  "projectName": "engageroom",
+  "version": "0.0.1",
+  "faviconPath": "favicon.ico",
+  "menuOrientation": "none",
+  "selectedTheme": "dark-theme",
+  "useWebXPanel": true,
+  "themes": [
+    {
+      "name": "light-theme",
+      "extends": "light-theme",
+      "brandLogo": {
+        "url": "./app/template/assets/img/ch5-logo-light.svg",
+        "alt": "Crestron Logo",
+        "receiveStateUrl": ""
+      },
+      "backgroundProperties": {
+        "backgroundColor": [
+          "#f8f8f8"
+        ]
+      }
+    },
+    {
+      "name": "dark-theme",
+      "extends": "dark-theme",
+      "brandLogo": {
+        "url": "./app/template/assets/img/adidas-logo-font-bw.png",
+        "alt": "Crestron Logo",
+        "receiveStateUrl": ""
+      },
+      "backgroundProperties": {
+        "backgroundColor": [
+          "#1a1a1a"
+        ]
+      }
+    },
+    {
+      "name": "project-light-theme",
+      "extends": "light-theme",
+      "brandLogo": {
+        "url": "./app/template/assets/img/ch5-logo-light.svg",
+        "alt": "Crestron Logo",
+        "receiveStateUrl": ""
+      },
+      "backgroundProperties": {
+        "backgroundColor": [
+          "#f8f8f8"
+        ]
+      }
+    },
+    {
+      "name": "project-dark-theme",
+      "extends": "dark-theme",
+      "brandLogo": {
+        "url": "./app/template/assets/img/ch5-logo-dark.svg",
+        "alt": "Crestron Logo",
+        "receiveStateUrl": ""
+      },
+      "backgroundProperties": {
+        "backgroundColor": [
+          "#1a1a1a"
+        ]
+      }
+    },
+    {
+      "name": "project-custom-theme",
+      "extends": "light-theme",
+      "brandLogo": {
+        "url": "./app/template/assets/img/ch5-logo-light.svg",
+        "alt": "Crestron Logo",
+        "receiveStateUrl": ""
+      },
+      "backgroundProperties": {
+        "backgroundColor": [
+          "#f8f8f8"
+        ]
+      }
+    }
+  ],
+  "config": {
+    "controlSystem": {}
+  },
+  "header": {
+    "display": true,
+    "displayInfo": false,
+    "diagnostics": {
+      "logs": {
+        "logAfterProjectLoad": true,
+        "receiveStateLogDiagnostics": "",
+        "logDiagnostics": "none"
+      }
+    },
+    "$component": ""
+  },
+  "footer": {
+    "display": false,
+    "$component": ""
+  },
+  "content": {
+    "$defaultView": "page1",
+    "triggerViewProperties": {
+      "gestureable": false,
+      "disableAnimation": true
+    },
+    "pages": [
+      {
+        "pageName": "page1",
+        "fullPath": "./app/project/components/pages/page1/",
+        "fileName": "page1.html",
+        "preloadPage": true,
+        "cachePage": false,
+        "standAloneView": false,
+        "navigation": {
+          "sequence": 0,
+          "label": "",
+          "isI18nLabel": true,
+          "iconClass": "fas fa-file-alt",
+          "iconUrl": "",
+          "iconPosition": "first"
+        }
+      },
+      {
+        "pageName": "fire",
+        "fullPath": "./app/project/components/pages/fire/",
+        "fileName": "fire.html",
+        "preloadPage": true,
+        "cachePage": false,
+        "standAloneView": false,
+        "navigation": {
+          "sequence": 1,
+          "label": "",
+          "isI18nLabel": false,
+          "iconClass": "fas fa-file-alt",
+          "iconUrl": "",
+          "iconPosition": "bottom"
+        }
+      }
+    ],
+    "widgets": []
+  }
+}

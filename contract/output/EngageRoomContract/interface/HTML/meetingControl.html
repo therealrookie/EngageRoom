@@ -1,0 +1,28 @@
+<template id="EngageRoomContract.meetingControl.meetingControl">
+	<div id="meetingControl.meetingControl">
+	 		<ch5-button sendEventOnClick="meetingControl.preset01" receiveStateSelected="meetingControl.preset01Fb">
+        	</ch5-button>
+	 		<ch5-button sendEventOnClick="meetingControl.preset02" receiveStateSelected="meetingControl.preset02Fb">
+        	</ch5-button>
+	 		<ch5-button sendEventOnClick="meetingControl.preset03" receiveStateSelected="meetingControl.preset03Fb">
+        	</ch5-button>
+	 		<ch5-button sendEventOnClick="meetingControl.Left">
+        	</ch5-button>
+	 		<ch5-button sendEventOnClick="meetingControl.Right">
+        	</ch5-button>
+	 		<ch5-button sendEventOnClick="meetingControl.Up">
+        	</ch5-button>
+	 		<ch5-button sendEventOnClick="meetingControl.Down">
+        	</ch5-button>
+	 		<ch5-button sendEventOnClick="meetingControl.Center">
+        	</ch5-button>
+	 		<ch5-button sendEventOnClick="meetingControl.zoomPlus" receiveStateSelected="meetingControl.zoomPlusFb">
+        	</ch5-button>
+	 		<ch5-button sendEventOnClick="meetingControl.zoomMinus" receiveStateSelected="meetingControl.zoomMinusFb">
+        	</ch5-button>
+	 		<ch5-slider sendEventOnChange="meetingControl.roomSoundVolume" receiveStateValue="meetingControl.roomSoundVolumeFb">
+        	</ch5-slider>
+	 		<ch5-button sendEventOnClick="meetingControl.volumeChangedRoomSoundVolume" receiveStateSelected="meetingControl.volumeChangedRoomSoundVolumeFb">
+        	</ch5-button>
+	 </div>
+</template>
