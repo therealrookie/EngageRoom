@@ -345,6 +345,16 @@
 					"id": "_8jo705ma2",
 					"parentId": "_cuu27uuxd",
 					"attributeType": 0
+				},
+				{
+					"Errors": [],
+					"name": "codeInputFb",
+					"siblingId": "_s0y11xigw",
+					"dataType": 3,
+					"notes": "",
+					"id": "_w4mfvaabl",
+					"parentId": "_cuu27uuxd",
+					"attributeType": 0
 				}
 			],
 			"feedbacks": [
@@ -365,6 +375,16 @@
 					"dataType": 2,
 					"notes": "",
 					"id": "_1b6ogc2ao",
+					"parentId": "_cuu27uuxd",
+					"attributeType": 1
+				},
+				{
+					"Errors": [],
+					"name": "codeInput",
+					"siblingId": "_w4mfvaabl",
+					"dataType": 3,
+					"notes": "",
+					"id": "_s0y11xigw",
 					"parentId": "_cuu27uuxd",
 					"attributeType": 1
 				}

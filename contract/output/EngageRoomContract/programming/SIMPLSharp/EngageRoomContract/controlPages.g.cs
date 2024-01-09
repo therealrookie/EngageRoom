@@ -12,13 +12,16 @@ namespace EngageRoomContract
 
         event EventHandler<UIEventArgs> page;
         event EventHandler<UIEventArgs> previousPage;
+        event EventHandler<UIEventArgs> codeInput;
 
         void pageFb(controlPagesUShortInputSigDelegate callback);
         void previousPageFb(controlPagesUShortInputSigDelegate callback);
+        void codeInputFb(controlPagesStringInputSigDelegate callback);
 
     }
 
     public delegate void controlPagesUShortInputSigDelegate(UShortInputSig uShortInputSig, IcontrolPages controlPages);
+    public delegate void controlPagesStringInputSigDelegate(StringInputSig stringInputSig, IcontrolPages controlPages);
 
     internal class controlPages : IcontrolPages, IDisposable
     {
@@ -47,6 +50,12 @@ namespace EngageRoomContract
                 public const uint pageFb = 1;
                 public const uint previousPageFb = 2;
             }
+            internal static class Strings
+            {
+                public const uint codeInput = 1;
+
+                public const uint codeInputFb = 1;
+            }
         }
 
         #endregion
@@ -67,6 +76,7 @@ namespace EngageRoomContract
  
             ComponentMediator.ConfigureNumericEvent(controlJoinId, Joins.Numerics.page, onpage);
             ComponentMediator.ConfigureNumericEvent(controlJoinId, Joins.Numerics.previousPage, onpreviousPage);
+            ComponentMediator.ConfigureStringEvent(controlJoinId, Joins.Strings.codeInput, oncodeInput);
 
         }
 
@@ -119,6 +129,23 @@ namespace EngageRoomContract
             }
         }
 
+        public event EventHandler<UIEventArgs> codeInput;
+        private void oncodeInput(SmartObjectEventArgs eventArgs)
+        {
+            EventHandler<UIEventArgs> handler = codeInput;
+            if (handler != null)
+                handler(this, UIEventArgs.CreateEventArgs(eventArgs));
+        }
+
+
+        public void codeInputFb(controlPagesStringInputSigDelegate callback)
+        {
+            for (int index = 0; index < Devices.Count; index++)
+            {
+                callback(Devices[index].SmartObjects[ControlJoinId].StringInput[Joins.Strings.codeInputFb], this);
+            }
+        }
+
         #endregion
 
         #region Overrides
@@ -148,6 +175,7 @@ namespace EngageRoomContract
 
             page = null;
             previousPage = null;
+            codeInput = null;
         }
 
         #endregion
