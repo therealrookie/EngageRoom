@@ -10,21 +10,15 @@ namespace EngageRoomContract
     {
         object UserObject { get; set; }
 
-        event EventHandler<UIEventArgs> delay;
         event EventHandler<UIEventArgs> page;
         event EventHandler<UIEventArgs> previousPage;
-        event EventHandler<UIEventArgs> codeInput;
 
-        void delayFb(controlPagesBoolInputSigDelegate callback);
         void pageFb(controlPagesUShortInputSigDelegate callback);
         void previousPageFb(controlPagesUShortInputSigDelegate callback);
-        void codeInputFb(controlPagesStringInputSigDelegate callback);
 
     }
 
-    public delegate void controlPagesBoolInputSigDelegate(BoolInputSig boolInputSig, IcontrolPages controlPages);
     public delegate void controlPagesUShortInputSigDelegate(UShortInputSig uShortInputSig, IcontrolPages controlPages);
-    public delegate void controlPagesStringInputSigDelegate(StringInputSig stringInputSig, IcontrolPages controlPages);
 
     internal class controlPages : IcontrolPages, IDisposable
     {
@@ -45,12 +39,6 @@ namespace EngageRoomContract
 
         private static class Joins
         {
-            internal static class Booleans
-            {
-                public const uint delay = 1;
-
-                public const uint delayFb = 1;
-            }
             internal static class Numerics
             {
                 public const uint page = 1;
@@ -58,12 +46,6 @@ namespace EngageRoomContract
 
                 public const uint pageFb = 1;
                 public const uint previousPageFb = 2;
-            }
-            internal static class Strings
-            {
-                public const uint codeInput = 1;
-
-                public const uint codeInputFb = 1;
             }
         }
 
@@ -83,10 +65,8 @@ namespace EngageRoomContract
  
             _devices = new List<BasicTriListWithSmartObject>(); 
  
-            ComponentMediator.ConfigureBooleanEvent(controlJoinId, Joins.Booleans.delay, ondelay);
             ComponentMediator.ConfigureNumericEvent(controlJoinId, Joins.Numerics.page, onpage);
             ComponentMediator.ConfigureNumericEvent(controlJoinId, Joins.Numerics.previousPage, onpreviousPage);
-            ComponentMediator.ConfigureStringEvent(controlJoinId, Joins.Strings.codeInput, oncodeInput);
 
         }
 
@@ -105,23 +85,6 @@ namespace EngageRoomContract
         #endregion
 
         #region CH5 Contract
-
-        public event EventHandler<UIEventArgs> delay;
-        private void ondelay(SmartObjectEventArgs eventArgs)
-        {
-            EventHandler<UIEventArgs> handler = delay;
-            if (handler != null)
-                handler(this, UIEventArgs.CreateEventArgs(eventArgs));
-        }
-
-
-        public void delayFb(controlPagesBoolInputSigDelegate callback)
-        {
-            for (int index = 0; index < Devices.Count; index++)
-            {
-                callback(Devices[index].SmartObjects[ControlJoinId].BooleanInput[Joins.Booleans.delayFb], this);
-            }
-        }
 
         public event EventHandler<UIEventArgs> page;
         private void onpage(SmartObjectEventArgs eventArgs)
@@ -156,23 +119,6 @@ namespace EngageRoomContract
             }
         }
 
-        public event EventHandler<UIEventArgs> codeInput;
-        private void oncodeInput(SmartObjectEventArgs eventArgs)
-        {
-            EventHandler<UIEventArgs> handler = codeInput;
-            if (handler != null)
-                handler(this, UIEventArgs.CreateEventArgs(eventArgs));
-        }
-
-
-        public void codeInputFb(controlPagesStringInputSigDelegate callback)
-        {
-            for (int index = 0; index < Devices.Count; index++)
-            {
-                callback(Devices[index].SmartObjects[ControlJoinId].StringInput[Joins.Strings.codeInputFb], this);
-            }
-        }
-
         #endregion
 
         #region Overrides
@@ -200,10 +146,8 @@ namespace EngageRoomContract
 
             IsDisposed = true;
 
-            delay = null;
             page = null;
             previousPage = null;
-            codeInput = null;
         }
 
         #endregion

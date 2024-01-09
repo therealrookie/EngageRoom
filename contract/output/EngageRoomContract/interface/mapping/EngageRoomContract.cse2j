@@ -1,15 +1,12 @@
 {
 	"name": "EngageRoomContract",
-	"timestamp": "2023-11-18 17:24:16.980",
+	"timestamp": "2024-01-09 15:42:58.260",
 	"version": "1.0.0.0",
 	"schema_version": 1,
 	"extra_value": "",
 	"signals": {
 		"states": {
 			"boolean": {
-				"1": {
-					"1": "controlPages.delayFb"
-				},
 				"2": {
 					"1": "selectLanguage.isEnglishFb"
 				},
@@ -73,9 +70,6 @@
 				}
 			},
 			"string": {
-				"1": {
-					"1": "controlPages.codeInputFb"
-				},
 				"4": {
 					"1": "ledControl.selectedChannelFb",
 					"2": "ledControl.channel1Fb",
@@ -126,10 +120,6 @@
 		},
 		"events": {
 			"boolean": {
-				"controlPages.delay": {
-					"joinId": 1,
-					"smartObjectId": 1
-				},
 				"selectLanguage.isEnglish": {
 					"joinId": 1,
 					"smartObjectId": 2
@@ -338,10 +328,6 @@
 				}
 			},
 			"string": {
-				"controlPages.codeInput": {
-					"joinId": 1,
-					"smartObjectId": 1
-				},
 				"ledControl.selectedChannel": {
 					"joinId": 1,
 					"smartObjectId": 4
