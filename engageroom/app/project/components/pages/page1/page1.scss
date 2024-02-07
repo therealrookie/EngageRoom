@@ -1,3 +1,7 @@
+@import url('../../../assets/scss/_variables.scss');
+@import url('../../../assets/scss/_fonts.scss');
+
+
 $main-background-color: #1a1a1a;
 $secondary-background-color: #2a2a2a;
 
@@ -14,6 +18,7 @@ $secondary-background-color: #2a2a2a;
     }
 
     h1 {
+        font-family: 'adineuePROBold';
         text-align: center;
         font-size: 300%;
         color: white;
@@ -21,6 +26,7 @@ $secondary-background-color: #2a2a2a;
     }
 
     p {
+        font-family: 'AdiHausDIN';
         color: white;
         margin-top: 0;
         margin-bottom: 0;
@@ -38,11 +44,12 @@ $secondary-background-color: #2a2a2a;
     }
 
     #startButton {
+        font-family: 'adineuePROBold';
         width: 25%;
         height: auto;
         display: inline-block;
         padding: 1% 5%;
-        margin: 3% 0;
+        margin: 3% 0 7% 0;
         border: 2px solid white;
         border-radius: 8px;
         background-color: transparent;
@@ -51,24 +58,26 @@ $secondary-background-color: #2a2a2a;
         cursor: pointer;
         text-decoration: none;
         transition: background-color 0.3s ease;
-        font-size: 180%;
+        font-size: 200%;
     }
 
     .datetime-wrapper {
         display: flex;
         align-items: center;
-        p {
-            font-size: 100% !important;
-        }
     }
 
-    ch5-datetime {
+    #currentDate {
+        margin: 0 50px 0 50px;
         color: white;
         display: inline-block;
-        margin-right: 5%;
         vertical-align: middle;
-        margin-top: 0;
-        margin-bottom: 0;
+    }
+
+    #currentTime {
+        margin: 0 0 0 50px;
+        color: white;
+        display: inline-block;
+        vertical-align: middle;
     }
 
     #startButton:active {
@@ -90,9 +99,9 @@ $secondary-background-color: #2a2a2a;
 
     #chooseEnglish,
     #chooseFrench {
+        font-family: 'adineuePROBold';
         width: 20%;
-        font-size: 130%;
-        font-weight: bold;
+        font-size: 140%;
         display: flex;
         align-items: center;
         background-color: #1a1a1a;
@@ -117,6 +126,7 @@ $secondary-background-color: #2a2a2a;
     }
 
     #currentRoom {
+        font-family: 'adineuePROBold' !important;
         position: fixed;
         color: white;
         font-size: 140%;

@@ -1,44 +1,514 @@
 {
 	"name": "EngageRoomContract",
-	"timestamp": "2023-10-31 10:54:55.004",
+	"timestamp": "2023-11-18 17:24:16.980",
 	"version": "1.0.0.0",
 	"schema_version": 1,
 	"extra_value": "",
 	"signals": {
 		"states": {
-			"numeric": {
+			"boolean": {
+				"1": {
+					"1": "controlPages.delayFb"
+				},
 				"2": {
-					"1": "controlPages.pageFb"
+					"1": "selectLanguage.isEnglishFb"
+				},
+				"3": {
+					"1": "localUse.volumeChangedBrandMusicFb",
+					"2": "localUse.volumeChangedMicVolumeFb",
+					"3": "localUse.volumeChangedMediaLevelFb"
+				},
+				"4": {
+					"1": "ledControl.signageFb",
+					"2": "ledControl.tvPlayerFb",
+					"3": "ledControl.laptopInputFb",
+					"4": "ledControl.ledOnFb",
+					"5": "ledControl.ledOffFb",
+					"6": "ledControl.showChannelsPageFb",
+					"7": "ledControl.channelsAvailableFb",
+					"8": "ledControl.videoConFb",
+					"9": "ledControl.videoConPermittedFb"
+				},
+				"5": {
+					"1": "monitorControl.signageFb",
+					"2": "monitorControl.tvPlayerFb",
+					"3": "monitorControl.laptopInputFb",
+					"4": "monitorControl.ledOnFb",
+					"5": "monitorControl.ledOffFb",
+					"6": "monitorControl.showChannelsPageFb",
+					"7": "monitorControl.channelsAvailableFb",
+					"8": "monitorControl.videoConFb",
+					"9": "monitorControl.videoConPermittedFb"
+				},
+				"6": {
+					"1": "cameraControl.preset01Fb",
+					"2": "cameraControl.preset02Fb",
+					"3": "cameraControl.preset03Fb",
+					"9": "cameraControl.zoomPlusFb",
+					"10": "cameraControl.zoomMinusFb",
+					"11": "cameraControl.callFb",
+					"12": "cameraControl.setBtnFb"
+				},
+				"7": {
+					"1": "meetingControl.preset01Fb",
+					"2": "meetingControl.preset02Fb",
+					"3": "meetingControl.preset03Fb",
+					"9": "meetingControl.zoomPlusFb",
+					"10": "meetingControl.zoomMinusFb",
+					"11": "meetingControl.volumeChangedRoomSoundVolumeFb"
+				}
+			},
+			"numeric": {
+				"1": {
+					"1": "controlPages.pageFb",
+					"2": "controlPages.previousPageFb"
+				},
+				"3": {
+					"1": "localUse.brandMusicVolumeFb",
+					"2": "localUse.micVolumeFb",
+					"3": "localUse.mediaLevelFb"
+				},
+				"7": {
+					"1": "meetingControl.roomSoundVolumeFb"
+				}
+			},
+			"string": {
+				"1": {
+					"1": "controlPages.codeInputFb"
+				},
+				"4": {
+					"1": "ledControl.selectedChannelFb",
+					"2": "ledControl.channel1Fb",
+					"3": "ledControl.channel2Fb",
+					"4": "ledControl.channel3Fb",
+					"5": "ledControl.channel4Fb",
+					"6": "ledControl.channel5Fb",
+					"7": "ledControl.channel6Fb",
+					"8": "ledControl.channel7Fb",
+					"9": "ledControl.channel8Fb",
+					"10": "ledControl.channel9Fb",
+					"11": "ledControl.channel10Fb",
+					"12": "ledControl.channel11Fb",
+					"13": "ledControl.channel12Fb",
+					"14": "ledControl.channel13Fb",
+					"15": "ledControl.channel14Fb",
+					"16": "ledControl.channel15Fb",
+					"17": "ledControl.channel16Fb",
+					"18": "ledControl.channel17Fb",
+					"19": "ledControl.channel18Fb",
+					"20": "ledControl.channel19Fb",
+					"21": "ledControl.channel20Fb"
+				},
+				"5": {
+					"1": "monitorControl.selectedChannelFb",
+					"2": "monitorControl.channel1Fb",
+					"3": "monitorControl.channel2Fb",
+					"4": "monitorControl.channel3Fb",
+					"5": "monitorControl.channel4Fb",
+					"6": "monitorControl.channel5Fb",
+					"7": "monitorControl.channel6Fb",
+					"8": "monitorControl.channel7Fb",
+					"9": "monitorControl.channel8Fb",
+					"10": "monitorControl.channel9Fb",
+					"11": "monitorControl.channel10Fb",
+					"12": "monitorControl.channel11Fb",
+					"13": "monitorControl.channel12Fb",
+					"14": "monitorControl.channel13Fb",
+					"15": "monitorControl.channel14Fb",
+					"16": "monitorControl.channel15Fb",
+					"17": "monitorControl.channel16Fb",
+					"18": "monitorControl.channel17Fb",
+					"19": "monitorControl.channel18Fb",
+					"20": "monitorControl.channel19Fb",
+					"21": "monitorControl.channel20Fb"
 				}
 			}
 		},
 		"events": {
 			"boolean": {
-				"controlCamera.Left": {
+				"controlPages.delay": {
 					"joinId": 1,
 					"smartObjectId": 1
 				},
-				"controlCamera.Right": {
+				"selectLanguage.isEnglish": {
+					"joinId": 1,
+					"smartObjectId": 2
+				},
+				"localUse.volumeChangedBrandMusic": {
+					"joinId": 1,
+					"smartObjectId": 3
+				},
+				"localUse.volumeChangedMicVolume": {
 					"joinId": 2,
-					"smartObjectId": 1
+					"smartObjectId": 3
 				},
-				"controlCamera.Up": {
+				"localUse.volumeChangedMediaLevel": {
 					"joinId": 3,
-					"smartObjectId": 1
+					"smartObjectId": 3
 				},
-				"controlCamera.Down": {
+				"ledControl.signage": {
+					"joinId": 1,
+					"smartObjectId": 4
+				},
+				"ledControl.tvPlayer": {
+					"joinId": 2,
+					"smartObjectId": 4
+				},
+				"ledControl.laptopInput": {
+					"joinId": 3,
+					"smartObjectId": 4
+				},
+				"ledControl.ledOn": {
 					"joinId": 4,
-					"smartObjectId": 1
+					"smartObjectId": 4
 				},
-				"controlCamera.Center": {
+				"ledControl.ledOff": {
 					"joinId": 5,
-					"smartObjectId": 1
+					"smartObjectId": 4
+				},
+				"ledControl.showChannelsPage": {
+					"joinId": 6,
+					"smartObjectId": 4
+				},
+				"ledControl.channelsAvailable": {
+					"joinId": 7,
+					"smartObjectId": 4
+				},
+				"ledControl.videoCon": {
+					"joinId": 8,
+					"smartObjectId": 4
+				},
+				"ledControl.videoConPermitted": {
+					"joinId": 9,
+					"smartObjectId": 4
+				},
+				"monitorControl.signage": {
+					"joinId": 1,
+					"smartObjectId": 5
+				},
+				"monitorControl.tvPlayer": {
+					"joinId": 2,
+					"smartObjectId": 5
+				},
+				"monitorControl.laptopInput": {
+					"joinId": 3,
+					"smartObjectId": 5
+				},
+				"monitorControl.ledOn": {
+					"joinId": 4,
+					"smartObjectId": 5
+				},
+				"monitorControl.ledOff": {
+					"joinId": 5,
+					"smartObjectId": 5
+				},
+				"monitorControl.showChannelsPage": {
+					"joinId": 6,
+					"smartObjectId": 5
+				},
+				"monitorControl.channelsAvailable": {
+					"joinId": 7,
+					"smartObjectId": 5
+				},
+				"monitorControl.videoCon": {
+					"joinId": 8,
+					"smartObjectId": 5
+				},
+				"monitorControl.videoConPermitted": {
+					"joinId": 9,
+					"smartObjectId": 5
+				},
+				"cameraControl.preset01": {
+					"joinId": 1,
+					"smartObjectId": 6
+				},
+				"cameraControl.preset02": {
+					"joinId": 2,
+					"smartObjectId": 6
+				},
+				"cameraControl.preset03": {
+					"joinId": 3,
+					"smartObjectId": 6
+				},
+				"cameraControl.Left": {
+					"joinId": 4,
+					"smartObjectId": 6
+				},
+				"cameraControl.Right": {
+					"joinId": 5,
+					"smartObjectId": 6
+				},
+				"cameraControl.Up": {
+					"joinId": 6,
+					"smartObjectId": 6
+				},
+				"cameraControl.Down": {
+					"joinId": 7,
+					"smartObjectId": 6
+				},
+				"cameraControl.Center": {
+					"joinId": 8,
+					"smartObjectId": 6
+				},
+				"cameraControl.zoomPlus": {
+					"joinId": 9,
+					"smartObjectId": 6
+				},
+				"cameraControl.zoomMinus": {
+					"joinId": 10,
+					"smartObjectId": 6
+				},
+				"cameraControl.call": {
+					"joinId": 11,
+					"smartObjectId": 6
+				},
+				"cameraControl.setBtn": {
+					"joinId": 12,
+					"smartObjectId": 6
+				},
+				"meetingControl.preset01": {
+					"joinId": 1,
+					"smartObjectId": 7
+				},
+				"meetingControl.preset02": {
+					"joinId": 2,
+					"smartObjectId": 7
+				},
+				"meetingControl.preset03": {
+					"joinId": 3,
+					"smartObjectId": 7
+				},
+				"meetingControl.Left": {
+					"joinId": 4,
+					"smartObjectId": 7
+				},
+				"meetingControl.Right": {
+					"joinId": 5,
+					"smartObjectId": 7
+				},
+				"meetingControl.Up": {
+					"joinId": 6,
+					"smartObjectId": 7
+				},
+				"meetingControl.Down": {
+					"joinId": 7,
+					"smartObjectId": 7
+				},
+				"meetingControl.Center": {
+					"joinId": 8,
+					"smartObjectId": 7
+				},
+				"meetingControl.zoomPlus": {
+					"joinId": 9,
+					"smartObjectId": 7
+				},
+				"meetingControl.zoomMinus": {
+					"joinId": 10,
+					"smartObjectId": 7
+				},
+				"meetingControl.volumeChangedRoomSoundVolume": {
+					"joinId": 11,
+					"smartObjectId": 7
 				}
 			},
 			"numeric": {
 				"controlPages.page": {
 					"joinId": 1,
-					"smartObjectId": 2
+					"smartObjectId": 1
+				},
+				"controlPages.previousPage": {
+					"joinId": 2,
+					"smartObjectId": 1
+				},
+				"localUse.brandMusicVolume": {
+					"joinId": 1,
+					"smartObjectId": 3
+				},
+				"localUse.micVolume": {
+					"joinId": 2,
+					"smartObjectId": 3
+				},
+				"localUse.mediaLevel": {
+					"joinId": 3,
+					"smartObjectId": 3
+				},
+				"meetingControl.roomSoundVolume": {
+					"joinId": 1,
+					"smartObjectId": 7
+				}
+			},
+			"string": {
+				"controlPages.codeInput": {
+					"joinId": 1,
+					"smartObjectId": 1
+				},
+				"ledControl.selectedChannel": {
+					"joinId": 1,
+					"smartObjectId": 4
+				},
+				"ledControl.channel1": {
+					"joinId": 2,
+					"smartObjectId": 4
+				},
+				"ledControl.channel2": {
+					"joinId": 3,
+					"smartObjectId": 4
+				},
+				"ledControl.channel3": {
+					"joinId": 4,
+					"smartObjectId": 4
+				},
+				"ledControl.channel4": {
+					"joinId": 5,
+					"smartObjectId": 4
+				},
+				"ledControl.channel5": {
+					"joinId": 6,
+					"smartObjectId": 4
+				},
+				"ledControl.channel6": {
+					"joinId": 7,
+					"smartObjectId": 4
+				},
+				"ledControl.channel7": {
+					"joinId": 8,
+					"smartObjectId": 4
+				},
+				"ledControl.channel8": {
+					"joinId": 9,
+					"smartObjectId": 4
+				},
+				"ledControl.channel9": {
+					"joinId": 10,
+					"smartObjectId": 4
+				},
+				"ledControl.channel10": {
+					"joinId": 11,
+					"smartObjectId": 4
+				},
+				"ledControl.channel11": {
+					"joinId": 12,
+					"smartObjectId": 4
+				},
+				"ledControl.channel12": {
+					"joinId": 13,
+					"smartObjectId": 4
+				},
+				"ledControl.channel13": {
+					"joinId": 14,
+					"smartObjectId": 4
+				},
+				"ledControl.channel14": {
+					"joinId": 15,
+					"smartObjectId": 4
+				},
+				"ledControl.channel15": {
+					"joinId": 16,
+					"smartObjectId": 4
+				},
+				"ledControl.channel16": {
+					"joinId": 17,
+					"smartObjectId": 4
+				},
+				"ledControl.channel17": {
+					"joinId": 18,
+					"smartObjectId": 4
+				},
+				"ledControl.channel18": {
+					"joinId": 19,
+					"smartObjectId": 4
+				},
+				"ledControl.channel19": {
+					"joinId": 20,
+					"smartObjectId": 4
+				},
+				"ledControl.channel20": {
+					"joinId": 21,
+					"smartObjectId": 4
+				},
+				"monitorControl.selectedChannel": {
+					"joinId": 1,
+					"smartObjectId": 5
+				},
+				"monitorControl.channel1": {
+					"joinId": 2,
+					"smartObjectId": 5
+				},
+				"monitorControl.channel2": {
+					"joinId": 3,
+					"smartObjectId": 5
+				},
+				"monitorControl.channel3": {
+					"joinId": 4,
+					"smartObjectId": 5
+				},
+				"monitorControl.channel4": {
+					"joinId": 5,
+					"smartObjectId": 5
+				},
+				"monitorControl.channel5": {
+					"joinId": 6,
+					"smartObjectId": 5
+				},
+				"monitorControl.channel6": {
+					"joinId": 7,
+					"smartObjectId": 5
+				},
+				"monitorControl.channel7": {
+					"joinId": 8,
+					"smartObjectId": 5
+				},
+				"monitorControl.channel8": {
+					"joinId": 9,
+					"smartObjectId": 5
+				},
+				"monitorControl.channel9": {
+					"joinId": 10,
+					"smartObjectId": 5
+				},
+				"monitorControl.channel10": {
+					"joinId": 11,
+					"smartObjectId": 5
+				},
+				"monitorControl.channel11": {
+					"joinId": 12,
+					"smartObjectId": 5
+				},
+				"monitorControl.channel12": {
+					"joinId": 13,
+					"smartObjectId": 5
+				},
+				"monitorControl.channel13": {
+					"joinId": 14,
+					"smartObjectId": 5
+				},
+				"monitorControl.channel14": {
+					"joinId": 15,
+					"smartObjectId": 5
+				},
+				"monitorControl.channel15": {
+					"joinId": 16,
+					"smartObjectId": 5
+				},
+				"monitorControl.channel16": {
+					"joinId": 17,
+					"smartObjectId": 5
+				},
+				"monitorControl.channel17": {
+					"joinId": 18,
+					"smartObjectId": 5
+				},
+				"monitorControl.channel18": {
+					"joinId": 19,
+					"smartObjectId": 5
+				},
+				"monitorControl.channel19": {
+					"joinId": 20,
+					"smartObjectId": 5
+				},
+				"monitorControl.channel20": {
+					"joinId": 21,
+					"smartObjectId": 5
 				}
 			}
 		}

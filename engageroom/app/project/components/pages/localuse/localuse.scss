@@ -30,10 +30,12 @@ $secondary-background-color: #2a2a2a;
     }
 
     h1 {
+        font-family: 'adineuePROBold';
         padding-top: 8px;
     }
 
     p {
+        font-family: 'AdiHausDIN';
         padding-top: 10px;
         font-size: 130%;
     }
@@ -52,6 +54,7 @@ $secondary-background-color: #2a2a2a;
 
 
     .sourceButton {
+        font-family: 'AdiHausDIN';
         margin-top: 35px;
         margin-left: 5%;
         width: 90%;
@@ -83,6 +86,7 @@ $secondary-background-color: #2a2a2a;
     }
 
     .tick-values {
+        font-family: 'AdiHausDIN';
         margin-top: 10px;
         position: absolute;
         top: 0;

@@ -20,7 +20,22 @@ const page1Module = (() => {
      * Initialize Method
      */
     function onInit() {
-
+        function updateDateTime() {
+            var now = new Date();
+    
+            var date = now.getDate().toString().padStart(2, '0') + '/'
+                     + (now.getMonth() + 1).toString().padStart(2, '0') + '/'
+                     + now.getFullYear();
+    
+            var time = now.getHours().toString().padStart(2, '0') + ':'
+                     + now.getMinutes().toString().padStart(2, '0');
+    
+            document.getElementById("currentDate").innerHTML = date;
+            document.getElementById("currentTime").innerHTML = time;
+        }
+    
+        setInterval(updateDateTime, 1000);
+        updateDateTime();
     }
 
     /**

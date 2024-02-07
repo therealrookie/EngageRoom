@@ -8,7 +8,7 @@
       <Device Model="Crestron One" DeviceId="0B"/>
       <Device Model="Crestron One" DeviceId="0C"/>
       <Device Model="Crestron One" DeviceId="0D"/>
-      <Device Model="Crestron One" DeviceId="0E"/>
+      <Device Model="Crestron One" DeviceId="0E" Name="iPad"/>
       <Device Model="TS-1070" DeviceId="11" Name="WE"/>
       <Device Model="TSW-770" DeviceId="12" Name="EN"/>
       <Device Model="TSW-770" DeviceId="13" Name="SP"/>

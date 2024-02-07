@@ -42,7 +42,7 @@ const ledcontrolModule = (() => {
 
                 if (button.id === "tvPlayerButton" && value && channelsAreAvailable) {
                     tvPlayerSelected = true;
-                } else {
+                } else if (value) {
                     tvPlayerSelected = false;
                 }
 

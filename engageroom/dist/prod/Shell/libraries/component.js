@@ -1357,9 +1357,9 @@ function onInit() {
 
     const languagePack = {
         en: {
-            "welcomeMsg": "Welcome to Paris",
+            "welcomeMsg": "WELCOME TO PARIS",
             "welcomeHint": "Start the system with this button.",
-            "btnStart": "Start",
+            "btnStart": "START",
             "txtToday": "Date",
             "txtTime": "Time",
 
@@ -1413,9 +1413,9 @@ function onInit() {
             "off": "OFF"
         },
         fr: {
-            "welcomeMsg": "Bienvenue à Paris",
+            "welcomeMsg": "BIENVENUE À PARIS",
             "welcomeHint": "Démarrez le système avec ce bouton.",
-            "btnStart": "Démarrer",
+            "btnStart": "DÉMARRER",
             "txtToday": "Date",
             "txtTime": "Heure",
 
@@ -3001,7 +3001,7 @@ const ledcontrolModule = (() => {
 
                 if (button.id === "tvPlayerButton" && value && channelsAreAvailable) {
                     tvPlayerSelected = true;
-                } else {
+                } else if (value) {
                     tvPlayerSelected = false;
                 }
 
@@ -3528,6 +3528,8 @@ const monitorcontrolModule = (() => {
 
         // ----------------------------- SOURCE BUTTONS ---------------------------------------------
         let tvPlayerSelected = false;
+        let currentColumn;
+        let channelsAreAvailable;
 
         let sourceButtons = [
             { event: 'monitorControl.signage', feedback: 'monitorControl.signageFb', valueTmp: false, value: false, id: "signageButton" },
@@ -3544,9 +3546,9 @@ const monitorcontrolModule = (() => {
 
                 if (button.id === "tvPlayerButton" && value && channelsAreAvailable) {
                     tvPlayerSelected = true;
-                } else {
+                } else if (value) {
                     tvPlayerSelected = false;
-                }
+                } 
 
                 updateShownColumn();
 
@@ -3587,8 +3589,7 @@ const monitorcontrolModule = (() => {
         }
 
         // ----------------------------- SWITCH BETWEEN VOLUME & CHANNELS --------------------------------------------------------------------------------------
-        let currentColumn;
-        let channelsAreAvailable;
+        
 
         // MAKE CHANNEL-LIST VISIBLE
         CrComLib.subscribeState('b', 'monitorControl.showChannelsPageFb', (showChannel) => {
@@ -3601,7 +3602,7 @@ const monitorcontrolModule = (() => {
             channelsAreAvailable = value;
         });
 
-        selectVisibleColumn("volume");
+        //selectVisibleColumn("volume");
 
         // LISTEN ON VOLUME- OR CHANNEL-ICON
         volumeIcon.addEventListener("click", () => {
@@ -3789,7 +3790,22 @@ const page1Module = (() => {
      * Initialize Method
      */
     function onInit() {
-
+        function updateDateTime() {
+            var now = new Date();
+    
+            var date = now.getDate().toString().padStart(2, '0') + '/'
+                     + (now.getMonth() + 1).toString().padStart(2, '0') + '/'
+                     + now.getFullYear();
+    
+            var time = now.getHours().toString().padStart(2, '0') + ':'
+                     + now.getMinutes().toString().padStart(2, '0');
+    
+            document.getElementById("currentDate").innerHTML = date;
+            document.getElementById("currentTime").innerHTML = time;
+        }
+    
+        setInterval(updateDateTime, 1000);
+        updateDateTime();
     }
 
     /**

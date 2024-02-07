@@ -1,0 +1,44 @@
+// Add font-famly: '[font]', where [font] is the font name that is being added.
+// Add src: url("[path]"), where [path] is the path of the source font file.
+
+/* Windpath */
+@font-face {
+    font-family: 'Windpath';
+    src: url('../fonts/Windpath.ttf') format('truetype'); /* IE9 Compat Modes */
+  }
+/* AdiHaus Bold */
+@font-face {
+    font-family: 'AdiHausBOLD';
+    src: url('../fonts/d6caca00166438cde071a59b0f091f7a.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('../fonts/d6caca00166438cde071a59b0f091f7a.woff2') format('woff2'), /* Super Modern Browsers */
+         url('../fonts/d6caca00166438cde071a59b0f091f7a.woff') format('woff'), /* Modern Browsers */
+         url('../fonts/d6caca00166438cde071a59b0f091f7a.ttf') format('truetype'), /* Safari, Android, iOS */
+         url('../fonts/d6caca00166438cde071a59b0f091f7a.svg') format('svg'); /* Legacy iOS */
+  }
+  /* roboto-100italic - latin */
+  @font-face {
+    font-family: 'AdiHausDIN';
+    src: url('../fonts/c0cd6ec8ce6d2bbd315a13b62ed13550.eot') format('embedded-opentype'), /* IE6-IE8 */
+         url('../fonts/c0cd6ec8ce6d2bbd315a13b62ed13550.woff2') format('woff2'), /* Super Modern Browsers */
+         url('../fonts/c0cd6ec8ce6d2bbd315a13b62ed13550.woff') format('woff'), /* Modern Browsers */
+         url('../fonts/c0cd6ec8ce6d2bbd315a13b62ed13550.ttf') format('truetype'), /* Safari, Android, iOS */
+         url('../fonts/c0cd6ec8ce6d2bbd315a13b62ed13550.svg') format('svg'); /* Legacy iOS */
+  }
+  /* roboto-100 - latin */
+@font-face {
+    font-family: 'adineuePRO';
+    src: url('../fonts/b82329475307e0380dc1ea23f0c35266.eot') format('embedded-opentype'), /* IE6-IE8 */
+         url('../fonts/b82329475307e0380dc1ea23f0c35266.woff2') format('woff2'), /* Super Modern Browsers */
+         url('../fonts/b82329475307e0380dc1ea23f0c35266.woff') format('woff'), /* Modern Browsers */
+         url('../fonts/b82329475307e0380dc1ea23f0c35266.ttf') format('truetype'), /* Safari, Android, iOS */
+         url('../fonts/b82329475307e0380dc1ea23f0c35266.svg') format('svg'); /* Legacy iOS */
+  }
+  /* roboto-100 - latin */
+@font-face {
+    font-family: 'adineuePROBold';
+    src: url('../fonts/1938eca97ab5576ba37b537143f552ef.eot') format('embedded-opentype'), /* IE6-IE8 */
+         url('../fonts/1938eca97ab5576ba37b537143f552ef.woff2') format('woff2'), /* Super Modern Browsers */
+         url('../fonts/1938eca97ab5576ba37b537143f552ef.woff') format('woff'), /* Modern Browsers */
+         url('../fonts/1938eca97ab5576ba37b537143f552ef.ttf') format('truetype'), /* Safari, Android, iOS */
+         url('../fonts/1938eca97ab5576ba37b537143f552ef.svg') format('svg'); /* Legacy iOS */
+  }

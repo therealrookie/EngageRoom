@@ -14,9 +14,9 @@ function onInit() {
 
     const languagePack = {
         en: {
-            "welcomeMsg": "Welcome to Paris",
+            "welcomeMsg": "WELCOME TO PARIS",
             "welcomeHint": "Start the system with this button.",
-            "btnStart": "Start",
+            "btnStart": "START",
             "txtToday": "Date",
             "txtTime": "Time",
 
@@ -70,9 +70,9 @@ function onInit() {
             "off": "OFF"
         },
         fr: {
-            "welcomeMsg": "Bienvenue à Paris",
+            "welcomeMsg": "BIENVENUE À PARIS",
             "welcomeHint": "Démarrez le système avec ce bouton.",
-            "btnStart": "Démarrer",
+            "btnStart": "DÉMARRER",
             "txtToday": "Date",
             "txtTime": "Heure",
 

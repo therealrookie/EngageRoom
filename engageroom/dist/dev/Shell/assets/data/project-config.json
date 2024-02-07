@@ -24,7 +24,7 @@
       "name": "dark-theme",
       "extends": "dark-theme",
       "brandLogo": {
-        "url": "./app/template/assets/img/adidas-logo-font-bw.png",
+        "url": "./app/template/assets/img/adidas-logo-font-bw.svg",
         "alt": "Crestron Logo",
         "receiveStateUrl": ""
       },
@@ -133,6 +133,134 @@
           "iconClass": "fas fa-file-alt",
           "iconUrl": "",
           "iconPosition": "bottom"
+        }
+      },
+      {
+        "pageName": "selectlocality",
+        "fullPath": "./app/project/components/pages/selectlocality/",
+        "fileName": "selectlocality.html",
+        "preloadPage": true,
+        "cachePage": false,
+        "standAloneView": false,
+        "navigation": {
+          "sequence": 2,
+          "label": "selectlocality",
+          "isI18nLabel": false,
+          "iconClass": "",
+          "iconUrl": "",
+          "iconPosition": ""
+        }
+      },
+      {
+        "pageName": "localuse",
+        "fullPath": "./app/project/components/pages/localuse/",
+        "fileName": "localuse.html",
+        "preloadPage": true,
+        "cachePage": false,
+        "standAloneView": false,
+        "navigation": {
+          "sequence": 3,
+          "label": "localuse",
+          "isI18nLabel": false,
+          "iconClass": "",
+          "iconUrl": "",
+          "iconPosition": ""
+        }
+      },
+      {
+        "pageName": "ledcontrol",
+        "fullPath": "./app/project/components/pages/ledcontrol/",
+        "fileName": "ledcontrol.html",
+        "preloadPage": true,
+        "cachePage": false,
+        "standAloneView": false,
+        "navigation": {
+          "sequence": 4,
+          "label": "ledcontrol",
+          "isI18nLabel": false,
+          "iconClass": "",
+          "iconUrl": "",
+          "iconPosition": ""
+        }
+      },
+      {
+        "pageName": "monitorcontrol",
+        "fullPath": "./app/project/components/pages/monitorcontrol/",
+        "fileName": "monitorcontrol.html",
+        "preloadPage": true,
+        "cachePage": false,
+        "standAloneView": false,
+        "navigation": {
+          "sequence": 5,
+          "label": "monitorcontrol",
+          "isI18nLabel": false,
+          "iconClass": "",
+          "iconUrl": "",
+          "iconPosition": ""
+        }
+      },
+      {
+        "pageName": "cameracontrol",
+        "fullPath": "./app/project/components/pages/cameracontrol/",
+        "fileName": "cameracontrol.html",
+        "preloadPage": true,
+        "cachePage": false,
+        "standAloneView": false,
+        "navigation": {
+          "sequence": 6,
+          "label": "cameracontrol",
+          "isI18nLabel": false,
+          "iconClass": "",
+          "iconUrl": "",
+          "iconPosition": ""
+        }
+      },
+      {
+        "pageName": "meeting",
+        "fullPath": "./app/project/components/pages/meeting/",
+        "fileName": "meeting.html",
+        "preloadPage": true,
+        "cachePage": false,
+        "standAloneView": false,
+        "navigation": {
+          "sequence": 7,
+          "label": "meeting",
+          "isI18nLabel": false,
+          "iconClass": "",
+          "iconUrl": "",
+          "iconPosition": ""
+        }
+      },
+      {
+        "pageName": "keypadinput",
+        "fullPath": "./app/project/components/pages/keypadinput/",
+        "fileName": "keypadinput.html",
+        "preloadPage": true,
+        "cachePage": false,
+        "standAloneView": false,
+        "navigation": {
+          "sequence": 8,
+          "label": "keypadinput",
+          "isI18nLabel": false,
+          "iconClass": "",
+          "iconUrl": "",
+          "iconPosition": ""
+        }
+      },
+      {
+        "pageName": "loading",
+        "fullPath": "./app/project/components/pages/loading/",
+        "fileName": "loading.html",
+        "preloadPage": true,
+        "cachePage": false,
+        "standAloneView": false,
+        "navigation": {
+          "sequence": 9,
+          "label": "loading",
+          "isI18nLabel": false,
+          "iconClass": "",
+          "iconUrl": "",
+          "iconPosition": ""
         }
       }
     ],

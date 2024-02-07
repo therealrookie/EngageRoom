@@ -20,6 +20,8 @@ const monitorcontrolModule = (() => {
 
         // ----------------------------- SOURCE BUTTONS ---------------------------------------------
         let tvPlayerSelected = false;
+        let currentColumn;
+        let channelsAreAvailable;
 
         let sourceButtons = [
             { event: 'monitorControl.signage', feedback: 'monitorControl.signageFb', valueTmp: false, value: false, id: "signageButton" },
@@ -36,9 +38,9 @@ const monitorcontrolModule = (() => {
 
                 if (button.id === "tvPlayerButton" && value && channelsAreAvailable) {
                     tvPlayerSelected = true;
-                } else {
+                } else if (value) {
                     tvPlayerSelected = false;
-                }
+                } 
 
                 updateShownColumn();
 
@@ -79,8 +81,7 @@ const monitorcontrolModule = (() => {
         }
 
         // ----------------------------- SWITCH BETWEEN VOLUME & CHANNELS --------------------------------------------------------------------------------------
-        let currentColumn;
-        let channelsAreAvailable;
+        
 
         // MAKE CHANNEL-LIST VISIBLE
         CrComLib.subscribeState('b', 'monitorControl.showChannelsPageFb', (showChannel) => {
@@ -93,7 +94,7 @@ const monitorcontrolModule = (() => {
             channelsAreAvailable = value;
         });
 
-        selectVisibleColumn("volume");
+        //selectVisibleColumn("volume");
 
         // LISTEN ON VOLUME- OR CHANNEL-ICON
         volumeIcon.addEventListener("click", () => {

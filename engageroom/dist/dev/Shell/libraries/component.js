@@ -1357,50 +1357,103 @@ function onInit() {
 
     const languagePack = {
         en: {
-            "welcomeMsg": "Welcome to Paris",
+            "welcomeMsg": "WELCOME TO PARIS",
             "welcomeHint": "Start the system with this button.",
-            "btnStart": "Start",
+            "btnStart": "START",
             "txtToday": "Date",
             "txtTime": "Time",
 
+            "localUseHeader": "Local Use",
+            "meetingHeader": "Meeting",
+            "zoomHeader": "Zoom",
+
+            "controlHeader": "Control",
+            "controlHint": "Click to control the device",
+            "ledControlButton": "LED Control",
+            "monitorControlButton": "Monitor Control",
+            "cameraControlButton": "Camera Control",
+
             "sourceHeader": "Source",
             "sourceHint": "Choose a video source",
-            "sofaInputButton": "SOFA INPUT",
-            "tvPlayerButton": "TV PLAYER",
-            "signageButton": "SIGNAGE",
-            "clickShareButton": "CLICK SHARE",
-            "yealinkMcoreButton": "YEALINK MCORE",
+            "tvPlayerButton": "TV Player",
+            "signageButton": "adiTV",
+            "laptopInputButton": "Laptop Input",
+            "videoConButton": "Video Conference",
 
             "volumeHeader": "Volume",
+            "volumeHint": "Change volume",
+            "roomSoundVolume": "Room Sound Volume",
+            "ledButtonsHeader": "LEDs",
+            "ledButtonsHint": "Turn LEDs on or off",
+            "monitorButtonsHeader": "Monitor",
+            "monitorButtonsHint": "Turn Monitor on or off",
+
+
             "brandMusicHeader": "Brand Music",
             "mediaLevelHeader": "Media Level",
+            "micLevelHeader": "Mic Level",
+
+            "cameraHeader": "Camera",
+            "cameraHint": "Select preset or move manually",
+
+            "preset01Button": "PRESET 1",
+            "preset02Button": "PRESET 2",
+            "preset03Button": "PRESET 3",
+            "previewButton": "PREVIEW",
+            "setButton": "SET",
+
 
             "channelHeader": "Channels",
 
             "homeButtonHeader": "Home",
+            "backButtonHeader": "Back",
 
             "displayHeader": "Display",
             "on": "ON",
             "off": "OFF"
         },
         fr: {
-            "welcomeMsg": "Bienvenue à Paris",
+            "welcomeMsg": "BIENVENUE À PARIS",
             "welcomeHint": "Démarrez le système avec ce bouton.",
-            "btnStart": "Démarrer",
+            "btnStart": "DÉMARRER",
             "txtToday": "Date",
             "txtTime": "Heure",
+
+            "localUseHeader": "Utilisation locale",
+            "meetingHeader": "Réunion",
+
+            "controlHeader": "Contrôle",
+            "controlHint": "Cliquez pour contrôler l'appareil",
+            "ledControlButton": "Contrôle LED",
+            "monitorControlButton": "Contrôle de l'écran",
+            "cameraControlButton": "Contrôle de la caméra",
             "sourceHeader": "Source",
             "sourceHint": "Choisissez une source vidéo",
-            "sofaInputButton": "ENTRÉE CANAPÉ",
-            "tvPlayerButton": "LECTEUR TV",
-            "signageButton": "PANNEAU PUBLICITAIRE",
-            "clickShareButton": "PARTAGE DE CLIC",
-            "yealinkMcoreButton": "YEALINK MCORE",
+            "zoomHeader": "Zoom",
+            "tvPlayerButton": "Chaînes TV",
+            "signageButton": "adiTV",
+            "laptopInputButton": "Entrée Ordinateur portable",
+            "videoConButton": "Video Conference",
             "volumeHeader": "Volume",
+            "volumeHint": "Changer le volume",
+            "roomSoundVolume": "Volume du son de la salle",
+            "ledButtonsHeader": "LEDs",
+            "ledButtonsHint": "Allumez ou éteignez les LEDs",
+            "monitorButtonsHeader": "Moniteur",
+            "monitorButtonsHint": "Allumez ou éteignez le moniteur",
             "brandMusicHeader": "Musique de marque",
-            "mediaLevelHeader": "Niveau média",
-            "channelHeader": "Channels",
+            "mediaLevelHeader": "Niveau des médias",
+            "micLevelHeader": "Niveau du microphone",
+            "previewButton": "APERÇU",
+            "setButton": "CONFIGURER",
+            "cameraHeader": "Caméra",
+            "cameraHint": "Sélectionnez un préréglage ou déplacez manuellement",
+            "preset01Button": "PRÉRÉGLAGE 1",
+            "preset02Button": "PRÉRÉGLAGE 2",
+            "preset03Button": "PRÉRÉGLAGE 3",
+            "channelHeader": "Chaînes",
             "homeButtonHeader": "Accueil",
+            "backButtonHeader": "Retour",
             "displayHeader": "Affichage",
             "on": "ON",
             "off": "OFF"
@@ -1408,48 +1461,17 @@ function onInit() {
     };
 
     // CONSTANTS
-    /*
+
     const btnEnglish = document.getElementById('chooseEnglish');
     const btnFrench = document.getElementById('chooseFrench');
-    const imgEnglish = btnEnglish.querySelector('img');
-    const imgFrench = btnFrench.querySelector('img');
-    */
     const startButton = document.getElementById("startButton");
 
-    // SUBSCRIBE STATES
-
-    CrComLib.subscribeState('b', 'selectLanguage.isEnglishFb', (value) => {
-        if (value) {
-            lang = 'en';
-        } else {
-            lang = 'fr';
-        }
-        changeLangButtonAppearance(value);
-        switchLanguage();
-    });
-
-    CrComLib.subscribeState('n', 'controlPages.pageFb', (value) => {
-        switch (value) {
-            case 1:
-                templatePageModule.navigateTriggerViewByPageName("page1");
-                break;
-            case 2:
-                templatePageModule.navigateTriggerViewByPageName("settings");
-                break;
-            case 100:
-                templatePageModule.navigateTriggerViewByPageName("fire");
-                break;
-            default:
-                break;
-        }
-        setTimeout(() => {
-            switchLanguage();
-        }, 50);
-    });
+    let codeIsCorrect = false;
+    let nextPageNr;
+    let inactivityTimeout;
 
 
-    // PUBLISH EVENTS
-/*
+    // EVENT LISTENERS
     btnEnglish.addEventListener('click', function () {
         CrComLib.publishEvent('b', 'selectLanguage.isEnglish', true);
     });
@@ -1457,18 +1479,20 @@ function onInit() {
     btnFrench.addEventListener('click', function () {
         CrComLib.publishEvent('b', 'selectLanguage.isEnglish', false);
     });
-*/
+
     startButton.addEventListener('click', function () {
-        startButton.classList.add('active');
-        setTimeout(function () {
-            CrComLib.publishEvent('n', 'controlPages.page', 2);
-            setTimeout(function () {
-                startButton.classList.remove('active');
-            }, 20);
-        }, 20);
+        CrComLib.publishEvent('n', 'controlPages.page', 2);
     });
 
-/*
+    // ----------------------------------- CHANGE LANGUAGE ---------------------------------------
+
+    CrComLib.subscribeState('b', 'selectLanguage.isEnglishFb', (value) => {
+        lang = value ? 'en' : 'fr';
+
+        changeLangButtonAppearance(value);
+        switchLanguage();
+    });
+
     function switchLanguage() {
         const elements = document.querySelectorAll('[data-lang-key]');
         elements.forEach(element => {
@@ -1477,36 +1501,125 @@ function onInit() {
         });
     }
 
-    // Initially setting English as active
-    
-    btnEnglish.classList.add('active');
+    btnEnglish.classList.add('buttonPressed');
 
     function changeLangButtonAppearance(isEnglish) {
         if (isEnglish) {
-            btnEnglish.classList.add('active');
-            imgEnglish.src = "./app/template/assets/img/translate-black.svg";
-            btnFrench.classList.remove('active');
-            imgFrench.src = "./app/template/assets/img/translate.svg";
+            btnEnglish.classList.add('buttonPressed');
+            btnFrench.classList.remove('buttonPressed');
         } else {
-            btnFrench.classList.add('active');
-            imgFrench.src = "./app/template/assets/img/translate-black.svg";
-            btnEnglish.classList.remove('active');
-            imgEnglish.src = "./app/template/assets/img/translate.svg";
+            btnFrench.classList.add('buttonPressed');
+            btnEnglish.classList.remove('buttonPressed');
         }
     }
-    */
+
+
+
+    // ----------------------------------- INPUT CODE AND TIMEOUT ---------------------------------------
+
+
+    function resetInactivityTimeout() {
+        clearTimeout(inactivityTimeout);
+
+        inactivityTimeout = setTimeout(() => {
+            let page = (nextPageNr == 6) ? 3 : nextPageNr;
+            CrComLib.publishEvent('n', 'controlPages.page', page);
+            prevPageSecure = false;
+        }, 20000);
+    }
+
+    document.addEventListener('touchstart', resetInactivityTimeout);
+
+
+
+
+    CrComLib.subscribeState('s', 'controlPages.codeInputFb', (inputCode) => {
+        if (inputCode === "911") {
+            codeIsCorrect = true;
+            setTimeout(() => { switchPage(nextPageNr) }, 100);
+        } else {
+            codeIsCorrect = false;
+        }
+    });
+
+
+
+    CrComLib.subscribeState('n', 'controlPages.pageFb', (value) => {
+        switchPage(value);
+
+        (value < 99) ? CrComLib.publishEvent('n', 'controlPages.previousPage', value) : undefined;
+
+        CrComLib.publishEvent('s', 'controlPages.codeInput', '');
+
+        setTimeout(() => { switchLanguage() }, 50);
+    });
+
+
+
+
+
+    function switchPage(pageNr) {
+
+        let nextPageName;
+        switch (pageNr) {
+            case 1:
+                nextPageName = "page1";
+                templatePageModule.navigateTriggerViewByPageName(nextPageName);
+
+                break;
+            case 2:
+                nextPageName = "selectlocality";
+                templatePageModule.navigateTriggerViewByPageName(nextPageName);
+                break;
+            case 3:
+                nextPageName = "localuse";
+                templatePageModule.navigateTriggerViewByPageName(nextPageName);
+
+                break;
+            case 4:
+                nextPageName = "ledcontrol";
+                templatePageModule.navigateTriggerViewByPageName(nextPageName);
+
+                break;
+            case 5:
+                nextPageName = "monitorcontrol";
+                templatePageModule.navigateTriggerViewByPageName(nextPageName);
+
+                break;
+            case 6:
+                nextPageName = codeIsCorrect ? "cameracontrol" : "keypadinput";
+                templatePageModule.navigateTriggerViewByPageName(nextPageName);
+                break;
+            case 7:
+                nextPageName = "meeting";
+                templatePageModule.navigateTriggerViewByPageName(nextPageName);
+                break;
+            case 100:
+                nextPageName = "fire";
+                templatePageModule.navigateTriggerViewByPageName(nextPageName);
+                break;
+            case 101:
+                nextPageName = "loading";
+                templatePageModule.navigateTriggerViewByPageName(nextPageName);
+                break;
+            default:
+                break;
+        }
+
+        nextPageNr = pageNr;
+
+
+        setTimeout(() => {
+            switchLanguage();
+        }, 50);
+    }
+
+
+
+
 }
 
-function showAlert(message, duration) {
-    const alertBox = document.getElementById('customAlert');
-    alertBox.innerText = message;
-    alertBox.style.display = 'block'; // Show the alert
 
-    // Hide the alert after the specified duration
-    setTimeout(() => {
-        alertBox.style.display = 'none';
-    }, duration);
-}
 /*jslint es6 */
 /*global CrComLib, webXPanelModule, hardButtonsModule, templateVersionInfoModule, projectConfigModule, featureModule, templateAppLoaderModule, translateModule, serviceModule, utilsModule, navigationModule */
 
@@ -2572,6 +2685,183 @@ const templateVersionInfoModule = (() => {
 		logSubscriptionsCount
 	};
 })();
+const cameracontrolModule = (() => {
+    'use strict';
+
+    function onInit() {
+        // -------------------------------- CONSTANTS --------------------------------
+
+        const cameraControlPage = document.getElementById("cameracontrol-page");
+        const homeButton = cameraControlPage.querySelector("#homeButtonColumn");
+        const backButton = cameraControlPage.querySelector("#backButtonColumn");
+        const zoomPlusButton = cameraControlPage.querySelector('#zoomPlus');
+        const zoomMinusButton = cameraControlPage.querySelector('#zoomMinus');
+
+
+        // -------------------------------- VARIABLES --------------------------------
+
+
+
+        // ----------------------------- PRESET BUTTONS --------------------------------------------------------------------------------------
+
+        let presetButtons = [
+            { event: 'cameraControl.preset01', feedback: 'cameraControl.preset01Fb', valueTmp: false, value: false, id: "preset01Button" },
+            { event: 'cameraControl.preset02', feedback: 'cameraControl.preset02Fb', valueTmp: false, value: false, id: "preset02Button" },
+            { event: 'cameraControl.preset03', feedback: 'cameraControl.preset03Fb', valueTmp: false, value: false, id: "preset03Button" },
+            { event: 'cameraControl.call', feedback: 'cameraControl.callFb', valueTmp: false, value: false, id: "callButton" },
+            { event: 'cameraControl.setBtn', feedback: 'cameraControl.setBtnFb', valueTmp: false, value: false, id: "setButton" }
+
+        ]
+
+        // GET PRESET BUTTONS FEEDBACK
+        presetButtons.forEach(button => {
+            CrComLib.subscribeState('b', button.feedback, (value) => {
+                button.value = value;
+                updateActivatedStyle(button);
+            });
+        });
+
+        // LISTEN ON ALL PRESET BUTTONS
+        presetButtons.forEach(button => {
+            const btnElement = cameraControlPage.querySelector(`#${button.id}`);
+            btnElement.addEventListener("click", () => {
+                sendPressedPresetButton(button.id);
+            });
+        });
+        /*
+                // SEND CORRECT VALUES FOR EACH BUTTON
+                function sendPressedPresetButton(buttonId) {
+                    presetButtons.forEach(button => {
+                        const value = button.id === buttonId;
+                        CrComLib.publishEvent('b', button.event, value);
+                    });
+                }
+        */
+        // SEND CORRECT VALUES FOR EACH BUTTON
+        function sendPressedPresetButton(buttonId) {
+
+            presetButtons.forEach((button, index) => {
+                let value;
+
+                if (index < 3) {
+                    value = button.id === buttonId;
+                } else {
+                    value = button.id === buttonId;
+                }
+
+                CrComLib.publishEvent('b', button.event, value);
+            });
+        }
+
+
+        // UPDATE STYLE OF PRESET BUTONS
+        function updateActivatedStyle(button) {
+            const element = cameraControlPage.querySelector('#' + button.id);
+            if (button.id === 'setButton') {
+                button.value ? element.classList.add("setButtonPressed") : element.classList.remove("setButtonPressed");
+            } else {
+                button.value ? element.classList.add("buttonPressed") : element.classList.remove("buttonPressed");
+            }
+        }
+
+        // ----------------------------- ZOOM CONTROL --------------------------------------------------------------------------------------
+
+        let zoomTimeout;
+        let isZoomingIn = false;
+        let isZoomingOut = false;
+
+        // ZOOM PLUS
+        CrComLib.subscribeState('b', 'cameraControl.zoomPlusFb', (zoomPlus) => {
+            if (zoomPlus) {
+                zoomPlusButton.classList.add('buttonPressed');
+            } else {
+                zoomPlusButton.classList.remove('buttonPressed');
+            }
+        });
+
+        // ZOOM MINUS
+        CrComLib.subscribeState('b', 'cameraControl.zoomMinusFb', (zoomMinus) => {
+            if (zoomMinus) {
+                zoomMinusButton.classList.add('buttonPressed');
+            } else {
+                zoomMinusButton.classList.remove('buttonPressed');
+            }
+        });
+
+        function zoomIn() {
+            CrComLib.publishEvent('b', 'cameraControl.zoomPlus', true);
+        }
+
+        // Function to handle zoom out
+        function zoomOut() {
+            CrComLib.publishEvent('b', 'cameraControl.zoomMinus', true);
+        }
+
+
+        zoomPlusButton.addEventListener("touchstart", (event) => {
+            event.preventDefault(); // Prevent default touch behavior (e.g., scrolling)
+            if (!isZoomingOut) {
+                isZoomingIn = true;
+                zoomIn(); // Trigger zoomIn immediately
+                // Start repeating action when the button is touched and held
+                zoomTimeout = setInterval(zoomIn, 200); // Adjust the interval as needed
+
+            }
+        });
+
+        // Add touchend event listener to stop zooming in
+        zoomPlusButton.addEventListener("touchend", () => {
+            isZoomingIn = false;
+            CrComLib.publishEvent('b', 'cameraControl.zoomPlus', false);
+            clearInterval(zoomTimeout);
+        });
+
+        // Add touchstart event listener for zooming out
+        zoomMinusButton.addEventListener("touchstart", (event) => {
+            event.preventDefault(); // Prevent default touch behavior (e.g., scrolling)
+            if (!isZoomingIn) {
+                isZoomingOut = true;
+                zoomOut(); // Trigger zoomOut immediately
+                // Start repeating action when the button is touched and held
+                zoomTimeout = setInterval(zoomOut, 200); // Adjust the interval as needed
+            }
+        });
+
+        // Add touchend event listener to stop zooming out
+        zoomMinusButton.addEventListener("touchend", () => {
+            isZoomingOut = false;
+            CrComLib.publishEvent('b', 'cameraControl.zoomMinus', false);
+            clearInterval(zoomTimeout);
+        });
+
+        // ----------------------------- NAVIGATION --------------------------------------------------------------------------------------
+
+        // LISTEN ON HOME BUTTON
+        homeButton.addEventListener('click', function () {
+            CrComLib.publishEvent('n', 'controlPages.page', 1);
+        });
+
+        // LISTEN ON BACK BUTTON
+        backButton.addEventListener('click', function () {
+            CrComLib.publishEvent('n', 'controlPages.page', 3);
+        });
+
+    }
+
+    let loadedSubId = CrComLib.subscribeState('o', 'ch5-import-htmlsnippet:cameracontrol-import-page', (value) => {
+        if (value['loaded']) {
+            onInit();
+            setTimeout(() => {
+                CrComLib.unsubscribeState('o', 'ch5-import-htmlsnippet:cameracontrol-import-page', loadedSubId);
+                loadedSubId = '';
+            });
+        }
+    });
+
+    return {
+    };
+
+})();
 const fireModule = (() => {
     'use strict';
 
@@ -2606,6 +2896,877 @@ const fireModule = (() => {
     };
 
 })();
+const keypadinputModule = (() => {
+    'use strict';
+
+    function onInit() {
+        const keypadInputPage = document.getElementById("keypadinput-page");
+        const dummyInput = keypadInputPage.querySelector('#dummyInput');
+
+        const homeButton = keypadInputPage.querySelector("#homeButtonColumn");
+        const backButton = keypadInputPage.querySelector("#backButtonColumn");
+
+        
+
+        let inputString = '';
+
+        CrComLib.subscribeState('s', 'controlPages.codeInputFb', (value) => {
+            inputString = value;
+            dummyInput.textContent = '•'.repeat(inputString.length);
+        })
+
+        keypadInputPage.querySelectorAll('.number').forEach(button => {
+            button.addEventListener('touchstart', function () {
+                if (inputString.length < 5) {
+                    inputString += button.getAttribute('data-key');
+                    CrComLib.publishEvent('s', 'controlPages.codeInput', inputString);
+                }
+            });
+
+        });
+
+        keypadInputPage.querySelector('.deleteButton').addEventListener('touchstart', function () {
+            inputString = inputString.slice(0, -1);
+
+            CrComLib.publishEvent('s', 'controlPages.codeInput', inputString);
+        });
+
+
+        // --------- LISTEN ON HOME BUTTON -----------------------------------------
+        homeButton.addEventListener('click', function () {
+                CrComLib.publishEvent('n', 'controlPages.page', 1);
+        });
+
+        // --------- LISTEN ON BACK BUTTON -----------------------------------------
+        backButton.addEventListener('click', function () {
+                CrComLib.publishEvent('n', 'controlPages.page', 2);
+        });
+    }
+
+    let loadedSubId = CrComLib.subscribeState('o', 'ch5-import-htmlsnippet:keypadinput-import-page', (value) => {
+        if (value['loaded']) {
+            onInit();
+            setTimeout(() => {
+                CrComLib.unsubscribeState('o', 'ch5-import-htmlsnippet:keypadinput-import-page', loadedSubId);
+                loadedSubId = '';
+            });
+        }
+    }); 
+
+    return {
+    };
+
+})();
+const ledcontrolModule = (() => {
+    'use strict';
+
+    function onInit() {
+
+        // ----------------------------- HTML ELEMENTS ---------------------------------------------
+
+        const ledControlPage = document.getElementById("ledcontrol-page");
+        const homeButton = ledControlPage.querySelector("#homeButtonColumn");
+        const backButton = ledControlPage.querySelector("#backButtonColumn");
+        const buttonContainer = ledControlPage.querySelector('#channelButtonContainer');
+        const volumeColumn = ledControlPage.querySelector("#volumeColumn");
+        const channelColumn = ledControlPage.querySelector("#channelColumn");
+        const channelIcon = ledControlPage.querySelector("#volumeColumn .toggle-icon");
+        const volumeIcon = ledControlPage.querySelector("#channelColumn .toggle-icon");
+        const ledOnButton = ledControlPage.querySelector('#ledOn');
+        const ledOffButton = ledControlPage.querySelector('#ledOff');
+
+
+
+
+
+
+
+        // ----------------------------- SOURCE BUTTONS ---------------------------------------------
+        let tvPlayerSelected = false;
+        let currentColumn;
+        let channelsAreAvailable;
+
+        let sourceButtons = [
+            { event: 'ledControl.signage', feedback: 'ledControl.signageFb', valueTmp: false, value: false, id: "signageButton" },
+            { event: 'ledControl.tvPlayer', feedback: 'ledControl.tvPlayerFb', valueTmp: false, value: false, id: "tvPlayerButton" },
+            { event: 'ledControl.laptopInput', feedback: 'ledControl.laptopInputFb', valueTmp: false, value: false, id: "laptopInputButton" },
+            { event: 'ledControl.videoCon', feedback: 'ledControl.videoConFb', valueTmp: false, value: false, id: "videoConButton" }
+        ]
+
+        // GET SOURCE BUTTONS FEEDBACK 
+        sourceButtons.forEach(button => {
+            CrComLib.subscribeState('b', button.feedback, (value) => {
+                button.value = value;
+                updateActivatedStyle(button);
+
+                if (button.id === "tvPlayerButton" && value && channelsAreAvailable) {
+                    tvPlayerSelected = true;
+                } else {
+                    tvPlayerSelected = false;
+                }
+
+                updateShownColumn();
+
+            });
+        });
+
+        // ACTIVATION / DEACTIVATION OF YEALINK BUTTON 
+        CrComLib.subscribeState('b', 'ledControl.videoConPermittedFb', (isActive) => {
+            if (!isActive) {
+                document.getElementById(sourceButtons[3].id).classList.add('inactive');
+            } else if (isActive) {
+                document.getElementById(sourceButtons[3].id).classList.remove('inactive');
+            }
+        });
+
+        // LISTEN ON ALL SOURCE BUTTONS
+        sourceButtons.forEach(button => {
+            const btnElement = ledControlPage.querySelector(`#${button.id}`);
+            btnElement.addEventListener("click", () => {
+                sendPressedSourceButton(button.id);
+            });
+        });
+
+        // SEND CORRECT VALUES FOR EACH BUTTON
+        function sendPressedSourceButton(buttonId) {
+            sourceButtons.forEach(button => {
+                const value = button.id === buttonId;
+                CrComLib.publishEvent('b', button.event, value);
+            });
+        }
+
+        // UPDATE STYLE OF SOURCE BUTONS 
+        function updateActivatedStyle(button) {
+            const element = ledControlPage.querySelector('#' + button.id);
+            button.value ? element.classList.add('buttonPressed') : element.classList.remove('buttonPressed');
+        }
+
+
+        // ----------------------------- SWITCH BETWEEN VOLUME & CHANNELS --------------------------------------------------------------------------------------
+
+        // MAKE CHANNEL-LIST VISIBLE 
+        CrComLib.subscribeState('b', 'ledControl.showChannelsPageFb', (showChannel) => {
+            currentColumn = showChannel ? "channel" : "volume";
+            selectVisibleColumn(currentColumn);
+        });
+
+        // MAKE CHANNEL-LIST AVAILABLE / UNAVAILABLE 
+        CrComLib.subscribeState('b', 'ledControl.channelsAvailableFb', (value) => {
+            channelsAreAvailable = value;
+        });
+
+        selectVisibleColumn("volume");
+
+        // LISTEN ON VOLUME- OR CHANNEL-ICON 
+        volumeIcon.addEventListener("click", () => {
+            CrComLib.publishEvent('b', 'ledControl.showChannelsPage', false);
+        });
+
+        channelIcon.addEventListener("click", () => {
+            CrComLib.publishEvent('b', 'ledControl.showChannelsPage', true);
+
+        });
+
+        // CHANGE STYLE OF VOLUME OR CHANNEL COLUMN 
+        function selectVisibleColumn(column) {
+            switch (column) {
+                case "volume":
+                    volumeColumn.classList.add("active");
+                    channelColumn.classList.remove("active");
+                    channelColumn.classList.add("inactive");
+                    volumeColumn.classList.remove("inactive");
+                    break;
+                case "channel":
+                    volumeColumn.classList.remove("active");
+                    channelColumn.classList.add("active");
+                    channelColumn.classList.remove("inactive");
+                    volumeColumn.classList.add("inactive");
+                    break;
+            }
+        }
+
+        // SWITCH BETWEEN VOLUME OR CHANNEL COLUMN 
+        function updateShownColumn() {
+            if (tvPlayerSelected) {
+                selectVisibleColumn(currentColumn);
+                channelIcon.style.visibility = "visible";
+            } else {
+                selectVisibleColumn("volume");
+                channelIcon.style.visibility = "hidden";
+            }
+        }
+
+        // ----------------------------- CHANNELS --------------------------------------------------------------------------------------
+
+        // CREATE OBJECT WITH KEY: channelJoinFB, VALUE: ''
+        const channelNames = Array.from({ length: 20 }, (_, index) => `ledControl.channel${index + 1}Fb`);
+        const channelInfo = {};
+
+        channelNames.forEach(channel => {
+            channelInfo[channel] = '';
+        });
+
+        // RECEIVE ALL CHANNEL NAMES 
+        for (const channelJoin in channelInfo) {
+            CrComLib.subscribeState('s', channelJoin, (channelName) => {
+                channelInfo[channelJoin] = channelName;
+                updateChannelList();
+            }
+            );
+        }
+
+        // RECEIVE THE SELECTED CHANNEL 
+        CrComLib.subscribeState('s', 'ledControl.selectedChannelFb', (channel) => {
+            buttonContainer.querySelectorAll('.button').forEach(button => {
+                if (button.textContent === channel) {
+                    button.classList.add('buttonPressed');
+                } else {
+                    button.classList.remove('buttonPressed');
+                }
+            });
+        });
+
+        // UPDATE THE LIST OF SHOWN CHANNELS IN THE SENT ORDER 
+        function updateChannelList() {
+            const sortedChannels = Object.entries(channelInfo)
+                .map(([channelJoin, channelName]) => ({ channelJoin, channelName }))
+                .filter(channel => channel.channelName.trim() !== '')
+                .sort((a, b) => {
+                    const numA = parseInt(a.channelJoin.match(/\d+/)[0]);
+                    const numB = parseInt(b.channelJoin.match(/\d+/)[0]);
+                    return numA - numB;
+                });
+
+            buttonContainer.innerHTML = '';
+
+            sortedChannels.forEach(({ channelJoin, channelName }) => {
+                const channelButton = document.createElement("div");
+                channelButton.classList.add("button");
+                channelButton.textContent = channelName;
+                channelButton.setAttribute("data-channel-join", channelJoin);
+
+                buttonContainer.appendChild(channelButton);
+
+                channelButton.removeEventListener('click', handleChannelButtonClick);
+
+                channelButton.addEventListener('click', handleChannelButtonClick);
+            });
+        }
+
+        // SEND TEXT OF CLICKED CHANNEL BUTTON 
+        function handleChannelButtonClick(event) {
+            const clickedButton = event.target;
+            CrComLib.publishEvent('s', 'ledControl.selectedChannel', clickedButton.textContent);
+        }
+
+        // ----------------------------- DISPLAY --------------------------------------------------------------------------------------
+
+        // FEEDBACK IF DISPLAY IS ON
+        CrComLib.subscribeState('b', 'ledControl.ledOnFb', (displayOn) => {
+            if (displayOn) {
+                ledOnButton.classList.add('buttonPressed');
+            } else {
+                ledOnButton.classList.remove('buttonPressed');
+            }
+        });
+
+        // FEEDBACK IF DISPLAY IS OFF
+        CrComLib.subscribeState('b', 'ledControl.ledOffFb', (displayOff) => {
+            if (displayOff) {
+                ledOffButton.classList.add('buttonPressed');
+            } else {
+                ledOffButton.classList.remove('buttonPressed');
+            }
+        });
+
+        // LISTEN ON DISPLAY ON/OFF BUTTONS
+        ledOnButton.addEventListener('touchstart', () => {
+            CrComLib.publishEvent('b', 'ledControl.ledOn', true);
+            CrComLib.publishEvent('b', 'ledControl.ledOff', false);
+        });
+
+        ledOffButton.addEventListener('touchstart', () => {
+            CrComLib.publishEvent('b', 'ledControl.ledOn', false);
+            CrComLib.publishEvent('b', 'ledControl.ledOff', true);
+        });
+
+
+        // ----------------------------- NAVIGATION --------------------------------------------------------------------------------------
+
+        // LISTEN ON HOME BUTTON 
+        homeButton.addEventListener('click', function () {
+            CrComLib.publishEvent('n', 'controlPages.page', 1);
+        });
+
+        // LISTEN ON BACK BUTTON 
+        backButton.addEventListener('click', function () {
+            CrComLib.publishEvent('n', 'controlPages.page', 3);
+        });
+
+    }
+
+    let loadedSubId = CrComLib.subscribeState('o', 'ch5-import-htmlsnippet:ledcontrol-import-page', (value) => {
+        if (value['loaded']) {
+            onInit();
+            setTimeout(() => {
+                CrComLib.unsubscribeState('o', 'ch5-import-htmlsnippet:ledcontrol-import-page', loadedSubId);
+                loadedSubId = '';
+            });
+        }
+    });
+
+    return {
+    };
+
+})();
+/**
+ * Copyright (C) 2023 to the present, Crestron Electronics, Inc.
+ * All rights reserved.
+ * No part of this software may be reproduced in any form, machine
+ * or natural, without the express written consent of Crestron Electronics.
+ * Use of this source code is subject to the terms of the Crestron Software License Agreement 
+ * under which you licensed this source code.  
+ *
+ * This code was automatically generated by Crestron's code generation tool.
+*/
+/*jslint es6 */
+/*global serviceModule, CrComLib */
+
+const loadingModule = (() => {
+    'use strict';
+
+    // BEGIN::CHANGEAREA - your javascript for page module code goes here         
+
+    /**
+     * Initialize Method
+     */
+    function onInit() {
+       serviceModule.addEmulatorScenarioNoControlSystem("./app/project/components/pages/loading/loading-emulator.json");
+       // Uncomment the below line and comment the above to load the emulator all the time.
+       // serviceModule.addEmulatorScenario("./app/project/components/pages/loading/loading-emulator.json");       
+    }
+
+    /**
+     * private method for page class initialization
+     */
+    let loadedSubId = CrComLib.subscribeState('o', 'ch5-import-htmlsnippet:loading-import-page', (value) => {
+        if (value['loaded']) {
+            onInit();
+            setTimeout(() => {
+                CrComLib.unsubscribeState('o', 'ch5-import-htmlsnippet:loading-import-page', loadedSubId);
+                loadedSubId = '';
+            });
+        }
+    }); 
+
+    /**
+     * All public method and properties are exported here
+     */
+    return {
+    };
+
+    // END::CHANGEAREA
+
+})();
+
+const localuseModule = (() => {
+    'use strict';
+
+    function onInit() {
+        const localUsePage = document.getElementById('localuse-page');
+        const ledControl = localUsePage.querySelector('#' + 'ledControlButton');
+        const monitorControl = localUsePage.querySelector('#' + 'monitorControlButton');
+        const cameraControl = localUsePage.querySelector('#' + 'cameraControlButton');
+        const homeButton = localUsePage.querySelector('#' + 'homeButtonColumn');
+        const backButton = localUsePage.querySelector('#' + 'backButtonColumn');
+
+
+        // --------- SEND VOLUME HAS CHANGED EVENTS -----------------------------------------
+
+        CrComLib.subscribeState('n', 'localUse.brandMusicVolumeFb', (value) => {
+            if (value >= 0 && value <= 65535) {
+                CrComLib.publishEvent('b', 'localUse.volumeChangedBrandMusic', true);
+                CrComLib.publishEvent('b', 'localUse.volumeChangedBrandMusic', false);
+            }
+        });
+
+        CrComLib.subscribeState('n', 'localUse.micVolumeFb', (value) => {
+            if (value >= 0 && value <= 65535) {
+                CrComLib.publishEvent('b', 'localUse.volumeChangedMicVolume', true);
+                CrComLib.publishEvent('b', 'localUse.volumeChangedMicVolume', false);
+            }
+        });
+
+        CrComLib.subscribeState('n', 'localUse.mediaLevelFb', (value) => {
+            if (value >= 0 && value <= 65535) {
+                CrComLib.publishEvent('b', 'localUse.volumeChangedMediaLevel', true);
+                CrComLib.publishEvent('b', 'localUse.volumeChangedMediaLevel', false);
+            }
+        });
+
+
+
+        ledControl.addEventListener('click', () => {
+                CrComLib.publishEvent('n', 'controlPages.page', 4);
+        });
+
+        monitorControl.addEventListener('click', () => {
+                CrComLib.publishEvent('n', 'controlPages.page', 5);
+        });
+
+        cameraControl.addEventListener('click', () => {
+                CrComLib.publishEvent('n', 'controlPages.page', 6);
+        });
+
+        homeButton.addEventListener('click', () => {
+                CrComLib.publishEvent('n', 'controlPages.page', 1);
+        });
+
+        backButton.addEventListener('click', () => {
+                CrComLib.publishEvent('n', 'controlPages.page', 2);
+        });
+    }
+
+    let loadedSubId = CrComLib.subscribeState('o', 'ch5-import-htmlsnippet:localuse-import-page', (value) => {
+        if (value['loaded']) {
+            onInit();
+            setTimeout(() => {
+                CrComLib.unsubscribeState('o', 'ch5-import-htmlsnippet:localuse-import-page', loadedSubId);
+                loadedSubId = '';
+            });
+        }
+    });
+
+    return {
+    };
+
+
+})();
+const meetingModule = (() => {
+    'use strict';
+
+    function onInit() {
+        // ----------------------------- HTML ELEMENTS --------------------------------------------------------------------------------------
+
+        const meetingPage = document.getElementById("meeting-page");
+        const homeButton = meetingPage.querySelector("#homeButtonColumn");
+        const backButton = meetingPage.querySelector("#backButtonColumn");
+        const zoomPlusButton = meetingPage.querySelector('#zoomPlus');
+        const zoomMinusButton = meetingPage.querySelector('#zoomMinus');
+
+
+        // ----------------------------- PRESET BUTTONS --------------------------------------------------------------------------------------
+
+        let presetButtons = [
+            { event: 'meetingControl.preset01', feedback: 'meetingControl.preset01Fb', valueTmp: false, value: false, id: "preset01Button" },
+            { event: 'meetingControl.preset02', feedback: 'meetingControl.preset02Fb', valueTmp: false, value: false, id: "preset02Button" },
+            { event: 'meetingControl.preset03', feedback: 'meetingControl.preset03Fb', valueTmp: false, value: false, id: "preset03Button" }
+        ]
+
+        // GET PRESET BUTTONS FEEDBACK
+        presetButtons.forEach(button => {
+            CrComLib.subscribeState('b', button.feedback, (value) => {
+                button.value = value;
+                updateActivatedStyle(button);
+            });
+        });
+
+
+        // LISTEN ON ALL PRESET BUTTONS
+        presetButtons.forEach(button => {
+            const btnElement = meetingPage.querySelector(`#${button.id}`);
+            btnElement.addEventListener("click", () => {
+                sendPressedPresetButton(button.id);
+            });
+        });
+
+        // SEND CORRECT VALUES FOR EACH BUTTON
+        function sendPressedPresetButton(buttonId) {
+            presetButtons.forEach(button => {
+                const value = button.id === buttonId;
+                CrComLib.publishEvent('b', button.event, value);
+            });
+        }
+
+        // UPDATE STYLE OF PRESET BUTONS
+        function updateActivatedStyle(button) {
+            const element = meetingPage.querySelector('#' +
+                button.id);
+            button.value ? element.classList.add('buttonPressed') : element.classList.remove('buttonPressed');
+        }
+
+        // ----------------------------- VOLUME --------------------------------------------------------------------------------------
+
+        // SEND VOLUME HAS CHANGED EVENTS
+        CrComLib.subscribeState('n', 'meetingControl.roomSoundVolumeFb', (value) => {
+            if (value >= 0 && value <= 65535) {
+                CrComLib.publishEvent('b', 'meetingControl.volumeChangedRoomSoundVolume', true);
+                CrComLib.publishEvent('b', 'meetingControl.volumeChangedRoomSoundVolume', false);
+            }
+        });
+
+        // ----------------------------- ZOOM CONTROL --------------------------------------------------------------------------------------
+
+        let zoomTimeout;
+        let isZoomingIn = false;
+        let isZoomingOut = false;
+
+        // FEEDBACK IF ZOOMING IN
+        CrComLib.subscribeState('b', 'meetingControl.zoomPlusFb', (zoomPlus) => {
+            if (zoomPlus) {
+                zoomPlusButton.classList.add('buttonPressed');
+            } else {
+                zoomPlusButton.classList.remove('buttonPressed');
+            }
+        });
+
+        // FEEDBACK IF ZOOMING OUT
+        CrComLib.subscribeState('b', 'meetingControl.zoomMinusFb', (zoomMinus) => {
+            if (zoomMinus) {
+                zoomMinusButton.classList.add('buttonPressed');
+            } else {
+                zoomMinusButton.classList.remove('buttonPressed');
+            }
+        });
+
+        function zoomIn() {
+            CrComLib.publishEvent('b', 'meetingControl.zoomPlus', true);
+        }
+
+        // Function to handle zoom out
+        function zoomOut() {
+            CrComLib.publishEvent('b', 'meetingControl.zoomMinus', true);
+        }
+
+
+        zoomPlusButton.addEventListener("touchstart", (event) => {
+            event.preventDefault(); // Prevent default touch behavior (e.g., scrolling)
+            if (!isZoomingOut) {
+                isZoomingIn = true;
+                zoomIn(); // Trigger zoomIn immediately
+                // Start repeating action when the button is touched and held
+                zoomTimeout = setInterval(zoomIn, 200); // Adjust the interval as needed
+
+            }
+        });
+
+        // Add touchend event listener to stop zooming in
+        zoomPlusButton.addEventListener("touchend", () => {
+            isZoomingIn = false;
+            CrComLib.publishEvent('b', 'meetingControl.zoomPlus', false);
+            clearInterval(zoomTimeout);
+        });
+
+        // Add touchstart event listener for zooming out
+        zoomMinusButton.addEventListener("touchstart", (event) => {
+            event.preventDefault(); // Prevent default touch behavior (e.g., scrolling)
+            if (!isZoomingIn) {
+                isZoomingOut = true;
+                zoomOut(); // Trigger zoomOut immediately
+                // Start repeating action when the button is touched and held
+                zoomTimeout = setInterval(zoomOut, 200); // Adjust the interval as needed
+            }
+        });
+
+        // Add touchend event listener to stop zooming out
+        zoomMinusButton.addEventListener("touchend", () => {
+            isZoomingOut = false;
+            CrComLib.publishEvent('b', 'meetingControl.zoomMinus', false);
+            clearInterval(zoomTimeout);
+        });
+
+
+
+
+        // ----------------------------- NAVIGATION --------------------------------------------------------------------------------------
+
+        // LISTEN ON HOME BUTTON
+        homeButton.addEventListener('click', function () {
+            CrComLib.publishEvent('n', 'controlPages.page', 1);
+        });
+
+        // LISTEN ON BACK BUTTON
+        backButton.addEventListener('click', function () {
+            CrComLib.publishEvent('n', 'controlPages.page', 2);
+        });
+
+    }
+
+    let loadedSubId = CrComLib.subscribeState('o', 'ch5-import-htmlsnippet:meeting-import-page', (value) => {
+        if (value['loaded']) {
+            onInit();
+            setTimeout(() => {
+                CrComLib.unsubscribeState('o', 'ch5-import-htmlsnippet:meeting-import-page', loadedSubId);
+                loadedSubId = '';
+            });
+        }
+    });
+
+    return {
+    };
+
+})();
+
+const monitorcontrolModule = (() => {
+    'use strict';
+
+    function onInit() {
+
+        // ----------------------------- HTML ELEMENTS ---------------------------------------------
+
+        const monitorControlPage = document.getElementById("monitorcontrol-page");
+        const homeButton = monitorControlPage.querySelector("#homeButtonColumn");
+        const backButton = monitorControlPage.querySelector("#backButtonColumn");
+        const buttonContainer = monitorControlPage.querySelector('#channelButtonContainer');
+        const volumeColumn = monitorControlPage.querySelector("#volumeColumn");
+        const channelColumn = monitorControlPage.querySelector("#channelColumn");
+        const channelIcon = monitorControlPage.querySelector("#volumeColumn .toggle-icon");
+        const volumeIcon = monitorControlPage.querySelector("#channelColumn .toggle-icon");
+        const ledOnButton = monitorControlPage.querySelector('#ledOn');
+        const ledOffButton = monitorControlPage.querySelector('#ledOff');
+
+
+        // ----------------------------- SOURCE BUTTONS ---------------------------------------------
+        let tvPlayerSelected = false;
+
+        let sourceButtons = [
+            { event: 'monitorControl.signage', feedback: 'monitorControl.signageFb', valueTmp: false, value: false, id: "signageButton" },
+            { event: 'monitorControl.tvPlayer', feedback: 'monitorControl.tvPlayerFb', valueTmp: false, value: false, id: "tvPlayerButton" },
+            { event: 'monitorControl.laptopInput', feedback: 'monitorControl.laptopInputFb', valueTmp: false, value: false, id: "laptopInputButton" },
+            { event: 'monitorControl.videoCon', feedback: 'monitorControl.videoConFb', valueTmp: false, value: false, id: "videoConButton" }
+        ]
+
+        // GET SOURCE BUTTONS FEEDBACK
+        sourceButtons.forEach(button => {
+            CrComLib.subscribeState('b', button.feedback, (value) => {
+                button.value = value;
+                updateActivatedStyle(button);
+
+                if (button.id === "tvPlayerButton" && value && channelsAreAvailable) {
+                    tvPlayerSelected = true;
+                } else {
+                    tvPlayerSelected = false;
+                }
+
+                updateShownColumn();
+
+            });
+        });
+
+
+        // ACTIVATION / DEACTIVATION OF YEALINK BUTTON
+        CrComLib.subscribeState('b', 'monitorControl.videoConPermittedFb', (isActive) => {
+            if (!isActive) {
+                document.getElementById(sourceButtons[3].id).classList.add('inactive');
+            } else if (isActive) {
+                document.getElementById(sourceButtons[3].id).classList.remove('inactive');
+            }
+        });
+
+        // LISTEN ON ALL SOURCE BUTTONS
+        sourceButtons.forEach(button => {
+            const btnElement = monitorControlPage.querySelector(`#${button.id}`);
+            btnElement.addEventListener("click", () => {
+                sendPressedSourceButton(button.id);
+            });
+        });
+
+        // SEND CORRECT VALUES FOR EACH BUTTON
+        function sendPressedSourceButton(buttonId) {
+            sourceButtons.forEach(button => {
+                const value = button.id === buttonId;
+                CrComLib.publishEvent('b', button.event, value);
+            });
+        }
+
+        // UPDATE STYLE OF SOURCE BUTTONS
+        function updateActivatedStyle(button) {
+            const element = monitorControlPage.querySelector('#' +
+                button.id);
+            button.value ? element.classList.add('buttonPressed') : element.classList.remove('buttonPressed');
+        }
+
+        // ----------------------------- SWITCH BETWEEN VOLUME & CHANNELS --------------------------------------------------------------------------------------
+        let currentColumn;
+        let channelsAreAvailable;
+
+        // MAKE CHANNEL-LIST VISIBLE
+        CrComLib.subscribeState('b', 'monitorControl.showChannelsPageFb', (showChannel) => {
+            currentColumn = showChannel ? "channel" : "volume";
+            selectVisibleColumn(currentColumn);
+        });
+
+        // MAKE CHANNEL-LIST AVAILABLE / UNAVAILABLE
+        CrComLib.subscribeState('b', 'monitorControl.channelsAvailableFb', (value) => {
+            channelsAreAvailable = value;
+        });
+
+        selectVisibleColumn("volume");
+
+        // LISTEN ON VOLUME- OR CHANNEL-ICON
+        volumeIcon.addEventListener("click", () => {
+            CrComLib.publishEvent('b', 'monitorControl.showChannelsPage', false);
+        });
+
+        channelIcon.addEventListener("click", () => {
+            CrComLib.publishEvent('b', 'monitorControl.showChannelsPage', true);
+
+        });
+
+        // CHANGE STYLE OF VOLUME OR CHANNEL COLUMN
+        function selectVisibleColumn(column) {
+            switch (column) {
+                case "volume":
+                    volumeColumn.classList.add("active");
+                    channelColumn.classList.remove("active");
+                    channelColumn.classList.add("inactive");
+                    volumeColumn.classList.remove("inactive");
+                    break;
+                case "channel":
+                    volumeColumn.classList.remove("active");
+                    channelColumn.classList.add("active");
+                    channelColumn.classList.remove("inactive");
+                    volumeColumn.classList.add("inactive");
+                    break;
+            }
+        }
+
+        // SWITCH BETWEEN VOLUME OR CHANNEL COLUMN
+        function updateShownColumn() {
+            if (tvPlayerSelected) {
+                selectVisibleColumn(currentColumn);
+                channelIcon.style.visibility = "visible";
+            } else {
+                selectVisibleColumn("volume");
+                channelIcon.style.visibility = "hidden";
+            }
+        }
+
+
+        // ----------------------------- CHANNELS --------------------------------------------------------------------------------------
+
+        // CREATE OBJECT WITH KEY: channelJoinFB, VALUE: ''
+        const channelNames = Array.from({ length: 20 }, (_, index) => `monitorControl.channel${index + 1}Fb`);
+        const channelInfo = {};
+
+        channelNames.forEach(channel => {
+            channelInfo[channel] = '';
+        });
+
+
+        // RECEIVE ALL CHANNEL NAMES
+        for (const channelJoin in channelInfo) {
+            CrComLib.subscribeState('s', channelJoin, (channelName) => {
+                channelInfo[channelJoin] = channelName;
+                updateChannelList();
+            }
+            );
+        }
+
+        // RECEIVE THE SELECTED CHANNEL
+        CrComLib.subscribeState('s', 'monitorControl.selectedChannelFb', (channel) => {
+            buttonContainer.querySelectorAll('.button').forEach(button => {
+                if (button.textContent === channel) {
+                    button.classList.add('buttonPressed');
+                } else {
+                    button.classList.remove('buttonPressed');
+                }
+            });
+        });
+
+        // UPDATE THE LIST OF SHOWN CHANNELS IN THE SENT ORDER
+        function updateChannelList() {
+            const sortedChannels = Object.entries(channelInfo)
+                .map(([channelJoin, channelName]) => ({ channelJoin, channelName }))
+                .filter(channel => channel.channelName.trim() !== '')
+                .sort((a, b) => {
+                    const numA = parseInt(a.channelJoin.match(/\d+/)[0]);
+                    const numB = parseInt(b.channelJoin.match(/\d+/)[0]);
+                    return numA - numB;
+                });
+
+            buttonContainer.innerHTML = '';
+
+            sortedChannels.forEach(({ channelJoin, channelName }) => {
+                const channelButton = document.createElement("div");
+                channelButton.classList.add("button");
+                channelButton.textContent = channelName;
+                channelButton.setAttribute("data-channel-join", channelJoin);
+
+                buttonContainer.appendChild(channelButton);
+
+                channelButton.removeEventListener('click', handleChannelButtonClick);
+
+                channelButton.addEventListener('click', handleChannelButtonClick);
+            });
+        }
+
+        // SEND TEXT OF CLICKED CHANNEL BUTTON
+        function handleChannelButtonClick(event) {
+            const clickedButton = event.target;
+            CrComLib.publishEvent('s', 'monitorControl.selectedChannel', clickedButton.textContent);
+        }
+
+        // ----------------------------- DISPLAY --------------------------------------------------------------------------------------
+
+        // FEEDBACK IF DISPLAY IS ON
+        CrComLib.subscribeState('b', 'monitorControl.ledOnFb', (displayOn) => {
+            if (displayOn) {
+                ledOnButton.classList.add('buttonPressed');
+            } else {
+                ledOnButton.classList.remove('buttonPressed');
+            }
+        });
+
+        // FEEDBACK IF DISPLAY IS OFF
+        CrComLib.subscribeState('b', 'monitorControl.ledOffFb', (displayOff) => {
+            if (displayOff) {
+                ledOffButton.classList.add('buttonPressed');
+            } else {
+                ledOffButton.classList.remove('buttonPressed');
+            }
+        });
+
+        // LISTEN ON DISPLAY ON/OFF BUTTONS
+        ledOnButton.addEventListener('touchstart', () => {
+            CrComLib.publishEvent('b', 'monitorControl.ledOn', true);
+            CrComLib.publishEvent('b', 'monitorControl.ledOff', false);
+        });
+
+        ledOffButton.addEventListener('touchstart', () => {
+            CrComLib.publishEvent('b', 'monitorControl.ledOn', false);
+            CrComLib.publishEvent('b', 'monitorControl.ledOff', true);
+        });
+
+
+        // ----------------------------- NAVIGATION --------------------------------------------------------------------------------------
+
+        // LISTEN ON HOME BUTTON
+        homeButton.addEventListener('click', function () {
+            CrComLib.publishEvent('n', 'controlPages.page', 1);
+        });
+
+        // LISTEN ON BACK BUTTON
+        backButton.addEventListener('click', function () {
+            CrComLib.publishEvent('n', 'controlPages.page', 3);
+        });
+
+    }
+
+    let loadedSubId = CrComLib.subscribeState('o', 'ch5-import-htmlsnippet:monitorcontrol-import-page', (value) => {
+        if (value['loaded']) {
+            onInit();
+            setTimeout(() => {
+                CrComLib.unsubscribeState('o', 'ch5-import-htmlsnippet:monitorcontrol-import-page', loadedSubId);
+                loadedSubId = '';
+            });
+        }
+    });
+
+    return {
+    };
+
+})();
 /**
  * Copyright (C) 2023 to the present, Crestron Electronics, Inc.
  * All rights reserved.
@@ -2628,23 +3789,22 @@ const page1Module = (() => {
      * Initialize Method
      */
     function onInit() {
-        //serviceModule.addEmulatorScenarioNoControlSystem("./app/project/components/pages/page1/page1-emulator.json");
-        // Uncomment the below line and comment the above to load the emulator all the time.
-        // serviceModule.addEmulatorScenario("./app/project/components/pages/page1/page1-emulator.json");    
-
-
-        function showAlert(message, duration) {
-            const alertBox = document.getElementById('customAlert');
-            alertBox.innerText = message;
-            alertBox.style.display = 'block'; // Show the alert
-
-            // Hide the alert after the specified duration
-            setTimeout(() => {
-                alertBox.style.display = 'none';
-            }, duration);
+        function updateDateTime() {
+            var now = new Date();
+    
+            var date = now.getDate().toString().padStart(2, '0') + '/'
+                     + (now.getMonth() + 1).toString().padStart(2, '0') + '/'
+                     + now.getFullYear();
+    
+            var time = now.getHours().toString().padStart(2, '0') + ':'
+                     + now.getMinutes().toString().padStart(2, '0');
+    
+            document.getElementById("currentDate").innerHTML = date;
+            document.getElementById("currentTime").innerHTML = time;
         }
-
-
+    
+        setInterval(updateDateTime, 1000);
+        updateDateTime();
     }
 
     /**
@@ -2667,5 +3827,44 @@ const page1Module = (() => {
     };
 
     // END::CHANGEAREA
+
+})();
+
+const selectlocalityModule = (() => {
+    'use strict';
+
+    function onInit() {
+        const page1 = document.getElementById("selectlocality-page");
+        const localUseButton = page1.querySelector('#' + "localUseColumn");
+        const meetingButton = page1.querySelector('#' + "meetingColumn");
+        const homeButton = page1.querySelector('#' + "navButton");
+
+        localUseButton.addEventListener('click', () => {
+            CrComLib.publishEvent('n', 'controlPages.page', 3);
+        });
+
+        meetingButton.addEventListener('click', () => {
+            CrComLib.publishEvent('n', 'controlPages.page', 7);
+        });
+
+        homeButton.addEventListener('click', () => {
+            CrComLib.publishEvent('n', 'controlPages.page', 1);
+        });
+    }
+
+
+    let loadedSubId = CrComLib.subscribeState('o', 'ch5-import-htmlsnippet:selectlocality-import-page', (value) => {
+        if (value['loaded']) {
+            onInit();
+            setTimeout(() => {
+                CrComLib.unsubscribeState('o', 'ch5-import-htmlsnippet:selectlocality-import-page', loadedSubId);
+                loadedSubId = '';
+            });
+        }
+    });
+
+    return {
+    };
+
 
 })();
