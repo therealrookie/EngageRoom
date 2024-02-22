@@ -18175,6 +18175,7 @@ DvVr=1193
 Ad=01
 SmH=390
 RelStat=Ignore
+DbH=25
 ]
 [
 ObjTp=Dv
@@ -18551,6 +18552,15 @@ DvH=9480
 Whc=3
 Mnf=Crestron
 Mdl=TS-770
+]
+[
+ObjTp=Db
+H=25
+DvH=9479
+Whc=3
+Mnf=Crestron
+Mdl=Crestron One Project Name
+Tpe=Crestron One Project Name
 ]
 [
 ObjTp=Cs
@@ -28444,15 +28454,17 @@ n1I=32
 n2I=32
 n1O=32
 Cmn1=iPad
-mC=8
+mC=10
 C1=390
-C2=399
-C3=400
-C4=401
-C5=402
-C6=403
-C7=404
-C8=405
+C2=406
+C3=407
+C4=399
+C5=400
+C6=401
+C7=402
+C8=403
+C9=404
+C10=405
 mI=96
 mO=64
 tO=96
@@ -29030,6 +29042,34 @@ tO=12
 mP=1
 P1=7d
 ChdH=16
+]
+[
+ObjTp=Sm
+H=406
+SmC=16463
+Nm=Crestron One Crestron Mobile Functions
+ObjVer=1
+SmVr=1193
+PrH=389
+CF=2
+n1I=4
+n1O=4
+mI=5
+mO=4
+tO=5
+]
+[
+ObjTp=Sm
+H=407
+SmC=16465
+Nm=Crestron One App Control
+ObjVer=1
+SmVr=1193
+PrH=389
+CF=2
+mI=102
+mO=0
+tO=102
 ]
 [
 ObjTp=Sm
