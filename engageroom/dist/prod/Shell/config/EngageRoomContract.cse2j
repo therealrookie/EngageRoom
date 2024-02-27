@@ -1,6 +1,6 @@
 {
 	"name": "EngageRoomContract",
-	"timestamp": "2023-11-18 17:24:16.980",
+	"timestamp": "2024-02-27 11:27:45.385",
 	"version": "1.0.0.0",
 	"schema_version": 1,
 	"extra_value": "",
@@ -8,7 +8,7 @@
 		"states": {
 			"boolean": {
 				"1": {
-					"1": "controlPages.delayFb"
+					"1": "controlPages.fireAlarmFb"
 				},
 				"2": {
 					"1": "selectLanguage.isEnglishFb"
@@ -126,7 +126,7 @@
 		},
 		"events": {
 			"boolean": {
-				"controlPages.delay": {
+				"controlPages.fireAlarm": {
 					"joinId": 1,
 					"smartObjectId": 1
 				},

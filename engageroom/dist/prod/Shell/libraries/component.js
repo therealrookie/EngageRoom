@@ -1467,6 +1467,14 @@ function onInit() {
   let nextPageNr;
   let inactivityTimeout;
 
+  // -------------------------- FIRE ALARM CHECK -------------------------------------------------------------------
+
+  let currPage;
+
+  CrComLib.subscribeState("b", "controlPages.fireAlarmFb", (fire) => {
+    fire ? switchPage(100) : switchPage(currPage);
+  });
+
   // EVENT LISTENERS
   btnEnglish.addEventListener("click", function () {
     CrComLib.publishEvent("b", "selectLanguage.isEnglish", true);
@@ -1535,6 +1543,7 @@ function onInit() {
   });
 
   CrComLib.subscribeState("n", "controlPages.pageFb", (value) => {
+    currPage = value;
     switchPage(value);
 
     value < 99 ? CrComLib.publishEvent("n", "controlPages.previousPage", value) : undefined;

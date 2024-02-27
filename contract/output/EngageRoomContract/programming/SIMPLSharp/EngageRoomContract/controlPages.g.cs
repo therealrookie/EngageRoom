@@ -10,16 +10,19 @@ namespace EngageRoomContract
     {
         object UserObject { get; set; }
 
+        event EventHandler<UIEventArgs> fireAlarm;
         event EventHandler<UIEventArgs> page;
         event EventHandler<UIEventArgs> previousPage;
         event EventHandler<UIEventArgs> codeInput;
 
+        void fireAlarmFb(controlPagesBoolInputSigDelegate callback);
         void pageFb(controlPagesUShortInputSigDelegate callback);
         void previousPageFb(controlPagesUShortInputSigDelegate callback);
         void codeInputFb(controlPagesStringInputSigDelegate callback);
 
     }
 
+    public delegate void controlPagesBoolInputSigDelegate(BoolInputSig boolInputSig, IcontrolPages controlPages);
     public delegate void controlPagesUShortInputSigDelegate(UShortInputSig uShortInputSig, IcontrolPages controlPages);
     public delegate void controlPagesStringInputSigDelegate(StringInputSig stringInputSig, IcontrolPages controlPages);
 
@@ -42,6 +45,12 @@ namespace EngageRoomContract
 
         private static class Joins
         {
+            internal static class Booleans
+            {
+                public const uint fireAlarm = 1;
+
+                public const uint fireAlarmFb = 1;
+            }
             internal static class Numerics
             {
                 public const uint page = 1;
@@ -74,6 +83,7 @@ namespace EngageRoomContract
  
             _devices = new List<BasicTriListWithSmartObject>(); 
  
+            ComponentMediator.ConfigureBooleanEvent(controlJoinId, Joins.Booleans.fireAlarm, onfireAlarm);
             ComponentMediator.ConfigureNumericEvent(controlJoinId, Joins.Numerics.page, onpage);
             ComponentMediator.ConfigureNumericEvent(controlJoinId, Joins.Numerics.previousPage, onpreviousPage);
             ComponentMediator.ConfigureStringEvent(controlJoinId, Joins.Strings.codeInput, oncodeInput);
@@ -95,6 +105,23 @@ namespace EngageRoomContract
         #endregion
 
         #region CH5 Contract
+
+        public event EventHandler<UIEventArgs> fireAlarm;
+        private void onfireAlarm(SmartObjectEventArgs eventArgs)
+        {
+            EventHandler<UIEventArgs> handler = fireAlarm;
+            if (handler != null)
+                handler(this, UIEventArgs.CreateEventArgs(eventArgs));
+        }
+
+
+        public void fireAlarmFb(controlPagesBoolInputSigDelegate callback)
+        {
+            for (int index = 0; index < Devices.Count; index++)
+            {
+                callback(Devices[index].SmartObjects[ControlJoinId].BooleanInput[Joins.Booleans.fireAlarmFb], this);
+            }
+        }
 
         public event EventHandler<UIEventArgs> page;
         private void onpage(SmartObjectEventArgs eventArgs)
@@ -173,6 +200,7 @@ namespace EngageRoomContract
 
             IsDisposed = true;
 
+            fireAlarm = null;
             page = null;
             previousPage = null;
             codeInput = null;

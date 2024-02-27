@@ -355,6 +355,16 @@
 					"id": "_w4mfvaabl",
 					"parentId": "_cuu27uuxd",
 					"attributeType": 0
+				},
+				{
+					"Errors": [],
+					"name": "fireAlarmFb",
+					"siblingId": "_ojj1q8loi",
+					"dataType": 1,
+					"notes": "",
+					"id": "_s1y9mrpeb",
+					"parentId": "_cuu27uuxd",
+					"attributeType": 0
 				}
 			],
 			"feedbacks": [
@@ -385,6 +395,16 @@
 					"dataType": 3,
 					"notes": "",
 					"id": "_s0y11xigw",
+					"parentId": "_cuu27uuxd",
+					"attributeType": 1
+				},
+				{
+					"Errors": [],
+					"name": "fireAlarm",
+					"siblingId": "_s1y9mrpeb",
+					"dataType": 1,
+					"notes": "",
+					"id": "_ojj1q8loi",
 					"parentId": "_cuu27uuxd",
 					"attributeType": 1
 				}
