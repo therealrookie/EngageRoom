@@ -1,4 +1,5 @@
 let loadedSubId = CrComLib.subscribeState("o", "ch5-import-htmlsnippet:page1-import-page", (value) => {
+  CrComLib.publishEvent("n", "controlPages.page", 1);
   if (value["loaded"]) {
     onInit();
     setTimeout(() => {
@@ -200,10 +201,7 @@ function onInit() {
   });
 
   CrComLib.subscribeState("n", "controlPages.pageFb", (value) => {
-    currPage = value;
     switchPage(value);
-
-    value < 99 ? CrComLib.publishEvent("n", "controlPages.previousPage", value) : undefined;
 
     CrComLib.publishEvent("s", "controlPages.codeInput", "");
 
@@ -213,6 +211,11 @@ function onInit() {
   });
 
   function switchPage(pageNr) {
+    if (pageNr < 100) {
+      currPage = pageNr;
+      CrComLib.publishEvent("n", "controlPages.previousPage", pageNr);
+    }
+
     let nextPageName;
     switch (pageNr) {
       case 1:

@@ -1,262 +1,261 @@
 const ledcontrolModule = (() => {
-    'use strict';
+  "use strict";
 
-    function onInit() {
+  function onInit() {
+    // ----------------------------- HTML ELEMENTS ---------------------------------------------
 
-        // ----------------------------- HTML ELEMENTS ---------------------------------------------
+    const ledControlPage = document.getElementById("ledcontrol-page");
+    const homeButton = ledControlPage.querySelector("#homeButtonColumn");
+    const backButton = ledControlPage.querySelector("#backButtonColumn");
+    const buttonContainer = ledControlPage.querySelector("#channelButtonContainer");
+    const volumeColumn = ledControlPage.querySelector("#volumeColumn");
+    const channelColumn = ledControlPage.querySelector("#channelColumn");
+    const channelIcon = ledControlPage.querySelector("#volumeColumn .toggle-icon");
+    const volumeIcon = ledControlPage.querySelector("#channelColumn .toggle-icon");
+    const ledOnButton = ledControlPage.querySelector("#ledOn");
+    const ledOffButton = ledControlPage.querySelector("#ledOff");
 
-        const ledControlPage = document.getElementById("ledcontrol-page");
-        const homeButton = ledControlPage.querySelector("#homeButtonColumn");
-        const backButton = ledControlPage.querySelector("#backButtonColumn");
-        const buttonContainer = ledControlPage.querySelector('#channelButtonContainer');
-        const volumeColumn = ledControlPage.querySelector("#volumeColumn");
-        const channelColumn = ledControlPage.querySelector("#channelColumn");
-        const channelIcon = ledControlPage.querySelector("#volumeColumn .toggle-icon");
-        const volumeIcon = ledControlPage.querySelector("#channelColumn .toggle-icon");
-        const ledOnButton = ledControlPage.querySelector('#ledOn');
-        const ledOffButton = ledControlPage.querySelector('#ledOff');
+    // ----------------------------- SOURCE BUTTONS ---------------------------------------------
+    let tvPlayerSelected = false;
+    let currentColumn;
 
+    let sourceButtons = [
+      {
+        event: "ledControl.signage",
+        feedback: "ledControl.signageFb",
+        valueTmp: false,
+        value: false,
+        id: "signageButton",
+      },
+      {
+        event: "ledControl.tvPlayer",
+        feedback: "ledControl.tvPlayerFb",
+        valueTmp: false,
+        value: false,
+        id: "tvPlayerButton",
+      },
+      {
+        event: "ledControl.laptopInput",
+        feedback: "ledControl.laptopInputFb",
+        valueTmp: false,
+        value: false,
+        id: "laptopInputButton",
+      },
+      {
+        event: "ledControl.videoCon",
+        feedback: "ledControl.videoConFb",
+        valueTmp: false,
+        value: false,
+        id: "videoConButton",
+      },
+    ];
 
+    // GET SOURCE BUTTONS FEEDBACK
+    sourceButtons.forEach((button) => {
+      CrComLib.subscribeState("b", button.feedback, (value) => {
+        button.value = value;
+        updateActivatedStyle(button);
 
-
-
-
-
-        // ----------------------------- SOURCE BUTTONS ---------------------------------------------
-        let tvPlayerSelected = false;
-        let currentColumn;
-        let channelsAreAvailable;
-
-        let sourceButtons = [
-            { event: 'ledControl.signage', feedback: 'ledControl.signageFb', valueTmp: false, value: false, id: "signageButton" },
-            { event: 'ledControl.tvPlayer', feedback: 'ledControl.tvPlayerFb', valueTmp: false, value: false, id: "tvPlayerButton" },
-            { event: 'ledControl.laptopInput', feedback: 'ledControl.laptopInputFb', valueTmp: false, value: false, id: "laptopInputButton" },
-            { event: 'ledControl.videoCon', feedback: 'ledControl.videoConFb', valueTmp: false, value: false, id: "videoConButton" }
-        ]
-
-        // GET SOURCE BUTTONS FEEDBACK 
-        sourceButtons.forEach(button => {
-            CrComLib.subscribeState('b', button.feedback, (value) => {
-                button.value = value;
-                updateActivatedStyle(button);
-
-                if (button.id === "tvPlayerButton" && value && channelsAreAvailable) {
-                    tvPlayerSelected = true;
-                } else if (value) {
-                    tvPlayerSelected = false;
-                }
-
-                updateShownColumn();
-
-            });
-        });
-
-        // ACTIVATION / DEACTIVATION OF YEALINK BUTTON 
-        CrComLib.subscribeState('b', 'ledControl.videoConPermittedFb', (isActive) => {
-            if (!isActive) {
-                document.getElementById(sourceButtons[3].id).classList.add('inactive');
-            } else if (isActive) {
-                document.getElementById(sourceButtons[3].id).classList.remove('inactive');
-            }
-        });
-
-        // LISTEN ON ALL SOURCE BUTTONS
-        sourceButtons.forEach(button => {
-            const btnElement = ledControlPage.querySelector(`#${button.id}`);
-            btnElement.addEventListener("click", () => {
-                sendPressedSourceButton(button.id);
-            });
-        });
-
-        // SEND CORRECT VALUES FOR EACH BUTTON
-        function sendPressedSourceButton(buttonId) {
-            sourceButtons.forEach(button => {
-                const value = button.id === buttonId;
-                CrComLib.publishEvent('b', button.event, value);
-            });
+        if (button.id === "tvPlayerButton" && value) {
+          tvPlayerSelected = true;
+        } else if (value) {
+          tvPlayerSelected = false;
         }
 
-        // UPDATE STYLE OF SOURCE BUTONS 
-        function updateActivatedStyle(button) {
-            const element = ledControlPage.querySelector('#' + button.id);
-            button.value ? element.classList.add('buttonPressed') : element.classList.remove('buttonPressed');
-        }
-
-
-        // ----------------------------- SWITCH BETWEEN VOLUME & CHANNELS --------------------------------------------------------------------------------------
-
-        // MAKE CHANNEL-LIST VISIBLE 
-        CrComLib.subscribeState('b', 'ledControl.showChannelsPageFb', (showChannel) => {
-            currentColumn = showChannel ? "channel" : "volume";
-            selectVisibleColumn(currentColumn);
-        });
-
-        // MAKE CHANNEL-LIST AVAILABLE / UNAVAILABLE 
-        CrComLib.subscribeState('b', 'ledControl.channelsAvailableFb', (value) => {
-            channelsAreAvailable = value;
-        });
-
-        selectVisibleColumn("volume");
-
-        // LISTEN ON VOLUME- OR CHANNEL-ICON 
-        volumeIcon.addEventListener("click", () => {
-            CrComLib.publishEvent('b', 'ledControl.showChannelsPage', false);
-        });
-
-        channelIcon.addEventListener("click", () => {
-            CrComLib.publishEvent('b', 'ledControl.showChannelsPage', true);
-
-        });
-
-        // CHANGE STYLE OF VOLUME OR CHANNEL COLUMN 
-        function selectVisibleColumn(column) {
-            switch (column) {
-                case "volume":
-                    volumeColumn.classList.add("active");
-                    channelColumn.classList.remove("active");
-                    channelColumn.classList.add("inactive");
-                    volumeColumn.classList.remove("inactive");
-                    break;
-                case "channel":
-                    volumeColumn.classList.remove("active");
-                    channelColumn.classList.add("active");
-                    channelColumn.classList.remove("inactive");
-                    volumeColumn.classList.add("inactive");
-                    break;
-            }
-        }
-
-        // SWITCH BETWEEN VOLUME OR CHANNEL COLUMN 
-        function updateShownColumn() {
-            if (tvPlayerSelected) {
-                selectVisibleColumn(currentColumn);
-                channelIcon.style.visibility = "visible";
-            } else {
-                selectVisibleColumn("volume");
-                channelIcon.style.visibility = "hidden";
-            }
-        }
-
-        // ----------------------------- CHANNELS --------------------------------------------------------------------------------------
-
-        // CREATE OBJECT WITH KEY: channelJoinFB, VALUE: ''
-        const channelNames = Array.from({ length: 20 }, (_, index) => `ledControl.channel${index + 1}Fb`);
-        const channelInfo = {};
-
-        channelNames.forEach(channel => {
-            channelInfo[channel] = '';
-        });
-
-        // RECEIVE ALL CHANNEL NAMES 
-        for (const channelJoin in channelInfo) {
-            CrComLib.subscribeState('s', channelJoin, (channelName) => {
-                channelInfo[channelJoin] = channelName;
-                updateChannelList();
-            }
-            );
-        }
-
-        // RECEIVE THE SELECTED CHANNEL 
-        CrComLib.subscribeState('s', 'ledControl.selectedChannelFb', (channel) => {
-            buttonContainer.querySelectorAll('.button').forEach(button => {
-                if (button.textContent === channel) {
-                    button.classList.add('buttonPressed');
-                } else {
-                    button.classList.remove('buttonPressed');
-                }
-            });
-        });
-
-        // UPDATE THE LIST OF SHOWN CHANNELS IN THE SENT ORDER 
-        function updateChannelList() {
-            const sortedChannels = Object.entries(channelInfo)
-                .map(([channelJoin, channelName]) => ({ channelJoin, channelName }))
-                .filter(channel => channel.channelName.trim() !== '')
-                .sort((a, b) => {
-                    const numA = parseInt(a.channelJoin.match(/\d+/)[0]);
-                    const numB = parseInt(b.channelJoin.match(/\d+/)[0]);
-                    return numA - numB;
-                });
-
-            buttonContainer.innerHTML = '';
-
-            sortedChannels.forEach(({ channelJoin, channelName }) => {
-                const channelButton = document.createElement("div");
-                channelButton.classList.add("button");
-                channelButton.textContent = channelName;
-                channelButton.setAttribute("data-channel-join", channelJoin);
-
-                buttonContainer.appendChild(channelButton);
-
-                channelButton.removeEventListener('click', handleChannelButtonClick);
-
-                channelButton.addEventListener('click', handleChannelButtonClick);
-            });
-        }
-
-        // SEND TEXT OF CLICKED CHANNEL BUTTON 
-        function handleChannelButtonClick(event) {
-            const clickedButton = event.target;
-            CrComLib.publishEvent('s', 'ledControl.selectedChannel', clickedButton.textContent);
-        }
-
-        // ----------------------------- DISPLAY --------------------------------------------------------------------------------------
-
-        // FEEDBACK IF DISPLAY IS ON
-        CrComLib.subscribeState('b', 'ledControl.ledOnFb', (displayOn) => {
-            if (displayOn) {
-                ledOnButton.classList.add('buttonPressed');
-            } else {
-                ledOnButton.classList.remove('buttonPressed');
-            }
-        });
-
-        // FEEDBACK IF DISPLAY IS OFF
-        CrComLib.subscribeState('b', 'ledControl.ledOffFb', (displayOff) => {
-            if (displayOff) {
-                ledOffButton.classList.add('buttonPressed');
-            } else {
-                ledOffButton.classList.remove('buttonPressed');
-            }
-        });
-
-        // LISTEN ON DISPLAY ON/OFF BUTTONS
-        ledOnButton.addEventListener('touchstart', () => {
-            CrComLib.publishEvent('b', 'ledControl.ledOn', true);
-            CrComLib.publishEvent('b', 'ledControl.ledOff', false);
-        });
-
-        ledOffButton.addEventListener('touchstart', () => {
-            CrComLib.publishEvent('b', 'ledControl.ledOn', false);
-            CrComLib.publishEvent('b', 'ledControl.ledOff', true);
-        });
-
-
-        // ----------------------------- NAVIGATION --------------------------------------------------------------------------------------
-
-        // LISTEN ON HOME BUTTON 
-        homeButton.addEventListener('click', function () {
-            CrComLib.publishEvent('n', 'controlPages.page', 1);
-        });
-
-        // LISTEN ON BACK BUTTON 
-        backButton.addEventListener('click', function () {
-            CrComLib.publishEvent('n', 'controlPages.page', 3);
-        });
-
-    }
-
-    let loadedSubId = CrComLib.subscribeState('o', 'ch5-import-htmlsnippet:ledcontrol-import-page', (value) => {
-        if (value['loaded']) {
-            onInit();
-            setTimeout(() => {
-                CrComLib.unsubscribeState('o', 'ch5-import-htmlsnippet:ledcontrol-import-page', loadedSubId);
-                loadedSubId = '';
-            });
-        }
+        updateShownColumn();
+      });
     });
 
-    return {
-    };
+    // ACTIVATION / DEACTIVATION OF YEALINK BUTTON
+    CrComLib.subscribeState("b", "ledControl.videoConPermittedFb", (isActive) => {
+      if (!isActive) {
+        document.getElementById(sourceButtons[3].id).classList.add("inactive");
+      } else if (isActive) {
+        document.getElementById(sourceButtons[3].id).classList.remove("inactive");
+      }
+    });
 
+    // LISTEN ON ALL SOURCE BUTTONS
+    sourceButtons.forEach((button) => {
+      const btnElement = ledControlPage.querySelector(`#${button.id}`);
+      btnElement.addEventListener("click", () => {
+        sendPressedSourceButton(button.id);
+      });
+    });
+
+    // SEND CORRECT VALUES FOR EACH BUTTON
+    function sendPressedSourceButton(buttonId) {
+      sourceButtons.forEach((button) => {
+        const value = button.id === buttonId;
+        CrComLib.publishEvent("b", button.event, value);
+      });
+    }
+
+    // UPDATE STYLE OF SOURCE BUTONS
+    function updateActivatedStyle(button) {
+      const element = ledControlPage.querySelector("#" + button.id);
+      button.value ? element.classList.add("buttonPressed") : element.classList.remove("buttonPressed");
+    }
+
+    // ----------------------------- SWITCH BETWEEN VOLUME & CHANNELS --------------------------------------------------------------------------------------
+
+    selectVisibleColumn("volume");
+
+    // LISTEN ON VOLUME- OR CHANNEL-ICON
+    volumeIcon.addEventListener("click", () => {
+      currentColumn = "volume";
+      selectVisibleColumn(currentColumn);
+    });
+
+    channelIcon.addEventListener("click", () => {
+      currentColumn = "channel";
+      selectVisibleColumn(currentColumn);
+    });
+
+    // CHANGE STYLE OF VOLUME OR CHANNEL COLUMN
+    function selectVisibleColumn(column) {
+      switch (column) {
+        case "volume":
+          volumeColumn.classList.add("active");
+          channelColumn.classList.remove("active");
+          channelColumn.classList.add("inactive");
+          volumeColumn.classList.remove("inactive");
+          break;
+        case "channel":
+          volumeColumn.classList.remove("active");
+          channelColumn.classList.add("active");
+          channelColumn.classList.remove("inactive");
+          volumeColumn.classList.add("inactive");
+          break;
+      }
+    }
+
+    // SWITCH BETWEEN VOLUME OR CHANNEL COLUMN
+    function updateShownColumn() {
+      if (tvPlayerSelected) {
+        selectVisibleColumn(currentColumn);
+        channelIcon.style.visibility = "visible";
+      } else {
+        selectVisibleColumn("volume");
+        channelIcon.style.visibility = "hidden";
+      }
+    }
+
+    // ----------------------------- CHANNELS --------------------------------------------------------------------------------------
+
+    // CREATE OBJECT WITH KEY: channelJoinFB, VALUE: ''
+    const channelNames = Array.from({ length: 40 }, (_, index) => `channelList.channel${index + 1}Fb`);
+    const channelInfo = {};
+
+    channelNames.forEach((channel) => {
+      channelInfo[channel] = "";
+    });
+
+    // RECEIVE ALL CHANNEL NAMES
+    for (const channelJoin in channelInfo) {
+      CrComLib.subscribeState("s", channelJoin, (channelName) => {
+        channelInfo[channelJoin] = channelName;
+        updateChannelList();
+      });
+    }
+
+    // RECEIVE THE SELECTED CHANNEL
+    CrComLib.subscribeState("s", "channelList.selectedChannelFb", (channel) => {
+      buttonContainer.querySelectorAll(".button").forEach((button) => {
+        if (button.textContent === channel) {
+          button.classList.add("buttonPressed");
+        } else {
+          button.classList.remove("buttonPressed");
+        }
+      });
+    });
+
+    // UPDATE THE LIST OF SHOWN CHANNELS IN THE SENT ORDER
+    function updateChannelList() {
+      const sortedChannels = Object.entries(channelInfo)
+        .map(([channelJoin, channelName]) => ({ channelJoin, channelName }))
+        .filter((channel) => channel.channelName.trim() !== "")
+        .sort((a, b) => {
+          const numA = parseInt(a.channelJoin.match(/\d+/)[0]);
+          const numB = parseInt(b.channelJoin.match(/\d+/)[0]);
+          return numA - numB;
+        });
+
+      buttonContainer.innerHTML = "";
+
+      sortedChannels.forEach(({ channelJoin, channelName }) => {
+        const channelButton = document.createElement("div");
+        channelButton.classList.add("button");
+        channelButton.textContent = channelName;
+        channelButton.setAttribute("data-channel-join", channelJoin);
+
+        buttonContainer.appendChild(channelButton);
+
+        channelButton.removeEventListener("click", handleChannelButtonClick);
+
+        channelButton.addEventListener("click", handleChannelButtonClick);
+      });
+    }
+
+    // SEND TEXT OF CLICKED CHANNEL BUTTON
+    function handleChannelButtonClick(event) {
+      const clickedButton = event.target;
+      CrComLib.publishEvent("s", "channelList.selectedChannel", clickedButton.textContent);
+    }
+
+    // ----------------------------- DISPLAY --------------------------------------------------------------------------------------
+
+    // FEEDBACK IF DISPLAY IS ON
+    CrComLib.subscribeState("b", "ledControl.ledOnFb", (displayOn) => {
+      if (displayOn) {
+        ledOnButton.classList.add("buttonPressed");
+      } else {
+        ledOnButton.classList.remove("buttonPressed");
+      }
+    });
+
+    // FEEDBACK IF DISPLAY IS OFF
+    CrComLib.subscribeState("b", "ledControl.ledOffFb", (displayOff) => {
+      if (displayOff) {
+        ledOffButton.classList.add("buttonPressed");
+      } else {
+        ledOffButton.classList.remove("buttonPressed");
+      }
+    });
+
+    // LISTEN ON DISPLAY ON/OFF BUTTONS
+    ledOnButton.addEventListener("touchstart", () => {
+      CrComLib.publishEvent("b", "ledControl.ledOn", true);
+      CrComLib.publishEvent("b", "ledControl.ledOff", false);
+    });
+
+    ledOffButton.addEventListener("touchstart", () => {
+      CrComLib.publishEvent("b", "ledControl.ledOn", false);
+      CrComLib.publishEvent("b", "ledControl.ledOff", true);
+    });
+
+    // ----------------------------- NAVIGATION --------------------------------------------------------------------------------------
+
+    // LISTEN ON HOME BUTTON
+    homeButton.addEventListener("click", function () {
+      CrComLib.publishEvent("n", "controlPages.page", 1);
+    });
+
+    // LISTEN ON BACK BUTTON
+    backButton.addEventListener("click", function () {
+      CrComLib.publishEvent("n", "controlPages.page", 3);
+    });
+  }
+
+  let loadedSubId = CrComLib.subscribeState("o", "ch5-import-htmlsnippet:ledcontrol-import-page", (value) => {
+    if (value["loaded"]) {
+      onInit();
+      setTimeout(() => {
+        CrComLib.unsubscribeState("o", "ch5-import-htmlsnippet:ledcontrol-import-page", loadedSubId);
+        loadedSubId = "";
+      });
+    }
+  });
+
+  return {};
 })();

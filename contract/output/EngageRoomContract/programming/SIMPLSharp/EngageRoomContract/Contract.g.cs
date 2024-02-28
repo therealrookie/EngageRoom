@@ -43,6 +43,9 @@ namespace EngageRoomContract
         public EngageRoomContract.ImeetingControl meetingControl { get { return (EngageRoomContract.ImeetingControl)InternalmeetingControl; } }
         private EngageRoomContract.meetingControl InternalmeetingControl { get; set; }
 
+        public EngageRoomContract.channelListContract.IchannelList channelList { get { return (EngageRoomContract.channelListContract.IchannelList)InternalchannelList; } }
+        private EngageRoomContract.channelListContract.channelList InternalchannelList { get; set; }
+
         #endregion
 
         #region Construction and Initialization
@@ -71,6 +74,7 @@ namespace EngageRoomContract
             InternalmonitorControl = new EngageRoomContract.monitorControl(ComponentMediator, 5);
             InternalcameraControl = new EngageRoomContract.cameraControl(ComponentMediator, 6);
             InternalmeetingControl = new EngageRoomContract.meetingControl(ComponentMediator, 7);
+            InternalchannelList = new EngageRoomContract.channelListContract.channelList(ComponentMediator, 8);
 
             for (int index = 0; index < devices.Length; index++)
             {
@@ -93,6 +97,7 @@ namespace EngageRoomContract
             InternalmonitorControl.AddDevice(device);
             InternalcameraControl.AddDevice(device);
             InternalmeetingControl.AddDevice(device);
+            InternalchannelList.AddDevice(device);
         }
 
         public void RemoveDevice(BasicTriListWithSmartObject device)
@@ -104,6 +109,7 @@ namespace EngageRoomContract
             InternalmonitorControl.RemoveDevice(device);
             InternalcameraControl.RemoveDevice(device);
             InternalmeetingControl.RemoveDevice(device);
+            InternalchannelList.RemoveDevice(device);
         }
 
         #endregion
@@ -126,6 +132,7 @@ namespace EngageRoomContract
             InternalmonitorControl.Dispose();
             InternalcameraControl.Dispose();
             InternalmeetingControl.Dispose();
+            InternalchannelList.Dispose();
             ComponentMediator.Dispose(); 
         }
 

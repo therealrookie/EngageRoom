@@ -1,6 +1,6 @@
 {
 	"name": "EngageRoomContract",
-	"timestamp": "2024-02-27 11:27:45.385",
+	"timestamp": "2024-02-27 14:58:16.557",
 	"version": "1.0.0.0",
 	"schema_version": 1,
 	"extra_value": "",
@@ -24,10 +24,8 @@
 					"3": "ledControl.laptopInputFb",
 					"4": "ledControl.ledOnFb",
 					"5": "ledControl.ledOffFb",
-					"6": "ledControl.showChannelsPageFb",
-					"7": "ledControl.channelsAvailableFb",
-					"8": "ledControl.videoConFb",
-					"9": "ledControl.videoConPermittedFb"
+					"6": "ledControl.videoConFb",
+					"7": "ledControl.videoConPermittedFb"
 				},
 				"5": {
 					"1": "monitorControl.signageFb",
@@ -35,10 +33,8 @@
 					"3": "monitorControl.laptopInputFb",
 					"4": "monitorControl.ledOnFb",
 					"5": "monitorControl.ledOffFb",
-					"6": "monitorControl.showChannelsPageFb",
-					"7": "monitorControl.channelsAvailableFb",
-					"8": "monitorControl.videoConFb",
-					"9": "monitorControl.videoConPermittedFb"
+					"6": "monitorControl.videoConFb",
+					"7": "monitorControl.videoConPermittedFb"
 				},
 				"6": {
 					"1": "cameraControl.preset01Fb",
@@ -76,51 +72,48 @@
 				"1": {
 					"1": "controlPages.codeInputFb"
 				},
-				"4": {
-					"1": "ledControl.selectedChannelFb",
-					"2": "ledControl.channel1Fb",
-					"3": "ledControl.channel2Fb",
-					"4": "ledControl.channel3Fb",
-					"5": "ledControl.channel4Fb",
-					"6": "ledControl.channel5Fb",
-					"7": "ledControl.channel6Fb",
-					"8": "ledControl.channel7Fb",
-					"9": "ledControl.channel8Fb",
-					"10": "ledControl.channel9Fb",
-					"11": "ledControl.channel10Fb",
-					"12": "ledControl.channel11Fb",
-					"13": "ledControl.channel12Fb",
-					"14": "ledControl.channel13Fb",
-					"15": "ledControl.channel14Fb",
-					"16": "ledControl.channel15Fb",
-					"17": "ledControl.channel16Fb",
-					"18": "ledControl.channel17Fb",
-					"19": "ledControl.channel18Fb",
-					"20": "ledControl.channel19Fb",
-					"21": "ledControl.channel20Fb"
-				},
-				"5": {
-					"1": "monitorControl.selectedChannelFb",
-					"2": "monitorControl.channel1Fb",
-					"3": "monitorControl.channel2Fb",
-					"4": "monitorControl.channel3Fb",
-					"5": "monitorControl.channel4Fb",
-					"6": "monitorControl.channel5Fb",
-					"7": "monitorControl.channel6Fb",
-					"8": "monitorControl.channel7Fb",
-					"9": "monitorControl.channel8Fb",
-					"10": "monitorControl.channel9Fb",
-					"11": "monitorControl.channel10Fb",
-					"12": "monitorControl.channel11Fb",
-					"13": "monitorControl.channel12Fb",
-					"14": "monitorControl.channel13Fb",
-					"15": "monitorControl.channel14Fb",
-					"16": "monitorControl.channel15Fb",
-					"17": "monitorControl.channel16Fb",
-					"18": "monitorControl.channel17Fb",
-					"19": "monitorControl.channel18Fb",
-					"20": "monitorControl.channel19Fb",
-					"21": "monitorControl.channel20Fb"
+				"8": {
+					"1": "channelList.selectedChannelFb",
+					"2": "channelList.channel1Fb",
+					"3": "channelList.channel2Fb",
+					"4": "channelList.channel3Fb",
+					"5": "channelList.channel4Fb",
+					"6": "channelList.channel5Fb",
+					"7": "channelList.channel6Fb",
+					"8": "channelList.channel7Fb",
+					"9": "channelList.channel8Fb",
+					"10": "channelList.channel9Fb",
+					"11": "channelList.channel10Fb",
+					"12": "channelList.channel11Fb",
+					"13": "channelList.channel12Fb",
+					"14": "channelList.channel13Fb",
+					"15": "channelList.channel14Fb",
+					"16": "channelList.channel15Fb",
+					"17": "channelList.channel16Fb",
+					"18": "channelList.channel17Fb",
+					"19": "channelList.channel18Fb",
+					"20": "channelList.channel19Fb",
+					"21": "channelList.channel20Fb",
+					"22": "channelList.channel21Fb",
+					"23": "channelList.channel22Fb",
+					"24": "channelList.channel23Fb",
+					"25": "channelList.channel24Fb",
+					"26": "channelList.channel25Fb",
+					"27": "channelList.channel26Fb",
+					"28": "channelList.channel27Fb",
+					"29": "channelList.channel28Fb",
+					"30": "channelList.channel29Fb",
+					"31": "channelList.channel30Fb",
+					"32": "channelList.channel31Fb",
+					"33": "channelList.channel32Fb",
+					"34": "channelList.channel33Fb",
+					"35": "channelList.channel34Fb",
+					"36": "channelList.channel35Fb",
+					"37": "channelList.channel36Fb",
+					"38": "channelList.channel37Fb",
+					"39": "channelList.channel38Fb",
+					"40": "channelList.channel39Fb",
+					"41": "channelList.channel40Fb"
 				}
 			}
 		},
@@ -166,20 +159,12 @@
 					"joinId": 5,
 					"smartObjectId": 4
 				},
-				"ledControl.showChannelsPage": {
+				"ledControl.videoCon": {
 					"joinId": 6,
 					"smartObjectId": 4
 				},
-				"ledControl.channelsAvailable": {
-					"joinId": 7,
-					"smartObjectId": 4
-				},
-				"ledControl.videoCon": {
-					"joinId": 8,
-					"smartObjectId": 4
-				},
 				"ledControl.videoConPermitted": {
-					"joinId": 9,
+					"joinId": 7,
 					"smartObjectId": 4
 				},
 				"monitorControl.signage": {
@@ -202,20 +187,12 @@
 					"joinId": 5,
 					"smartObjectId": 5
 				},
-				"monitorControl.showChannelsPage": {
+				"monitorControl.videoCon": {
 					"joinId": 6,
 					"smartObjectId": 5
 				},
-				"monitorControl.channelsAvailable": {
-					"joinId": 7,
-					"smartObjectId": 5
-				},
-				"monitorControl.videoCon": {
-					"joinId": 8,
-					"smartObjectId": 5
-				},
 				"monitorControl.videoConPermitted": {
-					"joinId": 9,
+					"joinId": 7,
 					"smartObjectId": 5
 				},
 				"cameraControl.preset01": {
@@ -342,173 +319,169 @@
 					"joinId": 1,
 					"smartObjectId": 1
 				},
-				"ledControl.selectedChannel": {
+				"channelList.selectedChannel": {
 					"joinId": 1,
-					"smartObjectId": 4
+					"smartObjectId": 8
 				},
-				"ledControl.channel1": {
+				"channelList.channel1": {
 					"joinId": 2,
-					"smartObjectId": 4
+					"smartObjectId": 8
 				},
-				"ledControl.channel2": {
+				"channelList.channel2": {
 					"joinId": 3,
-					"smartObjectId": 4
+					"smartObjectId": 8
 				},
-				"ledControl.channel3": {
+				"channelList.channel3": {
 					"joinId": 4,
-					"smartObjectId": 4
+					"smartObjectId": 8
 				},
-				"ledControl.channel4": {
+				"channelList.channel4": {
 					"joinId": 5,
-					"smartObjectId": 4
+					"smartObjectId": 8
 				},
-				"ledControl.channel5": {
+				"channelList.channel5": {
 					"joinId": 6,
-					"smartObjectId": 4
+					"smartObjectId": 8
 				},
-				"ledControl.channel6": {
+				"channelList.channel6": {
 					"joinId": 7,
-					"smartObjectId": 4
+					"smartObjectId": 8
 				},
-				"ledControl.channel7": {
+				"channelList.channel7": {
 					"joinId": 8,
-					"smartObjectId": 4
+					"smartObjectId": 8
 				},
-				"ledControl.channel8": {
+				"channelList.channel8": {
 					"joinId": 9,
-					"smartObjectId": 4
+					"smartObjectId": 8
 				},
-				"ledControl.channel9": {
+				"channelList.channel9": {
 					"joinId": 10,
-					"smartObjectId": 4
+					"smartObjectId": 8
 				},
-				"ledControl.channel10": {
+				"channelList.channel10": {
 					"joinId": 11,
-					"smartObjectId": 4
+					"smartObjectId": 8
 				},
-				"ledControl.channel11": {
+				"channelList.channel11": {
 					"joinId": 12,
-					"smartObjectId": 4
+					"smartObjectId": 8
 				},
-				"ledControl.channel12": {
+				"channelList.channel12": {
 					"joinId": 13,
-					"smartObjectId": 4
+					"smartObjectId": 8
 				},
-				"ledControl.channel13": {
+				"channelList.channel13": {
 					"joinId": 14,
-					"smartObjectId": 4
+					"smartObjectId": 8
 				},
-				"ledControl.channel14": {
+				"channelList.channel14": {
 					"joinId": 15,
-					"smartObjectId": 4
+					"smartObjectId": 8
 				},
-				"ledControl.channel15": {
+				"channelList.channel15": {
 					"joinId": 16,
-					"smartObjectId": 4
+					"smartObjectId": 8
 				},
-				"ledControl.channel16": {
+				"channelList.channel16": {
 					"joinId": 17,
-					"smartObjectId": 4
+					"smartObjectId": 8
 				},
-				"ledControl.channel17": {
+				"channelList.channel17": {
 					"joinId": 18,
-					"smartObjectId": 4
+					"smartObjectId": 8
 				},
-				"ledControl.channel18": {
+				"channelList.channel18": {
 					"joinId": 19,
-					"smartObjectId": 4
+					"smartObjectId": 8
 				},
-				"ledControl.channel19": {
+				"channelList.channel19": {
 					"joinId": 20,
-					"smartObjectId": 4
+					"smartObjectId": 8
 				},
-				"ledControl.channel20": {
+				"channelList.channel20": {
 					"joinId": 21,
-					"smartObjectId": 4
+					"smartObjectId": 8
 				},
-				"monitorControl.selectedChannel": {
-					"joinId": 1,
-					"smartObjectId": 5
+				"channelList.channel21": {
+					"joinId": 22,
+					"smartObjectId": 8
 				},
-				"monitorControl.channel1": {
-					"joinId": 2,
-					"smartObjectId": 5
+				"channelList.channel22": {
+					"joinId": 23,
+					"smartObjectId": 8
 				},
-				"monitorControl.channel2": {
-					"joinId": 3,
-					"smartObjectId": 5
+				"channelList.channel23": {
+					"joinId": 24,
+					"smartObjectId": 8
 				},
-				"monitorControl.channel3": {
-					"joinId": 4,
-					"smartObjectId": 5
+				"channelList.channel24": {
+					"joinId": 25,
+					"smartObjectId": 8
 				},
-				"monitorControl.channel4": {
-					"joinId": 5,
-					"smartObjectId": 5
+				"channelList.channel25": {
+					"joinId": 26,
+					"smartObjectId": 8
 				},
-				"monitorControl.channel5": {
-					"joinId": 6,
-					"smartObjectId": 5
+				"channelList.channel26": {
+					"joinId": 27,
+					"smartObjectId": 8
 				},
-				"monitorControl.channel6": {
-					"joinId": 7,
-					"smartObjectId": 5
+				"channelList.channel27": {
+					"joinId": 28,
+					"smartObjectId": 8
 				},
-				"monitorControl.channel7": {
-					"joinId": 8,
-					"smartObjectId": 5
+				"channelList.channel28": {
+					"joinId": 29,
+					"smartObjectId": 8
 				},
-				"monitorControl.channel8": {
-					"joinId": 9,
-					"smartObjectId": 5
+				"channelList.channel29": {
+					"joinId": 30,
+					"smartObjectId": 8
 				},
-				"monitorControl.channel9": {
-					"joinId": 10,
-					"smartObjectId": 5
+				"channelList.channel30": {
+					"joinId": 31,
+					"smartObjectId": 8
 				},
-				"monitorControl.channel10": {
-					"joinId": 11,
-					"smartObjectId": 5
+				"channelList.channel31": {
+					"joinId": 32,
+					"smartObjectId": 8
 				},
-				"monitorControl.channel11": {
-					"joinId": 12,
-					"smartObjectId": 5
+				"channelList.channel32": {
+					"joinId": 33,
+					"smartObjectId": 8
 				},
-				"monitorControl.channel12": {
-					"joinId": 13,
-					"smartObjectId": 5
+				"channelList.channel33": {
+					"joinId": 34,
+					"smartObjectId": 8
 				},
-				"monitorControl.channel13": {
-					"joinId": 14,
-					"smartObjectId": 5
+				"channelList.channel34": {
+					"joinId": 35,
+					"smartObjectId": 8
 				},
-				"monitorControl.channel14": {
-					"joinId": 15,
-					"smartObjectId": 5
+				"channelList.channel35": {
+					"joinId": 36,
+					"smartObjectId": 8
 				},
-				"monitorControl.channel15": {
-					"joinId": 16,
-					"smartObjectId": 5
+				"channelList.channel36": {
+					"joinId": 37,
+					"smartObjectId": 8
 				},
-				"monitorControl.channel16": {
-					"joinId": 17,
-					"smartObjectId": 5
+				"channelList.channel37": {
+					"joinId": 38,
+					"smartObjectId": 8
 				},
-				"monitorControl.channel17": {
-					"joinId": 18,
-					"smartObjectId": 5
+				"channelList.channel38": {
+					"joinId": 39,
+					"smartObjectId": 8
 				},
-				"monitorControl.channel18": {
-					"joinId": 19,
-					"smartObjectId": 5
+				"channelList.channel39": {
+					"joinId": 40,
+					"smartObjectId": 8
 				},
-				"monitorControl.channel19": {
-					"joinId": 20,
-					"smartObjectId": 5
-				},
-				"monitorControl.channel20": {
-					"joinId": 21,
-					"smartObjectId": 5
+				"channelList.channel40": {
+					"joinId": 41,
+					"smartObjectId": 8
 				}
 			}
 		}

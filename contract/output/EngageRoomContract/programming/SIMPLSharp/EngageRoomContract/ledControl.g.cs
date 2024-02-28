@@ -15,67 +15,20 @@ namespace EngageRoomContract
         event EventHandler<UIEventArgs> laptopInput;
         event EventHandler<UIEventArgs> ledOn;
         event EventHandler<UIEventArgs> ledOff;
-        event EventHandler<UIEventArgs> showChannelsPage;
-        event EventHandler<UIEventArgs> channelsAvailable;
         event EventHandler<UIEventArgs> videoCon;
         event EventHandler<UIEventArgs> videoConPermitted;
-        event EventHandler<UIEventArgs> selectedChannel;
-        event EventHandler<UIEventArgs> channel1;
-        event EventHandler<UIEventArgs> channel2;
-        event EventHandler<UIEventArgs> channel3;
-        event EventHandler<UIEventArgs> channel4;
-        event EventHandler<UIEventArgs> channel5;
-        event EventHandler<UIEventArgs> channel6;
-        event EventHandler<UIEventArgs> channel7;
-        event EventHandler<UIEventArgs> channel8;
-        event EventHandler<UIEventArgs> channel9;
-        event EventHandler<UIEventArgs> channel10;
-        event EventHandler<UIEventArgs> channel11;
-        event EventHandler<UIEventArgs> channel12;
-        event EventHandler<UIEventArgs> channel13;
-        event EventHandler<UIEventArgs> channel14;
-        event EventHandler<UIEventArgs> channel15;
-        event EventHandler<UIEventArgs> channel16;
-        event EventHandler<UIEventArgs> channel17;
-        event EventHandler<UIEventArgs> channel18;
-        event EventHandler<UIEventArgs> channel19;
-        event EventHandler<UIEventArgs> channel20;
 
         void signageFb(ledControlBoolInputSigDelegate callback);
         void tvPlayerFb(ledControlBoolInputSigDelegate callback);
         void laptopInputFb(ledControlBoolInputSigDelegate callback);
         void ledOnFb(ledControlBoolInputSigDelegate callback);
         void ledOffFb(ledControlBoolInputSigDelegate callback);
-        void showChannelsPageFb(ledControlBoolInputSigDelegate callback);
-        void channelsAvailableFb(ledControlBoolInputSigDelegate callback);
         void videoConFb(ledControlBoolInputSigDelegate callback);
         void videoConPermittedFb(ledControlBoolInputSigDelegate callback);
-        void selectedChannelFb(ledControlStringInputSigDelegate callback);
-        void channel1Fb(ledControlStringInputSigDelegate callback);
-        void channel2Fb(ledControlStringInputSigDelegate callback);
-        void channel3Fb(ledControlStringInputSigDelegate callback);
-        void channel4Fb(ledControlStringInputSigDelegate callback);
-        void channel5Fb(ledControlStringInputSigDelegate callback);
-        void channel6Fb(ledControlStringInputSigDelegate callback);
-        void channel7Fb(ledControlStringInputSigDelegate callback);
-        void channel8Fb(ledControlStringInputSigDelegate callback);
-        void channel9Fb(ledControlStringInputSigDelegate callback);
-        void channel10Fb(ledControlStringInputSigDelegate callback);
-        void channel11Fb(ledControlStringInputSigDelegate callback);
-        void channel12Fb(ledControlStringInputSigDelegate callback);
-        void channel13Fb(ledControlStringInputSigDelegate callback);
-        void channel14Fb(ledControlStringInputSigDelegate callback);
-        void channel15Fb(ledControlStringInputSigDelegate callback);
-        void channel16Fb(ledControlStringInputSigDelegate callback);
-        void channel17Fb(ledControlStringInputSigDelegate callback);
-        void channel18Fb(ledControlStringInputSigDelegate callback);
-        void channel19Fb(ledControlStringInputSigDelegate callback);
-        void channel20Fb(ledControlStringInputSigDelegate callback);
 
     }
 
     public delegate void ledControlBoolInputSigDelegate(BoolInputSig boolInputSig, IledControl ledControl);
-    public delegate void ledControlStringInputSigDelegate(StringInputSig stringInputSig, IledControl ledControl);
 
     internal class ledControl : IledControl, IDisposable
     {
@@ -103,66 +56,16 @@ namespace EngageRoomContract
                 public const uint laptopInput = 3;
                 public const uint ledOn = 4;
                 public const uint ledOff = 5;
-                public const uint showChannelsPage = 6;
-                public const uint channelsAvailable = 7;
-                public const uint videoCon = 8;
-                public const uint videoConPermitted = 9;
+                public const uint videoCon = 6;
+                public const uint videoConPermitted = 7;
 
                 public const uint signageFb = 1;
                 public const uint tvPlayerFb = 2;
                 public const uint laptopInputFb = 3;
                 public const uint ledOnFb = 4;
                 public const uint ledOffFb = 5;
-                public const uint showChannelsPageFb = 6;
-                public const uint channelsAvailableFb = 7;
-                public const uint videoConFb = 8;
-                public const uint videoConPermittedFb = 9;
-            }
-            internal static class Strings
-            {
-                public const uint selectedChannel = 1;
-                public const uint channel1 = 2;
-                public const uint channel2 = 3;
-                public const uint channel3 = 4;
-                public const uint channel4 = 5;
-                public const uint channel5 = 6;
-                public const uint channel6 = 7;
-                public const uint channel7 = 8;
-                public const uint channel8 = 9;
-                public const uint channel9 = 10;
-                public const uint channel10 = 11;
-                public const uint channel11 = 12;
-                public const uint channel12 = 13;
-                public const uint channel13 = 14;
-                public const uint channel14 = 15;
-                public const uint channel15 = 16;
-                public const uint channel16 = 17;
-                public const uint channel17 = 18;
-                public const uint channel18 = 19;
-                public const uint channel19 = 20;
-                public const uint channel20 = 21;
-
-                public const uint selectedChannelFb = 1;
-                public const uint channel1Fb = 2;
-                public const uint channel2Fb = 3;
-                public const uint channel3Fb = 4;
-                public const uint channel4Fb = 5;
-                public const uint channel5Fb = 6;
-                public const uint channel6Fb = 7;
-                public const uint channel7Fb = 8;
-                public const uint channel8Fb = 9;
-                public const uint channel9Fb = 10;
-                public const uint channel10Fb = 11;
-                public const uint channel11Fb = 12;
-                public const uint channel12Fb = 13;
-                public const uint channel13Fb = 14;
-                public const uint channel14Fb = 15;
-                public const uint channel15Fb = 16;
-                public const uint channel16Fb = 17;
-                public const uint channel17Fb = 18;
-                public const uint channel18Fb = 19;
-                public const uint channel19Fb = 20;
-                public const uint channel20Fb = 21;
+                public const uint videoConFb = 6;
+                public const uint videoConPermittedFb = 7;
             }
         }
 
@@ -187,31 +90,8 @@ namespace EngageRoomContract
             ComponentMediator.ConfigureBooleanEvent(controlJoinId, Joins.Booleans.laptopInput, onlaptopInput);
             ComponentMediator.ConfigureBooleanEvent(controlJoinId, Joins.Booleans.ledOn, onledOn);
             ComponentMediator.ConfigureBooleanEvent(controlJoinId, Joins.Booleans.ledOff, onledOff);
-            ComponentMediator.ConfigureBooleanEvent(controlJoinId, Joins.Booleans.showChannelsPage, onshowChannelsPage);
-            ComponentMediator.ConfigureBooleanEvent(controlJoinId, Joins.Booleans.channelsAvailable, onchannelsAvailable);
             ComponentMediator.ConfigureBooleanEvent(controlJoinId, Joins.Booleans.videoCon, onvideoCon);
             ComponentMediator.ConfigureBooleanEvent(controlJoinId, Joins.Booleans.videoConPermitted, onvideoConPermitted);
-            ComponentMediator.ConfigureStringEvent(controlJoinId, Joins.Strings.selectedChannel, onselectedChannel);
-            ComponentMediator.ConfigureStringEvent(controlJoinId, Joins.Strings.channel1, onchannel1);
-            ComponentMediator.ConfigureStringEvent(controlJoinId, Joins.Strings.channel2, onchannel2);
-            ComponentMediator.ConfigureStringEvent(controlJoinId, Joins.Strings.channel3, onchannel3);
-            ComponentMediator.ConfigureStringEvent(controlJoinId, Joins.Strings.channel4, onchannel4);
-            ComponentMediator.ConfigureStringEvent(controlJoinId, Joins.Strings.channel5, onchannel5);
-            ComponentMediator.ConfigureStringEvent(controlJoinId, Joins.Strings.channel6, onchannel6);
-            ComponentMediator.ConfigureStringEvent(controlJoinId, Joins.Strings.channel7, onchannel7);
-            ComponentMediator.ConfigureStringEvent(controlJoinId, Joins.Strings.channel8, onchannel8);
-            ComponentMediator.ConfigureStringEvent(controlJoinId, Joins.Strings.channel9, onchannel9);
-            ComponentMediator.ConfigureStringEvent(controlJoinId, Joins.Strings.channel10, onchannel10);
-            ComponentMediator.ConfigureStringEvent(controlJoinId, Joins.Strings.channel11, onchannel11);
-            ComponentMediator.ConfigureStringEvent(controlJoinId, Joins.Strings.channel12, onchannel12);
-            ComponentMediator.ConfigureStringEvent(controlJoinId, Joins.Strings.channel13, onchannel13);
-            ComponentMediator.ConfigureStringEvent(controlJoinId, Joins.Strings.channel14, onchannel14);
-            ComponentMediator.ConfigureStringEvent(controlJoinId, Joins.Strings.channel15, onchannel15);
-            ComponentMediator.ConfigureStringEvent(controlJoinId, Joins.Strings.channel16, onchannel16);
-            ComponentMediator.ConfigureStringEvent(controlJoinId, Joins.Strings.channel17, onchannel17);
-            ComponentMediator.ConfigureStringEvent(controlJoinId, Joins.Strings.channel18, onchannel18);
-            ComponentMediator.ConfigureStringEvent(controlJoinId, Joins.Strings.channel19, onchannel19);
-            ComponentMediator.ConfigureStringEvent(controlJoinId, Joins.Strings.channel20, onchannel20);
 
         }
 
@@ -267,22 +147,6 @@ namespace EngageRoomContract
         private void onledOff(SmartObjectEventArgs eventArgs)
         {
             EventHandler<UIEventArgs> handler = ledOff;
-            if (handler != null)
-                handler(this, UIEventArgs.CreateEventArgs(eventArgs));
-        }
-
-        public event EventHandler<UIEventArgs> showChannelsPage;
-        private void onshowChannelsPage(SmartObjectEventArgs eventArgs)
-        {
-            EventHandler<UIEventArgs> handler = showChannelsPage;
-            if (handler != null)
-                handler(this, UIEventArgs.CreateEventArgs(eventArgs));
-        }
-
-        public event EventHandler<UIEventArgs> channelsAvailable;
-        private void onchannelsAvailable(SmartObjectEventArgs eventArgs)
-        {
-            EventHandler<UIEventArgs> handler = channelsAvailable;
             if (handler != null)
                 handler(this, UIEventArgs.CreateEventArgs(eventArgs));
         }
@@ -344,22 +208,6 @@ namespace EngageRoomContract
             }
         }
 
-        public void showChannelsPageFb(ledControlBoolInputSigDelegate callback)
-        {
-            for (int index = 0; index < Devices.Count; index++)
-            {
-                callback(Devices[index].SmartObjects[ControlJoinId].BooleanInput[Joins.Booleans.showChannelsPageFb], this);
-            }
-        }
-
-        public void channelsAvailableFb(ledControlBoolInputSigDelegate callback)
-        {
-            for (int index = 0; index < Devices.Count; index++)
-            {
-                callback(Devices[index].SmartObjects[ControlJoinId].BooleanInput[Joins.Booleans.channelsAvailableFb], this);
-            }
-        }
-
         public void videoConFb(ledControlBoolInputSigDelegate callback)
         {
             for (int index = 0; index < Devices.Count; index++)
@@ -373,343 +221,6 @@ namespace EngageRoomContract
             for (int index = 0; index < Devices.Count; index++)
             {
                 callback(Devices[index].SmartObjects[ControlJoinId].BooleanInput[Joins.Booleans.videoConPermittedFb], this);
-            }
-        }
-
-        public event EventHandler<UIEventArgs> selectedChannel;
-        private void onselectedChannel(SmartObjectEventArgs eventArgs)
-        {
-            EventHandler<UIEventArgs> handler = selectedChannel;
-            if (handler != null)
-                handler(this, UIEventArgs.CreateEventArgs(eventArgs));
-        }
-
-        public event EventHandler<UIEventArgs> channel1;
-        private void onchannel1(SmartObjectEventArgs eventArgs)
-        {
-            EventHandler<UIEventArgs> handler = channel1;
-            if (handler != null)
-                handler(this, UIEventArgs.CreateEventArgs(eventArgs));
-        }
-
-        public event EventHandler<UIEventArgs> channel2;
-        private void onchannel2(SmartObjectEventArgs eventArgs)
-        {
-            EventHandler<UIEventArgs> handler = channel2;
-            if (handler != null)
-                handler(this, UIEventArgs.CreateEventArgs(eventArgs));
-        }
-
-        public event EventHandler<UIEventArgs> channel3;
-        private void onchannel3(SmartObjectEventArgs eventArgs)
-        {
-            EventHandler<UIEventArgs> handler = channel3;
-            if (handler != null)
-                handler(this, UIEventArgs.CreateEventArgs(eventArgs));
-        }
-
-        public event EventHandler<UIEventArgs> channel4;
-        private void onchannel4(SmartObjectEventArgs eventArgs)
-        {
-            EventHandler<UIEventArgs> handler = channel4;
-            if (handler != null)
-                handler(this, UIEventArgs.CreateEventArgs(eventArgs));
-        }
-
-        public event EventHandler<UIEventArgs> channel5;
-        private void onchannel5(SmartObjectEventArgs eventArgs)
-        {
-            EventHandler<UIEventArgs> handler = channel5;
-            if (handler != null)
-                handler(this, UIEventArgs.CreateEventArgs(eventArgs));
-        }
-
-        public event EventHandler<UIEventArgs> channel6;
-        private void onchannel6(SmartObjectEventArgs eventArgs)
-        {
-            EventHandler<UIEventArgs> handler = channel6;
-            if (handler != null)
-                handler(this, UIEventArgs.CreateEventArgs(eventArgs));
-        }
-
-        public event EventHandler<UIEventArgs> channel7;
-        private void onchannel7(SmartObjectEventArgs eventArgs)
-        {
-            EventHandler<UIEventArgs> handler = channel7;
-            if (handler != null)
-                handler(this, UIEventArgs.CreateEventArgs(eventArgs));
-        }
-
-        public event EventHandler<UIEventArgs> channel8;
-        private void onchannel8(SmartObjectEventArgs eventArgs)
-        {
-            EventHandler<UIEventArgs> handler = channel8;
-            if (handler != null)
-                handler(this, UIEventArgs.CreateEventArgs(eventArgs));
-        }
-
-        public event EventHandler<UIEventArgs> channel9;
-        private void onchannel9(SmartObjectEventArgs eventArgs)
-        {
-            EventHandler<UIEventArgs> handler = channel9;
-            if (handler != null)
-                handler(this, UIEventArgs.CreateEventArgs(eventArgs));
-        }
-
-        public event EventHandler<UIEventArgs> channel10;
-        private void onchannel10(SmartObjectEventArgs eventArgs)
-        {
-            EventHandler<UIEventArgs> handler = channel10;
-            if (handler != null)
-                handler(this, UIEventArgs.CreateEventArgs(eventArgs));
-        }
-
-        public event EventHandler<UIEventArgs> channel11;
-        private void onchannel11(SmartObjectEventArgs eventArgs)
-        {
-            EventHandler<UIEventArgs> handler = channel11;
-            if (handler != null)
-                handler(this, UIEventArgs.CreateEventArgs(eventArgs));
-        }
-
-        public event EventHandler<UIEventArgs> channel12;
-        private void onchannel12(SmartObjectEventArgs eventArgs)
-        {
-            EventHandler<UIEventArgs> handler = channel12;
-            if (handler != null)
-                handler(this, UIEventArgs.CreateEventArgs(eventArgs));
-        }
-
-        public event EventHandler<UIEventArgs> channel13;
-        private void onchannel13(SmartObjectEventArgs eventArgs)
-        {
-            EventHandler<UIEventArgs> handler = channel13;
-            if (handler != null)
-                handler(this, UIEventArgs.CreateEventArgs(eventArgs));
-        }
-
-        public event EventHandler<UIEventArgs> channel14;
-        private void onchannel14(SmartObjectEventArgs eventArgs)
-        {
-            EventHandler<UIEventArgs> handler = channel14;
-            if (handler != null)
-                handler(this, UIEventArgs.CreateEventArgs(eventArgs));
-        }
-
-        public event EventHandler<UIEventArgs> channel15;
-        private void onchannel15(SmartObjectEventArgs eventArgs)
-        {
-            EventHandler<UIEventArgs> handler = channel15;
-            if (handler != null)
-                handler(this, UIEventArgs.CreateEventArgs(eventArgs));
-        }
-
-        public event EventHandler<UIEventArgs> channel16;
-        private void onchannel16(SmartObjectEventArgs eventArgs)
-        {
-            EventHandler<UIEventArgs> handler = channel16;
-            if (handler != null)
-                handler(this, UIEventArgs.CreateEventArgs(eventArgs));
-        }
-
-        public event EventHandler<UIEventArgs> channel17;
-        private void onchannel17(SmartObjectEventArgs eventArgs)
-        {
-            EventHandler<UIEventArgs> handler = channel17;
-            if (handler != null)
-                handler(this, UIEventArgs.CreateEventArgs(eventArgs));
-        }
-
-        public event EventHandler<UIEventArgs> channel18;
-        private void onchannel18(SmartObjectEventArgs eventArgs)
-        {
-            EventHandler<UIEventArgs> handler = channel18;
-            if (handler != null)
-                handler(this, UIEventArgs.CreateEventArgs(eventArgs));
-        }
-
-        public event EventHandler<UIEventArgs> channel19;
-        private void onchannel19(SmartObjectEventArgs eventArgs)
-        {
-            EventHandler<UIEventArgs> handler = channel19;
-            if (handler != null)
-                handler(this, UIEventArgs.CreateEventArgs(eventArgs));
-        }
-
-        public event EventHandler<UIEventArgs> channel20;
-        private void onchannel20(SmartObjectEventArgs eventArgs)
-        {
-            EventHandler<UIEventArgs> handler = channel20;
-            if (handler != null)
-                handler(this, UIEventArgs.CreateEventArgs(eventArgs));
-        }
-
-
-        public void selectedChannelFb(ledControlStringInputSigDelegate callback)
-        {
-            for (int index = 0; index < Devices.Count; index++)
-            {
-                callback(Devices[index].SmartObjects[ControlJoinId].StringInput[Joins.Strings.selectedChannelFb], this);
-            }
-        }
-
-        public void channel1Fb(ledControlStringInputSigDelegate callback)
-        {
-            for (int index = 0; index < Devices.Count; index++)
-            {
-                callback(Devices[index].SmartObjects[ControlJoinId].StringInput[Joins.Strings.channel1Fb], this);
-            }
-        }
-
-        public void channel2Fb(ledControlStringInputSigDelegate callback)
-        {
-            for (int index = 0; index < Devices.Count; index++)
-            {
-                callback(Devices[index].SmartObjects[ControlJoinId].StringInput[Joins.Strings.channel2Fb], this);
-            }
-        }
-
-        public void channel3Fb(ledControlStringInputSigDelegate callback)
-        {
-            for (int index = 0; index < Devices.Count; index++)
-            {
-                callback(Devices[index].SmartObjects[ControlJoinId].StringInput[Joins.Strings.channel3Fb], this);
-            }
-        }
-
-        public void channel4Fb(ledControlStringInputSigDelegate callback)
-        {
-            for (int index = 0; index < Devices.Count; index++)
-            {
-                callback(Devices[index].SmartObjects[ControlJoinId].StringInput[Joins.Strings.channel4Fb], this);
-            }
-        }
-
-        public void channel5Fb(ledControlStringInputSigDelegate callback)
-        {
-            for (int index = 0; index < Devices.Count; index++)
-            {
-                callback(Devices[index].SmartObjects[ControlJoinId].StringInput[Joins.Strings.channel5Fb], this);
-            }
-        }
-
-        public void channel6Fb(ledControlStringInputSigDelegate callback)
-        {
-            for (int index = 0; index < Devices.Count; index++)
-            {
-                callback(Devices[index].SmartObjects[ControlJoinId].StringInput[Joins.Strings.channel6Fb], this);
-            }
-        }
-
-        public void channel7Fb(ledControlStringInputSigDelegate callback)
-        {
-            for (int index = 0; index < Devices.Count; index++)
-            {
-                callback(Devices[index].SmartObjects[ControlJoinId].StringInput[Joins.Strings.channel7Fb], this);
-            }
-        }
-
-        public void channel8Fb(ledControlStringInputSigDelegate callback)
-        {
-            for (int index = 0; index < Devices.Count; index++)
-            {
-                callback(Devices[index].SmartObjects[ControlJoinId].StringInput[Joins.Strings.channel8Fb], this);
-            }
-        }
-
-        public void channel9Fb(ledControlStringInputSigDelegate callback)
-        {
-            for (int index = 0; index < Devices.Count; index++)
-            {
-                callback(Devices[index].SmartObjects[ControlJoinId].StringInput[Joins.Strings.channel9Fb], this);
-            }
-        }
-
-        public void channel10Fb(ledControlStringInputSigDelegate callback)
-        {
-            for (int index = 0; index < Devices.Count; index++)
-            {
-                callback(Devices[index].SmartObjects[ControlJoinId].StringInput[Joins.Strings.channel10Fb], this);
-            }
-        }
-
-        public void channel11Fb(ledControlStringInputSigDelegate callback)
-        {
-            for (int index = 0; index < Devices.Count; index++)
-            {
-                callback(Devices[index].SmartObjects[ControlJoinId].StringInput[Joins.Strings.channel11Fb], this);
-            }
-        }
-
-        public void channel12Fb(ledControlStringInputSigDelegate callback)
-        {
-            for (int index = 0; index < Devices.Count; index++)
-            {
-                callback(Devices[index].SmartObjects[ControlJoinId].StringInput[Joins.Strings.channel12Fb], this);
-            }
-        }
-
-        public void channel13Fb(ledControlStringInputSigDelegate callback)
-        {
-            for (int index = 0; index < Devices.Count; index++)
-            {
-                callback(Devices[index].SmartObjects[ControlJoinId].StringInput[Joins.Strings.channel13Fb], this);
-            }
-        }
-
-        public void channel14Fb(ledControlStringInputSigDelegate callback)
-        {
-            for (int index = 0; index < Devices.Count; index++)
-            {
-                callback(Devices[index].SmartObjects[ControlJoinId].StringInput[Joins.Strings.channel14Fb], this);
-            }
-        }
-
-        public void channel15Fb(ledControlStringInputSigDelegate callback)
-        {
-            for (int index = 0; index < Devices.Count; index++)
-            {
-                callback(Devices[index].SmartObjects[ControlJoinId].StringInput[Joins.Strings.channel15Fb], this);
-            }
-        }
-
-        public void channel16Fb(ledControlStringInputSigDelegate callback)
-        {
-            for (int index = 0; index < Devices.Count; index++)
-            {
-                callback(Devices[index].SmartObjects[ControlJoinId].StringInput[Joins.Strings.channel16Fb], this);
-            }
-        }
-
-        public void channel17Fb(ledControlStringInputSigDelegate callback)
-        {
-            for (int index = 0; index < Devices.Count; index++)
-            {
-                callback(Devices[index].SmartObjects[ControlJoinId].StringInput[Joins.Strings.channel17Fb], this);
-            }
-        }
-
-        public void channel18Fb(ledControlStringInputSigDelegate callback)
-        {
-            for (int index = 0; index < Devices.Count; index++)
-            {
-                callback(Devices[index].SmartObjects[ControlJoinId].StringInput[Joins.Strings.channel18Fb], this);
-            }
-        }
-
-        public void channel19Fb(ledControlStringInputSigDelegate callback)
-        {
-            for (int index = 0; index < Devices.Count; index++)
-            {
-                callback(Devices[index].SmartObjects[ControlJoinId].StringInput[Joins.Strings.channel19Fb], this);
-            }
-        }
-
-        public void channel20Fb(ledControlStringInputSigDelegate callback)
-        {
-            for (int index = 0; index < Devices.Count; index++)
-            {
-                callback(Devices[index].SmartObjects[ControlJoinId].StringInput[Joins.Strings.channel20Fb], this);
             }
         }
 
@@ -745,31 +256,8 @@ namespace EngageRoomContract
             laptopInput = null;
             ledOn = null;
             ledOff = null;
-            showChannelsPage = null;
-            channelsAvailable = null;
             videoCon = null;
             videoConPermitted = null;
-            selectedChannel = null;
-            channel1 = null;
-            channel2 = null;
-            channel3 = null;
-            channel4 = null;
-            channel5 = null;
-            channel6 = null;
-            channel7 = null;
-            channel8 = null;
-            channel9 = null;
-            channel10 = null;
-            channel11 = null;
-            channel12 = null;
-            channel13 = null;
-            channel14 = null;
-            channel15 = null;
-            channel16 = null;
-            channel17 = null;
-            channel18 = null;
-            channel19 = null;
-            channel20 = null;
         }
 
         #endregion
