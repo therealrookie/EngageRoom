@@ -1473,7 +1473,13 @@ function onInit() {
   let currPage;
 
   CrComLib.subscribeState("b", "controlPages.fireAlarmFb", (fire) => {
-    fire ? switchPage(100) : switchPage(currPage);
+    if (fire) {
+      templatePageModule.navigateTriggerViewByPageName("fire");
+    } else if (currPage) {
+      switchPage(currPage);
+    } else {
+      switchPage(1);
+    }
   });
 
   // EVENT LISTENERS
@@ -1591,10 +1597,6 @@ function onInit() {
         break;
       case 7:
         nextPageName = "meeting";
-        templatePageModule.navigateTriggerViewByPageName(nextPageName);
-        break;
-      case 100:
-        nextPageName = "fire";
         templatePageModule.navigateTriggerViewByPageName(nextPageName);
         break;
       case 101:
@@ -2679,182 +2681,218 @@ const templateVersionInfoModule = (() => {
 	};
 })();
 const cameracontrolModule = (() => {
-    'use strict';
+  "use strict";
 
-    function onInit() {
-        // -------------------------------- CONSTANTS --------------------------------
+  function onInit() {
+    // -------------------------------- CONSTANTS --------------------------------
 
-        const cameraControlPage = document.getElementById("cameracontrol-page");
-        const homeButton = cameraControlPage.querySelector("#homeButtonColumn");
-        const backButton = cameraControlPage.querySelector("#backButtonColumn");
-        const zoomPlusButton = cameraControlPage.querySelector('#zoomPlus');
-        const zoomMinusButton = cameraControlPage.querySelector('#zoomMinus');
+    const cameraControlPage = document.getElementById("cameracontrol-page");
+    const homeButton = cameraControlPage.querySelector("#homeButtonColumn");
+    const backButton = cameraControlPage.querySelector("#backButtonColumn");
+    const zoomPlusButton = cameraControlPage.querySelector("#zoomPlus");
+    const zoomMinusButton = cameraControlPage.querySelector("#zoomMinus");
 
+    // -------------------------------- VARIABLES --------------------------------
 
-        // -------------------------------- VARIABLES --------------------------------
+    // ----------------------------- PRESET BUTTONS --------------------------------------------------------------------------------------
 
+    let presetButtons = [
+      {
+        event: "cameraControl.preset01",
+        feedback: "cameraControl.preset01Fb",
+        value: false,
+        id: "preset01Button",
+      },
+      {
+        event: "cameraControl.preset02",
+        feedback: "cameraControl.preset02Fb",
+        value: false,
+        id: "preset02Button",
+      },
+      {
+        event: "cameraControl.preset03",
+        feedback: "cameraControl.preset03Fb",
+        value: false,
+        id: "preset03Button",
+      },
+      {
+        event: "cameraControl.call",
+        feedback: "cameraControl.callFb",
+        value: false,
+        id: "callButton",
+      },
+      {
+        event: "cameraControl.setBtn",
+        feedback: "cameraControl.setBtnFb",
+        value: false,
+        id: "setButton",
+      },
+    ];
 
-
-        // ----------------------------- PRESET BUTTONS --------------------------------------------------------------------------------------
-
-        let presetButtons = [
-            { event: 'cameraControl.preset01', feedback: 'cameraControl.preset01Fb', valueTmp: false, value: false, id: "preset01Button" },
-            { event: 'cameraControl.preset02', feedback: 'cameraControl.preset02Fb', valueTmp: false, value: false, id: "preset02Button" },
-            { event: 'cameraControl.preset03', feedback: 'cameraControl.preset03Fb', valueTmp: false, value: false, id: "preset03Button" },
-            { event: 'cameraControl.call', feedback: 'cameraControl.callFb', valueTmp: false, value: false, id: "callButton" },
-            { event: 'cameraControl.setBtn', feedback: 'cameraControl.setBtnFb', valueTmp: false, value: false, id: "setButton" }
-
-        ]
-
-        // GET PRESET BUTTONS FEEDBACK
-        presetButtons.forEach(button => {
-            CrComLib.subscribeState('b', button.feedback, (value) => {
-                button.value = value;
-                updateActivatedStyle(button);
-            });
-        });
-
-        // LISTEN ON ALL PRESET BUTTONS
-        presetButtons.forEach(button => {
-            const btnElement = cameraControlPage.querySelector(`#${button.id}`);
-            btnElement.addEventListener("click", () => {
-                sendPressedPresetButton(button.id);
-            });
-        });
-        /*
-                // SEND CORRECT VALUES FOR EACH BUTTON
-                function sendPressedPresetButton(buttonId) {
-                    presetButtons.forEach(button => {
-                        const value = button.id === buttonId;
-                        CrComLib.publishEvent('b', button.event, value);
-                    });
-                }
-        */
-        // SEND CORRECT VALUES FOR EACH BUTTON
-        function sendPressedPresetButton(buttonId) {
-
-            presetButtons.forEach((button, index) => {
-                let value;
-
-                if (index < 3) {
-                    value = button.id === buttonId;
-                } else {
-                    value = button.id === buttonId;
-                }
-
-                CrComLib.publishEvent('b', button.event, value);
-            });
-        }
-
-
-        // UPDATE STYLE OF PRESET BUTONS
-        function updateActivatedStyle(button) {
-            const element = cameraControlPage.querySelector('#' + button.id);
-            if (button.id === 'setButton') {
-                button.value ? element.classList.add("setButtonPressed") : element.classList.remove("setButtonPressed");
-            } else {
-                button.value ? element.classList.add("buttonPressed") : element.classList.remove("buttonPressed");
-            }
-        }
-
-        // ----------------------------- ZOOM CONTROL --------------------------------------------------------------------------------------
-
-        let zoomTimeout;
-        let isZoomingIn = false;
-        let isZoomingOut = false;
-
-        // ZOOM PLUS
-        CrComLib.subscribeState('b', 'cameraControl.zoomPlusFb', (zoomPlus) => {
-            if (zoomPlus) {
-                zoomPlusButton.classList.add('buttonPressed');
-            } else {
-                zoomPlusButton.classList.remove('buttonPressed');
-            }
-        });
-
-        // ZOOM MINUS
-        CrComLib.subscribeState('b', 'cameraControl.zoomMinusFb', (zoomMinus) => {
-            if (zoomMinus) {
-                zoomMinusButton.classList.add('buttonPressed');
-            } else {
-                zoomMinusButton.classList.remove('buttonPressed');
-            }
-        });
-
-        function zoomIn() {
-            CrComLib.publishEvent('b', 'cameraControl.zoomPlus', true);
-        }
-
-        // Function to handle zoom out
-        function zoomOut() {
-            CrComLib.publishEvent('b', 'cameraControl.zoomMinus', true);
-        }
-
-
-        zoomPlusButton.addEventListener("touchstart", (event) => {
-            event.preventDefault(); // Prevent default touch behavior (e.g., scrolling)
-            if (!isZoomingOut) {
-                isZoomingIn = true;
-                zoomIn(); // Trigger zoomIn immediately
-                // Start repeating action when the button is touched and held
-                zoomTimeout = setInterval(zoomIn, 200); // Adjust the interval as needed
-
-            }
-        });
-
-        // Add touchend event listener to stop zooming in
-        zoomPlusButton.addEventListener("touchend", () => {
-            isZoomingIn = false;
-            CrComLib.publishEvent('b', 'cameraControl.zoomPlus', false);
-            clearInterval(zoomTimeout);
-        });
-
-        // Add touchstart event listener for zooming out
-        zoomMinusButton.addEventListener("touchstart", (event) => {
-            event.preventDefault(); // Prevent default touch behavior (e.g., scrolling)
-            if (!isZoomingIn) {
-                isZoomingOut = true;
-                zoomOut(); // Trigger zoomOut immediately
-                // Start repeating action when the button is touched and held
-                zoomTimeout = setInterval(zoomOut, 200); // Adjust the interval as needed
-            }
-        });
-
-        // Add touchend event listener to stop zooming out
-        zoomMinusButton.addEventListener("touchend", () => {
-            isZoomingOut = false;
-            CrComLib.publishEvent('b', 'cameraControl.zoomMinus', false);
-            clearInterval(zoomTimeout);
-        });
-
-        // ----------------------------- NAVIGATION --------------------------------------------------------------------------------------
-
-        // LISTEN ON HOME BUTTON
-        homeButton.addEventListener('click', function () {
-            CrComLib.publishEvent('n', 'controlPages.page', 1);
-        });
-
-        // LISTEN ON BACK BUTTON
-        backButton.addEventListener('click', function () {
-            CrComLib.publishEvent('n', 'controlPages.page', 3);
-        });
-
-    }
-
-    let loadedSubId = CrComLib.subscribeState('o', 'ch5-import-htmlsnippet:cameracontrol-import-page', (value) => {
-        if (value['loaded']) {
-            onInit();
-            setTimeout(() => {
-                CrComLib.unsubscribeState('o', 'ch5-import-htmlsnippet:cameracontrol-import-page', loadedSubId);
-                loadedSubId = '';
-            });
-        }
+    // GET PRESET BUTTONS FEEDBACK
+    presetButtons.forEach((button) => {
+      CrComLib.subscribeState("b", button.feedback, (value) => {
+        button.value = value;
+        updateActivatedStyle(button);
+      });
     });
 
-    return {
-    };
+    // LISTEN ON ALL PRESET BUTTONS
+    presetButtons.forEach((button) => {
+      const btnElement = cameraControlPage.querySelector(`#${button.id}`);
+      if (button.id === "setButton") {
+        btnElement.addEventListener("touchstart", () => {
+          CrComLib.publishEvent("b", "cameraControl.setBtn", true);
+        });
+        btnElement.addEventListener("touchend", () => {
+          CrComLib.publishEvent("b", "cameraControl.setBtn", false);
+          setPresetButtonsToZero();
+        });
+        btnElement.addEventListener("touchcancel", () => {
+          CrComLib.publishEvent("b", "cameraControl.setBtn", false);
+          setPresetButtonsToZero();
+        });
+      } else {
+        btnElement.addEventListener("click", () => {
+          sendPressedPresetButton(button.id);
+        });
+      }
+    });
 
+    // SEND CORRECT VALUES FOR EACH BUTTON
+    function sendPressedPresetButton(buttonId) {
+      presetButtons.forEach((button, index) => {
+        // if button = preset button
+        if (index < 3) {
+          // if button is pressed
+          if (button.id === buttonId) {
+            CrComLib.publishEvent("b", button.event, true);
+            CrComLib.publishEvent("b", button.event, false);
+            CrComLib.publishEvent("b", button.event, true);
+            // all other buttons, that are not pressed
+          } else {
+            CrComLib.publishEvent("b", button.event, false);
+          }
+          // if button = preview button
+        } else if (index == 3) {
+          // if button is pressed
+          if (button.id === buttonId) {
+            CrComLib.publishEvent("b", button.event, !button.value);
+          }
+        }
+      });
+    }
+
+    function setPresetButtonsToZero() {
+      presetButtons.forEach((button, index) => {
+        index < 3 && CrComLib.publishEvent("b", button.event, false);
+      });
+    }
+
+    // UPDATE STYLE OF PRESET BUTONS
+    function updateActivatedStyle(button) {
+      const element = cameraControlPage.querySelector("#" + button.id);
+      if (button.id === "setButton") {
+        button.value ? element.classList.add("setButtonPressed") : element.classList.remove("setButtonPressed");
+      } else {
+        button.value ? element.classList.add("buttonPressed") : element.classList.remove("buttonPressed");
+      }
+    }
+
+    // ----------------------------- ZOOM CONTROL --------------------------------------------------------------------------------------
+
+    let zoomTimeout;
+    let isZoomingIn = false;
+    let isZoomingOut = false;
+
+    // ZOOM PLUS
+    CrComLib.subscribeState("b", "cameraControl.zoomPlusFb", (zoomPlus) => {
+      if (zoomPlus) {
+        zoomPlusButton.classList.add("buttonPressed");
+      } else {
+        zoomPlusButton.classList.remove("buttonPressed");
+      }
+    });
+
+    // ZOOM MINUS
+    CrComLib.subscribeState("b", "cameraControl.zoomMinusFb", (zoomMinus) => {
+      if (zoomMinus) {
+        zoomMinusButton.classList.add("buttonPressed");
+      } else {
+        zoomMinusButton.classList.remove("buttonPressed");
+      }
+    });
+
+    function zoomIn() {
+      CrComLib.publishEvent("b", "cameraControl.zoomPlus", true);
+    }
+
+    // Function to handle zoom out
+    function zoomOut() {
+      CrComLib.publishEvent("b", "cameraControl.zoomMinus", true);
+    }
+
+    zoomPlusButton.addEventListener("touchstart", (event) => {
+      event.preventDefault(); // Prevent default touch behavior (e.g., scrolling)
+      if (!isZoomingOut) {
+        isZoomingIn = true;
+        zoomIn(); // Trigger zoomIn immediately
+        // Start repeating action when the button is touched and held
+        zoomTimeout = setInterval(zoomIn, 200); // Adjust the interval as needed
+      }
+    });
+
+    // Add touchend event listener to stop zooming in
+    zoomPlusButton.addEventListener("touchend", () => {
+      isZoomingIn = false;
+      CrComLib.publishEvent("b", "cameraControl.zoomPlus", false);
+      clearInterval(zoomTimeout);
+    });
+
+    // Add touchstart event listener for zooming out
+    zoomMinusButton.addEventListener("touchstart", (event) => {
+      event.preventDefault(); // Prevent default touch behavior (e.g., scrolling)
+      if (!isZoomingIn) {
+        isZoomingOut = true;
+        zoomOut(); // Trigger zoomOut immediately
+        // Start repeating action when the button is touched and held
+        zoomTimeout = setInterval(zoomOut, 200); // Adjust the interval as needed
+      }
+    });
+
+    // Add touchend event listener to stop zooming out
+    zoomMinusButton.addEventListener("touchend", () => {
+      isZoomingOut = false;
+      CrComLib.publishEvent("b", "cameraControl.zoomMinus", false);
+      clearInterval(zoomTimeout);
+    });
+
+    // ----------------------------- NAVIGATION --------------------------------------------------------------------------------------
+
+    // LISTEN ON HOME BUTTON
+    homeButton.addEventListener("click", function () {
+      CrComLib.publishEvent("n", "controlPages.page", 1);
+    });
+
+    // LISTEN ON BACK BUTTON
+    backButton.addEventListener("click", function () {
+      CrComLib.publishEvent("n", "controlPages.page", 3);
+    });
+  }
+
+  let loadedSubId = CrComLib.subscribeState("o", "ch5-import-htmlsnippet:cameracontrol-import-page", (value) => {
+    if (value["loaded"]) {
+      onInit();
+      setTimeout(() => {
+        CrComLib.unsubscribeState("o", "ch5-import-htmlsnippet:cameracontrol-import-page", loadedSubId);
+        loadedSubId = "";
+      });
+    }
+  });
+
+  return {};
 })();
+
 const fireModule = (() => {
     'use strict';
 
@@ -3336,169 +3374,191 @@ const localuseModule = (() => {
 
 })();
 const meetingModule = (() => {
-    'use strict';
+  "use strict";
 
-    function onInit() {
-        // ----------------------------- HTML ELEMENTS --------------------------------------------------------------------------------------
+  function onInit() {
+    // ----------------------------- HTML ELEMENTS --------------------------------------------------------------------------------------
 
-        const meetingPage = document.getElementById("meeting-page");
-        const homeButton = meetingPage.querySelector("#homeButtonColumn");
-        const backButton = meetingPage.querySelector("#backButtonColumn");
-        const zoomPlusButton = meetingPage.querySelector('#zoomPlus');
-        const zoomMinusButton = meetingPage.querySelector('#zoomMinus');
+    const meetingPage = document.getElementById("meeting-page");
+    const homeButton = meetingPage.querySelector("#homeButtonColumn");
+    const backButton = meetingPage.querySelector("#backButtonColumn");
+    const zoomPlusButton = meetingPage.querySelector("#zoomPlus");
+    const zoomMinusButton = meetingPage.querySelector("#zoomMinus");
 
+    // ----------------------------- PRESET BUTTONS --------------------------------------------------------------------------------------
 
-        // ----------------------------- PRESET BUTTONS --------------------------------------------------------------------------------------
+    let presetButtons = [
+      {
+        event: "meetingControl.preset01",
+        feedback: "meetingControl.preset01Fb",
+        valueTmp: false,
+        value: false,
+        id: "preset01Button",
+      },
+      {
+        event: "meetingControl.preset02",
+        feedback: "meetingControl.preset02Fb",
+        valueTmp: false,
+        value: false,
+        id: "preset02Button",
+      },
+      {
+        event: "meetingControl.preset03",
+        feedback: "meetingControl.preset03Fb",
+        valueTmp: false,
+        value: false,
+        id: "preset03Button",
+      },
+    ];
 
-        let presetButtons = [
-            { event: 'meetingControl.preset01', feedback: 'meetingControl.preset01Fb', valueTmp: false, value: false, id: "preset01Button" },
-            { event: 'meetingControl.preset02', feedback: 'meetingControl.preset02Fb', valueTmp: false, value: false, id: "preset02Button" },
-            { event: 'meetingControl.preset03', feedback: 'meetingControl.preset03Fb', valueTmp: false, value: false, id: "preset03Button" }
-        ]
-
-        // GET PRESET BUTTONS FEEDBACK
-        presetButtons.forEach(button => {
-            CrComLib.subscribeState('b', button.feedback, (value) => {
-                button.value = value;
-                updateActivatedStyle(button);
-            });
-        });
-
-
-        // LISTEN ON ALL PRESET BUTTONS
-        presetButtons.forEach(button => {
-            const btnElement = meetingPage.querySelector(`#${button.id}`);
-            btnElement.addEventListener("click", () => {
-                sendPressedPresetButton(button.id);
-            });
-        });
-
-        // SEND CORRECT VALUES FOR EACH BUTTON
-        function sendPressedPresetButton(buttonId) {
-            presetButtons.forEach(button => {
-                const value = button.id === buttonId;
-                CrComLib.publishEvent('b', button.event, value);
-            });
-        }
-
-        // UPDATE STYLE OF PRESET BUTONS
-        function updateActivatedStyle(button) {
-            const element = meetingPage.querySelector('#' +
-                button.id);
-            button.value ? element.classList.add('buttonPressed') : element.classList.remove('buttonPressed');
-        }
-
-        // ----------------------------- VOLUME --------------------------------------------------------------------------------------
-
-        // SEND VOLUME HAS CHANGED EVENTS
-        CrComLib.subscribeState('n', 'meetingControl.roomSoundVolumeFb', (value) => {
-            if (value >= 0 && value <= 65535) {
-                CrComLib.publishEvent('b', 'meetingControl.volumeChangedRoomSoundVolume', true);
-                CrComLib.publishEvent('b', 'meetingControl.volumeChangedRoomSoundVolume', false);
-            }
-        });
-
-        // ----------------------------- ZOOM CONTROL --------------------------------------------------------------------------------------
-
-        let zoomTimeout;
-        let isZoomingIn = false;
-        let isZoomingOut = false;
-
-        // FEEDBACK IF ZOOMING IN
-        CrComLib.subscribeState('b', 'meetingControl.zoomPlusFb', (zoomPlus) => {
-            if (zoomPlus) {
-                zoomPlusButton.classList.add('buttonPressed');
-            } else {
-                zoomPlusButton.classList.remove('buttonPressed');
-            }
-        });
-
-        // FEEDBACK IF ZOOMING OUT
-        CrComLib.subscribeState('b', 'meetingControl.zoomMinusFb', (zoomMinus) => {
-            if (zoomMinus) {
-                zoomMinusButton.classList.add('buttonPressed');
-            } else {
-                zoomMinusButton.classList.remove('buttonPressed');
-            }
-        });
-
-        function zoomIn() {
-            CrComLib.publishEvent('b', 'meetingControl.zoomPlus', true);
-        }
-
-        // Function to handle zoom out
-        function zoomOut() {
-            CrComLib.publishEvent('b', 'meetingControl.zoomMinus', true);
-        }
-
-
-        zoomPlusButton.addEventListener("touchstart", (event) => {
-            event.preventDefault(); // Prevent default touch behavior (e.g., scrolling)
-            if (!isZoomingOut) {
-                isZoomingIn = true;
-                zoomIn(); // Trigger zoomIn immediately
-                // Start repeating action when the button is touched and held
-                zoomTimeout = setInterval(zoomIn, 200); // Adjust the interval as needed
-
-            }
-        });
-
-        // Add touchend event listener to stop zooming in
-        zoomPlusButton.addEventListener("touchend", () => {
-            isZoomingIn = false;
-            CrComLib.publishEvent('b', 'meetingControl.zoomPlus', false);
-            clearInterval(zoomTimeout);
-        });
-
-        // Add touchstart event listener for zooming out
-        zoomMinusButton.addEventListener("touchstart", (event) => {
-            event.preventDefault(); // Prevent default touch behavior (e.g., scrolling)
-            if (!isZoomingIn) {
-                isZoomingOut = true;
-                zoomOut(); // Trigger zoomOut immediately
-                // Start repeating action when the button is touched and held
-                zoomTimeout = setInterval(zoomOut, 200); // Adjust the interval as needed
-            }
-        });
-
-        // Add touchend event listener to stop zooming out
-        zoomMinusButton.addEventListener("touchend", () => {
-            isZoomingOut = false;
-            CrComLib.publishEvent('b', 'meetingControl.zoomMinus', false);
-            clearInterval(zoomTimeout);
-        });
-
-
-
-
-        // ----------------------------- NAVIGATION --------------------------------------------------------------------------------------
-
-        // LISTEN ON HOME BUTTON
-        homeButton.addEventListener('click', function () {
-            CrComLib.publishEvent('n', 'controlPages.page', 1);
-        });
-
-        // LISTEN ON BACK BUTTON
-        backButton.addEventListener('click', function () {
-            CrComLib.publishEvent('n', 'controlPages.page', 2);
-        });
-
-    }
-
-    let loadedSubId = CrComLib.subscribeState('o', 'ch5-import-htmlsnippet:meeting-import-page', (value) => {
-        if (value['loaded']) {
-            onInit();
-            setTimeout(() => {
-                CrComLib.unsubscribeState('o', 'ch5-import-htmlsnippet:meeting-import-page', loadedSubId);
-                loadedSubId = '';
-            });
-        }
+    // GET PRESET BUTTONS FEEDBACK
+    presetButtons.forEach((button) => {
+      CrComLib.subscribeState("b", button.feedback, (value) => {
+        button.value = value;
+        updateActivatedStyle(button);
+      });
     });
 
-    return {
-    };
+    // LISTEN ON ALL PRESET BUTTONS
+    presetButtons.forEach((button) => {
+      const btnElement = meetingPage.querySelector(`#${button.id}`);
+      btnElement.addEventListener("touchstart", () => {
+        sendPressedPresetButton(button.id, true);
+      });
+      btnElement.addEventListener("touchend", () => {
+        sendPressedPresetButton(button.id, false);
+        setPresetButtonsToZero();
+      });
+      btnElement.addEventListener("touchcancel", () => {
+        sendPressedPresetButton(button.id, false);
+        setPresetButtonsToZero();
+      });
+    });
 
+    // SEND CORRECT VALUES FOR EACH BUTTON
+    function sendPressedPresetButton(buttonId, pressed) {
+      presetButtons.forEach((button) => {
+        const value = button.id === buttonId && pressed;
+        CrComLib.publishEvent("b", button.event, value);
+      });
+    }
+
+    function setPresetButtonsToZero() {
+      presetButtons.forEach((button) => {
+        CrComLib.publishEvent("b", button.event, false);
+      });
+    }
+
+    // UPDATE STYLE OF PRESET BUTONS
+    function updateActivatedStyle(button) {
+      const element = meetingPage.querySelector("#" + button.id);
+      button.value ? element.classList.add("buttonPressed") : element.classList.remove("buttonPressed");
+    }
+
+    // ----------------------------- VOLUME --------------------------------------------------------------------------------------
+
+    // SEND VOLUME HAS CHANGED EVENTS
+    CrComLib.subscribeState("n", "meetingControl.roomSoundVolumeFb", (value) => {
+      if (value >= 0 && value <= 65535) {
+        CrComLib.publishEvent("b", "meetingControl.volumeChangedRoomSoundVolume", true);
+        CrComLib.publishEvent("b", "meetingControl.volumeChangedRoomSoundVolume", false);
+      }
+    });
+
+    // ----------------------------- ZOOM CONTROL --------------------------------------------------------------------------------------
+
+    let zoomTimeout;
+    let isZoomingIn = false;
+    let isZoomingOut = false;
+
+    // FEEDBACK IF ZOOMING IN
+    CrComLib.subscribeState("b", "meetingControl.zoomPlusFb", (zoomPlus) => {
+      if (zoomPlus) {
+        zoomPlusButton.classList.add("buttonPressed");
+      } else {
+        zoomPlusButton.classList.remove("buttonPressed");
+      }
+    });
+
+    // FEEDBACK IF ZOOMING OUT
+    CrComLib.subscribeState("b", "meetingControl.zoomMinusFb", (zoomMinus) => {
+      if (zoomMinus) {
+        zoomMinusButton.classList.add("buttonPressed");
+      } else {
+        zoomMinusButton.classList.remove("buttonPressed");
+      }
+    });
+
+    function zoomIn() {
+      CrComLib.publishEvent("b", "meetingControl.zoomPlus", true);
+    }
+
+    // Function to handle zoom out
+    function zoomOut() {
+      CrComLib.publishEvent("b", "meetingControl.zoomMinus", true);
+    }
+
+    zoomPlusButton.addEventListener("touchstart", (event) => {
+      event.preventDefault(); // Prevent default touch behavior (e.g., scrolling)
+      if (!isZoomingOut) {
+        isZoomingIn = true;
+        zoomIn(); // Trigger zoomIn immediately
+        // Start repeating action when the button is touched and held
+        zoomTimeout = setInterval(zoomIn, 200); // Adjust the interval as needed
+      }
+    });
+
+    // Add touchend event listener to stop zooming in
+    zoomPlusButton.addEventListener("touchend", () => {
+      isZoomingIn = false;
+      CrComLib.publishEvent("b", "meetingControl.zoomPlus", false);
+      clearInterval(zoomTimeout);
+    });
+
+    // Add touchstart event listener for zooming out
+    zoomMinusButton.addEventListener("touchstart", (event) => {
+      event.preventDefault(); // Prevent default touch behavior (e.g., scrolling)
+      if (!isZoomingIn) {
+        isZoomingOut = true;
+        zoomOut(); // Trigger zoomOut immediately
+        // Start repeating action when the button is touched and held
+        zoomTimeout = setInterval(zoomOut, 200); // Adjust the interval as needed
+      }
+    });
+
+    // Add touchend event listener to stop zooming out
+    zoomMinusButton.addEventListener("touchend", () => {
+      isZoomingOut = false;
+      CrComLib.publishEvent("b", "meetingControl.zoomMinus", false);
+      clearInterval(zoomTimeout);
+    });
+
+    // ----------------------------- NAVIGATION --------------------------------------------------------------------------------------
+
+    // LISTEN ON HOME BUTTON
+    homeButton.addEventListener("click", function () {
+      CrComLib.publishEvent("n", "controlPages.page", 1);
+    });
+
+    // LISTEN ON BACK BUTTON
+    backButton.addEventListener("click", function () {
+      CrComLib.publishEvent("n", "controlPages.page", 2);
+    });
+  }
+
+  let loadedSubId = CrComLib.subscribeState("o", "ch5-import-htmlsnippet:meeting-import-page", (value) => {
+    if (value["loaded"]) {
+      onInit();
+      setTimeout(() => {
+        CrComLib.unsubscribeState("o", "ch5-import-htmlsnippet:meeting-import-page", loadedSubId);
+        loadedSubId = "";
+      });
+    }
+  });
+
+  return {};
 })();
+
 const monitorcontrolModule = (() => {
   "use strict";
 

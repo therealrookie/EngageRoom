@@ -130,7 +130,13 @@ function onInit() {
   let currPage;
 
   CrComLib.subscribeState("b", "controlPages.fireAlarmFb", (fire) => {
-    fire ? switchPage(100) : switchPage(currPage);
+    if (fire) {
+      templatePageModule.navigateTriggerViewByPageName("fire");
+    } else if (currPage) {
+      switchPage(currPage);
+    } else {
+      switchPage(1);
+    }
   });
 
   // EVENT LISTENERS
@@ -248,10 +254,6 @@ function onInit() {
         break;
       case 7:
         nextPageName = "meeting";
-        templatePageModule.navigateTriggerViewByPageName(nextPageName);
-        break;
-      case 100:
-        nextPageName = "fire";
         templatePageModule.navigateTriggerViewByPageName(nextPageName);
         break;
       case 101:
