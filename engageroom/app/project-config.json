@@ -120,22 +120,6 @@
         }
       },
       {
-        "pageName": "fire",
-        "fullPath": "./app/project/components/pages/fire/",
-        "fileName": "fire.html",
-        "preloadPage": true,
-        "cachePage": false,
-        "standAloneView": false,
-        "navigation": {
-          "sequence": 1,
-          "label": "",
-          "isI18nLabel": false,
-          "iconClass": "fas fa-file-alt",
-          "iconUrl": "",
-          "iconPosition": "bottom"
-        }
-      },
-      {
         "pageName": "selectlocality",
         "fullPath": "./app/project/components/pages/selectlocality/",
         "fileName": "selectlocality.html",

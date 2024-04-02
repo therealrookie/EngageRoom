@@ -12,7 +12,7 @@
 		{
 			"uri": "channelListContract.cce",
 			"parentContractId": "_y68nohgrp",
-			"id": "_dvymhrkde",
+			"id": "_qsbmqrho7",
 			"date": "2024-2-27"
 		}
 	],
@@ -353,16 +353,6 @@
 				},
 				{
 					"Errors": [],
-					"name": "previousPageFb",
-					"siblingId": "_1b6ogc2ao",
-					"dataType": 2,
-					"notes": "",
-					"id": "_8jo705ma2",
-					"parentId": "_cuu27uuxd",
-					"attributeType": 0
-				},
-				{
-					"Errors": [],
 					"name": "codeInputFb",
 					"siblingId": "_s0y11xigw",
 					"dataType": 3,
@@ -373,11 +363,11 @@
 				},
 				{
 					"Errors": [],
-					"name": "fireAlarmFb",
-					"siblingId": "_ojj1q8loi",
+					"name": "isLoadingFb",
+					"siblingId": "_8nfcn4u7n",
 					"dataType": 1,
 					"notes": "",
-					"id": "_s1y9mrpeb",
+					"id": "_gm09temeb",
 					"parentId": "_cuu27uuxd",
 					"attributeType": 0
 				}
@@ -395,16 +385,6 @@
 				},
 				{
 					"Errors": [],
-					"name": "previousPage",
-					"siblingId": "_8jo705ma2",
-					"dataType": 2,
-					"notes": "",
-					"id": "_1b6ogc2ao",
-					"parentId": "_cuu27uuxd",
-					"attributeType": 1
-				},
-				{
-					"Errors": [],
 					"name": "codeInput",
 					"siblingId": "_w4mfvaabl",
 					"dataType": 3,
@@ -415,11 +395,11 @@
 				},
 				{
 					"Errors": [],
-					"name": "fireAlarm",
-					"siblingId": "_s1y9mrpeb",
+					"name": "isLoading",
+					"siblingId": "_gm09temeb",
 					"dataType": 1,
 					"notes": "",
-					"id": "_ojj1q8loi",
+					"id": "_8nfcn4u7n",
 					"parentId": "_cuu27uuxd",
 					"attributeType": 1
 				}

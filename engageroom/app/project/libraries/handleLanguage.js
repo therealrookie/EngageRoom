@@ -125,19 +125,32 @@ function onInit() {
   let nextPageNr;
   let inactivityTimeout;
 
-  // -------------------------- FIRE ALARM CHECK -------------------------------------------------------------------
+  // -------------------------- LOADING PAGE CHECK -------------------------------------------------------------------
 
-  let currPage;
+  let isLoading = false;
 
-  CrComLib.subscribeState("b", "controlPages.fireAlarmFb", (fire) => {
-    if (fire) {
-      templatePageModule.navigateTriggerViewByPageName("fire");
-    } else if (currPage) {
-      switchPage(currPage);
+  CrComLib.subscribeState("b", "controlPages.isLoadingFb", (loading) => {
+    if (loading) {
+      isLoading = true;
+      checkForLoading();
+      templatePageModule.navigateTriggerViewByPageName("loading");
     } else {
-      switchPage(1);
+      isLoading = false;
+      setTimeout(() => {
+        switchPage(1);
+      }, 2000);
     }
   });
+
+  function checkForLoading() {
+    setTimeout(() => {
+      if (!isLoading) {
+        switchPage(1);
+      } else {
+        checkForLoading();
+      }
+    }, 10000);
+  }
 
   // EVENT LISTENERS
   btnEnglish.addEventListener("click", function () {
@@ -168,8 +181,6 @@ function onInit() {
       element.textContent = languagePack[lang][key];
     });
   }
-
-  btnEnglish.classList.add("buttonPressed");
 
   function changeLangButtonAppearance(isEnglish) {
     if (isEnglish) {
@@ -217,11 +228,6 @@ function onInit() {
   });
 
   function switchPage(pageNr) {
-    if (pageNr < 100) {
-      currPage = pageNr;
-      CrComLib.publishEvent("n", "controlPages.previousPage", pageNr);
-    }
-
     let nextPageName;
     switch (pageNr) {
       case 1:
@@ -254,10 +260,6 @@ function onInit() {
         break;
       case 7:
         nextPageName = "meeting";
-        templatePageModule.navigateTriggerViewByPageName(nextPageName);
-        break;
-      case 101:
-        nextPageName = "loading";
         templatePageModule.navigateTriggerViewByPageName(nextPageName);
         break;
       default:

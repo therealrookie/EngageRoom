@@ -1468,19 +1468,32 @@ function onInit() {
   let nextPageNr;
   let inactivityTimeout;
 
-  // -------------------------- FIRE ALARM CHECK -------------------------------------------------------------------
+  // -------------------------- LOADING PAGE CHECK -------------------------------------------------------------------
 
-  let currPage;
+  let isLoading = false;
 
-  CrComLib.subscribeState("b", "controlPages.fireAlarmFb", (fire) => {
-    if (fire) {
-      templatePageModule.navigateTriggerViewByPageName("fire");
-    } else if (currPage) {
-      switchPage(currPage);
+  CrComLib.subscribeState("b", "controlPages.isLoadingFb", (loading) => {
+    if (loading) {
+      isLoading = true;
+      checkForLoading();
+      templatePageModule.navigateTriggerViewByPageName("loading");
     } else {
-      switchPage(1);
+      isLoading = false;
+      setTimeout(() => {
+        switchPage(1);
+      }, 2000);
     }
   });
+
+  function checkForLoading() {
+    setTimeout(() => {
+      if (!isLoading) {
+        switchPage(1);
+      } else {
+        checkForLoading();
+      }
+    }, 10000);
+  }
 
   // EVENT LISTENERS
   btnEnglish.addEventListener("click", function () {
@@ -1511,8 +1524,6 @@ function onInit() {
       element.textContent = languagePack[lang][key];
     });
   }
-
-  btnEnglish.classList.add("buttonPressed");
 
   function changeLangButtonAppearance(isEnglish) {
     if (isEnglish) {
@@ -1560,11 +1571,6 @@ function onInit() {
   });
 
   function switchPage(pageNr) {
-    if (pageNr < 100) {
-      currPage = pageNr;
-      CrComLib.publishEvent("n", "controlPages.previousPage", pageNr);
-    }
-
     let nextPageName;
     switch (pageNr) {
       case 1:
@@ -1597,10 +1603,6 @@ function onInit() {
         break;
       case 7:
         nextPageName = "meeting";
-        templatePageModule.navigateTriggerViewByPageName(nextPageName);
-        break;
-      case 101:
-        nextPageName = "loading";
         templatePageModule.navigateTriggerViewByPageName(nextPageName);
         break;
       default:
@@ -2893,40 +2895,6 @@ const cameracontrolModule = (() => {
   return {};
 })();
 
-const fireModule = (() => {
-    'use strict';
-
-    function onInit() {
-        let messageElement = document.getElementById('emergency-message');
-
-        
-        function toggleEmergencyMessage() {
-            if (messageElement.textContent === 'Fire') {
-                messageElement.textContent = 'Incendie';
-            } else {
-                messageElement.textContent = 'Fire';
-            }
-        }
- 
-        setInterval(toggleEmergencyMessage, 2000);
-    }
-
-    
-    // private method for page class initialization
-    let loadedSubId = CrComLib.subscribeState('o', 'ch5-import-htmlsnippet:fire-import-page', (value) => {
-        if (value['loaded']) {
-            onInit();
-            setTimeout(() => {
-                CrComLib.unsubscribeState('o', 'ch5-import-htmlsnippet:fire-import-page', loadedSubId);
-                loadedSubId = '';
-            });
-        }
-    }); 
-
-    return {
-    };
-
-})();
 const keypadinputModule = (() => {
     'use strict';
 
@@ -3000,13 +2968,11 @@ const ledcontrolModule = (() => {
     const buttonContainer = ledControlPage.querySelector("#channelButtonContainer");
     const volumeColumn = ledControlPage.querySelector("#volumeColumn");
     const channelColumn = ledControlPage.querySelector("#channelColumn");
-    const channelIcon = ledControlPage.querySelector("#volumeColumn .toggle-icon");
     const volumeIcon = ledControlPage.querySelector("#channelColumn .toggle-icon");
     const ledOnButton = ledControlPage.querySelector("#ledOn");
     const ledOffButton = ledControlPage.querySelector("#ledOff");
 
     // ----------------------------- SOURCE BUTTONS ---------------------------------------------
-    let tvPlayerSelected = false;
     let currentColumn;
 
     let sourceButtons = [
@@ -3045,14 +3011,6 @@ const ledcontrolModule = (() => {
       CrComLib.subscribeState("b", button.feedback, (value) => {
         button.value = value;
         updateActivatedStyle(button);
-
-        if (button.id === "tvPlayerButton" && value) {
-          tvPlayerSelected = true;
-        } else if (value) {
-          tvPlayerSelected = false;
-        }
-
-        updateShownColumn();
       });
     });
 
@@ -3070,6 +3028,12 @@ const ledcontrolModule = (() => {
       const btnElement = ledControlPage.querySelector(`#${button.id}`);
       btnElement.addEventListener("click", () => {
         sendPressedSourceButton(button.id);
+        if (button.id === "tvPlayerButton") {
+          currentColumn = currentColumn === "channel" ? "volume" : "channel";
+        } else {
+          currentColumn = "volume";
+        }
+        selectVisibleColumn(currentColumn);
       });
     });
 
@@ -3093,13 +3057,7 @@ const ledcontrolModule = (() => {
 
     // LISTEN ON VOLUME- OR CHANNEL-ICON
     volumeIcon.addEventListener("click", () => {
-      currentColumn = "volume";
-      selectVisibleColumn(currentColumn);
-    });
-
-    channelIcon.addEventListener("click", () => {
-      currentColumn = "channel";
-      selectVisibleColumn(currentColumn);
+      selectVisibleColumn("volume");
     });
 
     // CHANGE STYLE OF VOLUME OR CHANNEL COLUMN
@@ -3118,17 +3076,7 @@ const ledcontrolModule = (() => {
           volumeColumn.classList.add("inactive");
           break;
       }
-    }
-
-    // SWITCH BETWEEN VOLUME OR CHANNEL COLUMN
-    function updateShownColumn() {
-      if (tvPlayerSelected) {
-        selectVisibleColumn(currentColumn);
-        channelIcon.style.visibility = "visible";
-      } else {
-        selectVisibleColumn("volume");
-        channelIcon.style.visibility = "hidden";
-      }
+      currentColumn = column;
     }
 
     // ----------------------------- CHANNELS --------------------------------------------------------------------------------------
@@ -3299,80 +3247,74 @@ const loadingModule = (() => {
     // END::CHANGEAREA
 
 })();
-
 const localuseModule = (() => {
-    'use strict';
+  "use strict";
 
-    function onInit() {
-        const localUsePage = document.getElementById('localuse-page');
-        const ledControl = localUsePage.querySelector('#' + 'ledControlButton');
-        const monitorControl = localUsePage.querySelector('#' + 'monitorControlButton');
-        const cameraControl = localUsePage.querySelector('#' + 'cameraControlButton');
-        const homeButton = localUsePage.querySelector('#' + 'homeButtonColumn');
-        const backButton = localUsePage.querySelector('#' + 'backButtonColumn');
+  function onInit() {
+    const localUsePage = document.getElementById("localuse-page");
+    const ledControl = localUsePage.querySelector("#ledControlButton");
+    const monitorControl = localUsePage.querySelector("#monitorControlButton");
+    const cameraControl = localUsePage.querySelector("#cameraControlButton");
+    const homeButton = localUsePage.querySelector("#homeButtonColumn");
+    const backButton = localUsePage.querySelector("#backButtonColumn");
 
+    // --------- SEND VOLUME HAS CHANGED EVENTS -----------------------------------------
 
-        // --------- SEND VOLUME HAS CHANGED EVENTS -----------------------------------------
-
-        CrComLib.subscribeState('n', 'localUse.brandMusicVolumeFb', (value) => {
-            if (value >= 0 && value <= 65535) {
-                CrComLib.publishEvent('b', 'localUse.volumeChangedBrandMusic', true);
-                CrComLib.publishEvent('b', 'localUse.volumeChangedBrandMusic', false);
-            }
-        });
-
-        CrComLib.subscribeState('n', 'localUse.micVolumeFb', (value) => {
-            if (value >= 0 && value <= 65535) {
-                CrComLib.publishEvent('b', 'localUse.volumeChangedMicVolume', true);
-                CrComLib.publishEvent('b', 'localUse.volumeChangedMicVolume', false);
-            }
-        });
-
-        CrComLib.subscribeState('n', 'localUse.mediaLevelFb', (value) => {
-            if (value >= 0 && value <= 65535) {
-                CrComLib.publishEvent('b', 'localUse.volumeChangedMediaLevel', true);
-                CrComLib.publishEvent('b', 'localUse.volumeChangedMediaLevel', false);
-            }
-        });
-
-
-
-        ledControl.addEventListener('click', () => {
-                CrComLib.publishEvent('n', 'controlPages.page', 4);
-        });
-
-        monitorControl.addEventListener('click', () => {
-                CrComLib.publishEvent('n', 'controlPages.page', 5);
-        });
-
-        cameraControl.addEventListener('click', () => {
-                CrComLib.publishEvent('n', 'controlPages.page', 6);
-        });
-
-        homeButton.addEventListener('click', () => {
-                CrComLib.publishEvent('n', 'controlPages.page', 1);
-        });
-
-        backButton.addEventListener('click', () => {
-                CrComLib.publishEvent('n', 'controlPages.page', 2);
-        });
-    }
-
-    let loadedSubId = CrComLib.subscribeState('o', 'ch5-import-htmlsnippet:localuse-import-page', (value) => {
-        if (value['loaded']) {
-            onInit();
-            setTimeout(() => {
-                CrComLib.unsubscribeState('o', 'ch5-import-htmlsnippet:localuse-import-page', loadedSubId);
-                loadedSubId = '';
-            });
-        }
+    CrComLib.subscribeState("n", "localUse.brandMusicVolumeFb", (value) => {
+      if (value >= 0 && value <= 65535) {
+        CrComLib.publishEvent("b", "localUse.volumeChangedBrandMusic", true);
+        CrComLib.publishEvent("b", "localUse.volumeChangedBrandMusic", false);
+      }
     });
 
-    return {
-    };
+    CrComLib.subscribeState("n", "localUse.micVolumeFb", (value) => {
+      if (value >= 0 && value <= 65535) {
+        CrComLib.publishEvent("b", "localUse.volumeChangedMicVolume", true);
+        CrComLib.publishEvent("b", "localUse.volumeChangedMicVolume", false);
+      }
+    });
 
+    CrComLib.subscribeState("n", "localUse.mediaLevelFb", (value) => {
+      if (value >= 0 && value <= 65535) {
+        CrComLib.publishEvent("b", "localUse.volumeChangedMediaLevel", true);
+        CrComLib.publishEvent("b", "localUse.volumeChangedMediaLevel", false);
+      }
+    });
 
+    ledControl.addEventListener("click", () => {
+      CrComLib.publishEvent("n", "controlPages.page", 4);
+    });
+
+    monitorControl.addEventListener("click", () => {
+      CrComLib.publishEvent("n", "controlPages.page", 5);
+    });
+
+    cameraControl.addEventListener("click", () => {
+      CrComLib.publishEvent("n", "controlPages.page", 6);
+    });
+
+    homeButton.addEventListener("click", () => {
+      CrComLib.publishEvent("n", "controlPages.page", 1);
+    });
+
+    backButton.addEventListener("click", () => {
+      CrComLib.publishEvent("n", "controlPages.page", 2);
+    });
+  }
+
+  let loadedSubId = CrComLib.subscribeState("o", "ch5-import-htmlsnippet:localuse-import-page", (value) => {
+    if (value["loaded"]) {
+      onInit();
+      setTimeout(() => {
+        CrComLib.unsubscribeState("o", "ch5-import-htmlsnippet:localuse-import-page", loadedSubId);
+        loadedSubId = "";
+      });
+    }
+  });
+
+  return {};
 })();
+
 const meetingModule = (() => {
   "use strict";
 
@@ -3577,7 +3519,6 @@ const monitorcontrolModule = (() => {
     const ledOffButton = monitorControlPage.querySelector("#ledOff");
 
     // ----------------------------- SOURCE BUTTONS ---------------------------------------------
-    let tvPlayerSelected = false;
     let currentColumn;
 
     let sourceButtons = [
@@ -3616,14 +3557,6 @@ const monitorcontrolModule = (() => {
       CrComLib.subscribeState("b", button.feedback, (value) => {
         button.value = value;
         updateActivatedStyle(button);
-
-        if (button.id === "tvPlayerButton" && value) {
-          tvPlayerSelected = true;
-        } else if (value) {
-          tvPlayerSelected = false;
-        }
-
-        updateShownColumn();
       });
     });
 
@@ -3641,6 +3574,12 @@ const monitorcontrolModule = (() => {
       const btnElement = monitorControlPage.querySelector(`#${button.id}`);
       btnElement.addEventListener("click", () => {
         sendPressedSourceButton(button.id);
+        if (button.id === "tvPlayerButton") {
+          currentColumn = currentColumn === "channel" ? "volume" : "channel";
+        } else {
+          currentColumn = "volume";
+        }
+        selectVisibleColumn(currentColumn);
       });
     });
 
@@ -3664,13 +3603,7 @@ const monitorcontrolModule = (() => {
 
     // LISTEN ON VOLUME- OR CHANNEL-ICON
     volumeIcon.addEventListener("click", () => {
-      currentColumn = "volume";
-      selectVisibleColumn(currentColumn);
-    });
-
-    channelIcon.addEventListener("click", () => {
-      currentColumn = "channel";
-      selectVisibleColumn(currentColumn);
+      selectVisibleColumn("volume");
     });
 
     // CHANGE STYLE OF VOLUME OR CHANNEL COLUMN
@@ -3689,17 +3622,7 @@ const monitorcontrolModule = (() => {
           volumeColumn.classList.add("inactive");
           break;
       }
-    }
-
-    // SWITCH BETWEEN VOLUME OR CHANNEL COLUMN
-    function updateShownColumn() {
-      if (tvPlayerSelected) {
-        selectVisibleColumn(currentColumn);
-        channelIcon.style.visibility = "visible";
-      } else {
-        selectVisibleColumn("volume");
-        channelIcon.style.visibility = "hidden";
-      }
+      currentColumn = column;
     }
 
     // ----------------------------- CHANNELS --------------------------------------------------------------------------------------

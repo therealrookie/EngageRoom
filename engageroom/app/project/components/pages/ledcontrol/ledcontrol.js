@@ -10,13 +10,11 @@ const ledcontrolModule = (() => {
     const buttonContainer = ledControlPage.querySelector("#channelButtonContainer");
     const volumeColumn = ledControlPage.querySelector("#volumeColumn");
     const channelColumn = ledControlPage.querySelector("#channelColumn");
-    const channelIcon = ledControlPage.querySelector("#volumeColumn .toggle-icon");
     const volumeIcon = ledControlPage.querySelector("#channelColumn .toggle-icon");
     const ledOnButton = ledControlPage.querySelector("#ledOn");
     const ledOffButton = ledControlPage.querySelector("#ledOff");
 
     // ----------------------------- SOURCE BUTTONS ---------------------------------------------
-    let tvPlayerSelected = false;
     let currentColumn;
 
     let sourceButtons = [
@@ -55,14 +53,6 @@ const ledcontrolModule = (() => {
       CrComLib.subscribeState("b", button.feedback, (value) => {
         button.value = value;
         updateActivatedStyle(button);
-
-        if (button.id === "tvPlayerButton" && value) {
-          tvPlayerSelected = true;
-        } else if (value) {
-          tvPlayerSelected = false;
-        }
-
-        updateShownColumn();
       });
     });
 
@@ -80,6 +70,12 @@ const ledcontrolModule = (() => {
       const btnElement = ledControlPage.querySelector(`#${button.id}`);
       btnElement.addEventListener("click", () => {
         sendPressedSourceButton(button.id);
+        if (button.id === "tvPlayerButton") {
+          currentColumn = currentColumn === "channel" ? "volume" : "channel";
+        } else {
+          currentColumn = "volume";
+        }
+        selectVisibleColumn(currentColumn);
       });
     });
 
@@ -103,13 +99,7 @@ const ledcontrolModule = (() => {
 
     // LISTEN ON VOLUME- OR CHANNEL-ICON
     volumeIcon.addEventListener("click", () => {
-      currentColumn = "volume";
-      selectVisibleColumn(currentColumn);
-    });
-
-    channelIcon.addEventListener("click", () => {
-      currentColumn = "channel";
-      selectVisibleColumn(currentColumn);
+      selectVisibleColumn("volume");
     });
 
     // CHANGE STYLE OF VOLUME OR CHANNEL COLUMN
@@ -128,17 +118,7 @@ const ledcontrolModule = (() => {
           volumeColumn.classList.add("inactive");
           break;
       }
-    }
-
-    // SWITCH BETWEEN VOLUME OR CHANNEL COLUMN
-    function updateShownColumn() {
-      if (tvPlayerSelected) {
-        selectVisibleColumn(currentColumn);
-        channelIcon.style.visibility = "visible";
-      } else {
-        selectVisibleColumn("volume");
-        channelIcon.style.visibility = "hidden";
-      }
+      currentColumn = column;
     }
 
     // ----------------------------- CHANNELS --------------------------------------------------------------------------------------

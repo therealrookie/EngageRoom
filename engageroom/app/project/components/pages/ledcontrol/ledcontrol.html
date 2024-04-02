@@ -1,50 +1,48 @@
 <section id="ledcontrol-page" class="details-container" aria-labelledby="Ledcontrol">
+  <div class="column source" id="sourceColumn">
+    <h1 data-lang-key="sourceHeader"></h1>
 
-    <div class="column source" id="sourceColumn">
+    <p data-lang-key="sourceHint"></p>
 
-        <h1 data-lang-key="sourceHeader"></h1>
+    <div id="signageButton" class="sourceButton" data-lang-key="signageButton"></div>
+    <div id="tvPlayerButton" class="sourceButton" data-lang-key="tvPlayerButton"></div>
+    <div id="laptopInputButton" class="sourceButton" data-lang-key="laptopInputButton"></div>
+    <div id="videoConButton" class="sourceButton" data-lang-key="videoConButton"></div>
+  </div>
 
-        <p data-lang-key="sourceHint"></p>
-
-        <div id="signageButton" class="sourceButton" data-lang-key="signageButton"></div>
-        <div id="tvPlayerButton" class="sourceButton" data-lang-key="tvPlayerButton"></div>
-        <div id="laptopInputButton" class="sourceButton" data-lang-key="laptopInputButton"></div>
-        <div id="videoConButton" class="sourceButton" data-lang-key="videoConButton"></div>
-
+  <div class="column volume" id="volumeColumn">
+    <div id="columnHeader">
+      <h1 data-lang-key="ledButtonsHeader"></h1>
+      <div style="width: 2rem"></div>
     </div>
 
-    <div class="column volume" id="volumeColumn">
-        <div id="columnHeader">
-            <h1 data-lang-key="ledButtonsHeader"></h1>
-            <img src="./app/template/assets/img/list-columns-white.svg" class="toggle-icon" data-target="channelColumn">
-        </div>
+    <p data-lang-key="ledButtonsHint"></p>
 
-        <p data-lang-key="ledButtonsHint"></p>
-
-        <div id="ledButtons">
-            <div id="ledOn" data-lang-key="on"></div>
-            <div id="ledOff" data-lang-key="off"></div>
-        </div>
-
+    <div id="ledButtons">
+      <div id="ledOn" data-lang-key="on"></div>
+      <div id="ledOff" data-lang-key="off"></div>
     </div>
+  </div>
 
-    <div class="column channels" id="channelColumn">
-        <div id="columnHeader">
-            <h1 data-lang-key="channelHeader"></h1>
-            <img src="./app/template/assets/img/x-lg-white.svg" class="toggle-icon" data-target="volumeColumn">
-        </div>
-        <div id="channelButtonContainer" class="button-container">
-        </div>
+  <div class="column channels" id="channelColumn">
+    <div id="columnHeader">
+      <h1 data-lang-key="channelHeader"></h1>
+      <img src="./app/template/assets/img/x-lg-white.svg" class="toggle-icon" data-target="volumeColumn" />
     </div>
+    <div id="channelButtonContainer" class="button-container"></div>
+  </div>
 
-    <div id="backButtonColumn" class="column">
-        <h1 data-lang-key="backButtonHeader"></h1>
-        <div id="backButtonImageContainer"> <img src="./app/template/assets/img/arrow-back.svg" class="navButtonIcon"> </div>
+  <div id="backButtonColumn" class="column">
+    <h1 data-lang-key="backButtonHeader"></h1>
+    <div id="backButtonImageContainer">
+      <img src="./app/template/assets/img/arrow-back.svg" class="navButtonIcon" />
     </div>
+  </div>
 
-    <div id="homeButtonColumn" class="column">
-        <h1 data-lang-key="homeButtonHeader"></h1>
-        <div id="homeButtonImageContainer"> <img src="./app/template/assets/img/house-fill.svg" class="navButtonIcon"> </div>
+  <div id="homeButtonColumn" class="column">
+    <h1 data-lang-key="homeButtonHeader"></h1>
+    <div id="homeButtonImageContainer">
+      <img src="./app/template/assets/img/house-fill.svg" class="navButtonIcon" />
     </div>
-
+  </div>
 </section>

@@ -10,14 +10,12 @@ namespace EngageRoomContract
     {
         object UserObject { get; set; }
 
-        event EventHandler<UIEventArgs> fireAlarm;
+        event EventHandler<UIEventArgs> isLoading;
         event EventHandler<UIEventArgs> page;
-        event EventHandler<UIEventArgs> previousPage;
         event EventHandler<UIEventArgs> codeInput;
 
-        void fireAlarmFb(controlPagesBoolInputSigDelegate callback);
+        void isLoadingFb(controlPagesBoolInputSigDelegate callback);
         void pageFb(controlPagesUShortInputSigDelegate callback);
-        void previousPageFb(controlPagesUShortInputSigDelegate callback);
         void codeInputFb(controlPagesStringInputSigDelegate callback);
 
     }
@@ -47,17 +45,15 @@ namespace EngageRoomContract
         {
             internal static class Booleans
             {
-                public const uint fireAlarm = 1;
+                public const uint isLoading = 1;
 
-                public const uint fireAlarmFb = 1;
+                public const uint isLoadingFb = 1;
             }
             internal static class Numerics
             {
                 public const uint page = 1;
-                public const uint previousPage = 2;
 
                 public const uint pageFb = 1;
-                public const uint previousPageFb = 2;
             }
             internal static class Strings
             {
@@ -83,9 +79,8 @@ namespace EngageRoomContract
  
             _devices = new List<BasicTriListWithSmartObject>(); 
  
-            ComponentMediator.ConfigureBooleanEvent(controlJoinId, Joins.Booleans.fireAlarm, onfireAlarm);
+            ComponentMediator.ConfigureBooleanEvent(controlJoinId, Joins.Booleans.isLoading, onisLoading);
             ComponentMediator.ConfigureNumericEvent(controlJoinId, Joins.Numerics.page, onpage);
-            ComponentMediator.ConfigureNumericEvent(controlJoinId, Joins.Numerics.previousPage, onpreviousPage);
             ComponentMediator.ConfigureStringEvent(controlJoinId, Joins.Strings.codeInput, oncodeInput);
 
         }
@@ -106,20 +101,20 @@ namespace EngageRoomContract
 
         #region CH5 Contract
 
-        public event EventHandler<UIEventArgs> fireAlarm;
-        private void onfireAlarm(SmartObjectEventArgs eventArgs)
+        public event EventHandler<UIEventArgs> isLoading;
+        private void onisLoading(SmartObjectEventArgs eventArgs)
         {
-            EventHandler<UIEventArgs> handler = fireAlarm;
+            EventHandler<UIEventArgs> handler = isLoading;
             if (handler != null)
                 handler(this, UIEventArgs.CreateEventArgs(eventArgs));
         }
 
 
-        public void fireAlarmFb(controlPagesBoolInputSigDelegate callback)
+        public void isLoadingFb(controlPagesBoolInputSigDelegate callback)
         {
             for (int index = 0; index < Devices.Count; index++)
             {
-                callback(Devices[index].SmartObjects[ControlJoinId].BooleanInput[Joins.Booleans.fireAlarmFb], this);
+                callback(Devices[index].SmartObjects[ControlJoinId].BooleanInput[Joins.Booleans.isLoadingFb], this);
             }
         }
 
@@ -131,28 +126,12 @@ namespace EngageRoomContract
                 handler(this, UIEventArgs.CreateEventArgs(eventArgs));
         }
 
-        public event EventHandler<UIEventArgs> previousPage;
-        private void onpreviousPage(SmartObjectEventArgs eventArgs)
-        {
-            EventHandler<UIEventArgs> handler = previousPage;
-            if (handler != null)
-                handler(this, UIEventArgs.CreateEventArgs(eventArgs));
-        }
-
 
         public void pageFb(controlPagesUShortInputSigDelegate callback)
         {
             for (int index = 0; index < Devices.Count; index++)
             {
                 callback(Devices[index].SmartObjects[ControlJoinId].UShortInput[Joins.Numerics.pageFb], this);
-            }
-        }
-
-        public void previousPageFb(controlPagesUShortInputSigDelegate callback)
-        {
-            for (int index = 0; index < Devices.Count; index++)
-            {
-                callback(Devices[index].SmartObjects[ControlJoinId].UShortInput[Joins.Numerics.previousPageFb], this);
             }
         }
 
@@ -200,9 +179,8 @@ namespace EngageRoomContract
 
             IsDisposed = true;
 
-            fireAlarm = null;
+            isLoading = null;
             page = null;
-            previousPage = null;
             codeInput = null;
         }
 

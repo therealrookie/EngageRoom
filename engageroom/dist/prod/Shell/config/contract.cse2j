@@ -1,6 +1,6 @@
 {
 	"name": "EngageRoomContract",
-	"timestamp": "2024-02-27 14:58:16.557",
+	"timestamp": "2024-04-02 11:08:55.871",
 	"version": "1.0.0.0",
 	"schema_version": 1,
 	"extra_value": "",
@@ -8,7 +8,7 @@
 		"states": {
 			"boolean": {
 				"1": {
-					"1": "controlPages.fireAlarmFb"
+					"1": "controlPages.isLoadingFb"
 				},
 				"2": {
 					"1": "selectLanguage.isEnglishFb"
@@ -56,8 +56,7 @@
 			},
 			"numeric": {
 				"1": {
-					"1": "controlPages.pageFb",
-					"2": "controlPages.previousPageFb"
+					"1": "controlPages.pageFb"
 				},
 				"3": {
 					"1": "localUse.brandMusicVolumeFb",
@@ -119,7 +118,7 @@
 		},
 		"events": {
 			"boolean": {
-				"controlPages.fireAlarm": {
+				"controlPages.isLoading": {
 					"joinId": 1,
 					"smartObjectId": 1
 				},
@@ -291,10 +290,6 @@
 			"numeric": {
 				"controlPages.page": {
 					"joinId": 1,
-					"smartObjectId": 1
-				},
-				"controlPages.previousPage": {
-					"joinId": 2,
 					"smartObjectId": 1
 				},
 				"localUse.brandMusicVolume": {
