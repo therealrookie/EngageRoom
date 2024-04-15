@@ -1364,7 +1364,7 @@ function onInit() {
       txtTime: "Time",
 
       localUseHeader: "Local Use",
-      meetingHeader: "Meeting",
+      meetingHeader: "Video Conference",
       zoomHeader: "Zoom",
 
       controlHeader: "Control",
@@ -1402,6 +1402,7 @@ function onInit() {
       setButton: "SET",
 
       channelHeader: "Channels",
+      channelHint: "Choose channel",
 
       homeButtonHeader: "Home",
       backButtonHeader: "Back",
@@ -1418,7 +1419,7 @@ function onInit() {
       txtTime: "Heure",
 
       localUseHeader: "Utilisation locale",
-      meetingHeader: "Réunion",
+      meetingHeader: "Conférence vidéo",
 
       controlHeader: "Contrôle",
       controlHint: "Cliquez pour contrôler l'appareil",
@@ -1428,7 +1429,7 @@ function onInit() {
       sourceHeader: "Source",
       sourceHint: "Choisissez une source vidéo",
       zoomHeader: "Zoom",
-      tvPlayerButton: "Chaînes TV",
+      tvPlayerButton: "Lecteur TV",
       signageButton: "adiTV",
       laptopInputButton: "Entrée Ordinateur portable",
       videoConButton: "Video Conference",
@@ -1437,8 +1438,8 @@ function onInit() {
       roomSoundVolume: "Volume du son de la salle",
       ledButtonsHeader: "LEDs",
       ledButtonsHint: "Allumez ou éteignez les LEDs",
-      monitorButtonsHeader: "Moniteur",
-      monitorButtonsHint: "Allumez ou éteignez le moniteur",
+      monitorButtonsHeader: "Écran",
+      monitorButtonsHint: "Allumez ou éteignez le écran",
       brandMusicHeader: "Musique de marque",
       mediaLevelHeader: "Niveau des médias",
       micLevelHeader: "Niveau du microphone",
@@ -1450,9 +1451,10 @@ function onInit() {
       preset02Button: "PRÉRÉGLAGE 2",
       preset03Button: "PRÉRÉGLAGE 3",
       channelHeader: "Chaînes",
+      channelHint: "Choisir une chaîne",
       homeButtonHeader: "Accueil",
       backButtonHeader: "Retour",
-      displayHeader: "Affichage",
+      displayHeader: "Écran",
       on: "ON",
       off: "OFF",
     },
@@ -2754,6 +2756,16 @@ const cameracontrolModule = (() => {
           CrComLib.publishEvent("b", "cameraControl.setBtn", false);
           setPresetButtonsToZero();
         });
+      } else if (button.id === "callButton") {
+        btnElement.addEventListener("touchstart", () => {
+          CrComLib.publishEvent("b", "cameraControl.call", true);
+        });
+        btnElement.addEventListener("touchend", () => {
+          CrComLib.publishEvent("b", "cameraControl.call", false);
+        });
+        btnElement.addEventListener("touchcancel", () => {
+          CrComLib.publishEvent("b", "cameraControl.call", false);
+        });
       } else {
         btnElement.addEventListener("click", () => {
           sendPressedPresetButton(button.id);
@@ -2776,11 +2788,6 @@ const cameracontrolModule = (() => {
             CrComLib.publishEvent("b", button.event, false);
           }
           // if button = preview button
-        } else if (index == 3) {
-          // if button is pressed
-          if (button.id === buttonId) {
-            CrComLib.publishEvent("b", button.event, !button.value);
-          }
         }
       });
     }
@@ -2874,12 +2881,19 @@ const cameracontrolModule = (() => {
     // LISTEN ON HOME BUTTON
     homeButton.addEventListener("click", function () {
       CrComLib.publishEvent("n", "controlPages.page", 1);
+      camControlPageControl();
     });
 
     // LISTEN ON BACK BUTTON
     backButton.addEventListener("click", function () {
       CrComLib.publishEvent("n", "controlPages.page", 3);
+      camControlPageControl();
     });
+
+    function camControlPageControl() {
+      CrComLib.publishEvent("b", "controlPages.camControlDeactivated", true);
+      CrComLib.publishEvent("b", "controlPages.camControlDeactivated", false);
+    }
   }
 
   let loadedSubId = CrComLib.subscribeState("o", "ch5-import-htmlsnippet:cameracontrol-import-page", (value) => {
@@ -3017,9 +3031,9 @@ const ledcontrolModule = (() => {
     // ACTIVATION / DEACTIVATION OF YEALINK BUTTON
     CrComLib.subscribeState("b", "ledControl.videoConPermittedFb", (isActive) => {
       if (!isActive) {
-        document.getElementById(sourceButtons[3].id).classList.add("inactive");
+        monitorControlPage.querySelector(`#${sourceButtons[3].id}`).classList.add("inactive");
       } else if (isActive) {
-        document.getElementById(sourceButtons[3].id).classList.remove("inactive");
+        monitorControlPage.querySelector(`#${sourceButtons[3].id}`).classList.remove("inactive");
       }
     });
 
@@ -3198,55 +3212,50 @@ const ledcontrolModule = (() => {
   return {};
 })();
 
-/**
- * Copyright (C) 2023 to the present, Crestron Electronics, Inc.
- * All rights reserved.
- * No part of this software may be reproduced in any form, machine
- * or natural, without the express written consent of Crestron Electronics.
- * Use of this source code is subject to the terms of the Crestron Software License Agreement 
- * under which you licensed this source code.  
- *
- * This code was automatically generated by Crestron's code generation tool.
-*/
-/*jslint es6 */
-/*global serviceModule, CrComLib */
-
 const loadingModule = (() => {
-    'use strict';
+  "use strict";
 
-    // BEGIN::CHANGEAREA - your javascript for page module code goes here         
+  function onInit() {
+    const loadingText = document.getElementById("loading-text");
+    let isEnglish = true;
+    let dotCount = 0;
 
-    /**
-     * Initialize Method
-     */
-    function onInit() {
-       serviceModule.addEmulatorScenarioNoControlSystem("./app/project/components/pages/loading/loading-emulator.json");
-       // Uncomment the below line and comment the above to load the emulator all the time.
-       // serviceModule.addEmulatorScenario("./app/project/components/pages/loading/loading-emulator.json");       
+    function updateText() {
+      let text = isEnglish ? "System is loading" : "Le système est en cours de chargement";
+      for (let i = 0; i < dotCount; i++) {
+        text += " .";
+      }
+      loadingText.textContent = text;
     }
 
-    /**
-     * private method for page class initialization
-     */
-    let loadedSubId = CrComLib.subscribeState('o', 'ch5-import-htmlsnippet:loading-import-page', (value) => {
-        if (value['loaded']) {
-            onInit();
-            setTimeout(() => {
-                CrComLib.unsubscribeState('o', 'ch5-import-htmlsnippet:loading-import-page', loadedSubId);
-                loadedSubId = '';
-            });
-        }
-    }); 
+    function animate() {
+      updateText();
+      dotCount++;
 
-    /**
-     * All public method and properties are exported here
-     */
-    return {
-    };
+      if (dotCount > 3) {
+        dotCount = 0;
+        isEnglish = !isEnglish; // Toggle language after full dot animation
+      }
 
-    // END::CHANGEAREA
+      setTimeout(animate, 1000); // Call animate every 500ms
+    }
 
+    animate(); // Start the animation
+  }
+
+  let loadedSubId = CrComLib.subscribeState("o", "ch5-import-htmlsnippet:loading-import-page", (value) => {
+    if (value["loaded"]) {
+      onInit();
+      setTimeout(() => {
+        CrComLib.unsubscribeState("o", "ch5-import-htmlsnippet:loading-import-page", loadedSubId);
+        loadedSubId = "";
+      });
+    }
+  });
+
+  return {};
 })();
+
 const localuseModule = (() => {
   "use strict";
 
@@ -3260,26 +3269,41 @@ const localuseModule = (() => {
 
     // --------- SEND VOLUME HAS CHANGED EVENTS -----------------------------------------
 
-    CrComLib.subscribeState("n", "localUse.brandMusicVolumeFb", (value) => {
-      if (value >= 0 && value <= 65535) {
-        CrComLib.publishEvent("b", "localUse.volumeChangedBrandMusic", true);
-        CrComLib.publishEvent("b", "localUse.volumeChangedBrandMusic", false);
-      }
-    });
+    const volumeDelay = 50;
 
-    CrComLib.subscribeState("n", "localUse.micVolumeFb", (value) => {
-      if (value >= 0 && value <= 65535) {
-        CrComLib.publishEvent("b", "localUse.volumeChangedMicVolume", true);
-        CrComLib.publishEvent("b", "localUse.volumeChangedMicVolume", false);
-      }
-    });
+    // General-purpose debounce function
+    function debounce(func, wait) {
+      let timeout;
+      return function executedFunction(...args) {
+        const later = () => {
+          clearTimeout(timeout);
+          func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+      };
+    }
 
-    CrComLib.subscribeState("n", "localUse.mediaLevelFb", (value) => {
+    // Function to handle volume changes
+    function handleVolumeChange(volumeType, value) {
       if (value >= 0 && value <= 65535) {
-        CrComLib.publishEvent("b", "localUse.volumeChangedMediaLevel", true);
-        CrComLib.publishEvent("b", "localUse.volumeChangedMediaLevel", false);
+        CrComLib.publishEvent("b", `localUse.volumeChanged${volumeType}`, true);
+        // Assuming you need to reset the volumeChanged state immediately after setting it to true
+        setTimeout(() => CrComLib.publishEvent("b", `localUse.volumeChanged${volumeType}`, false), 0);
       }
-    });
+    }
+
+    // Debounced handlers
+    const brandMusicVolumeHandler = debounce(handleVolumeChange.bind(null, "BrandMusic"), volumeDelay);
+    const micVolumeHandler = debounce(handleVolumeChange.bind(null, "MicVolume"), volumeDelay);
+    const mediaLevelHandler = debounce(handleVolumeChange.bind(null, "MediaLevel"), volumeDelay);
+
+    // Subscribe state changes
+    CrComLib.subscribeState("n", "localUse.brandMusicVolumeFb", brandMusicVolumeHandler);
+    CrComLib.subscribeState("n", "localUse.micVolumeFb", micVolumeHandler);
+    CrComLib.subscribeState("n", "localUse.mediaLevelFb", mediaLevelHandler);
+
+    // --------- SWITCH PAGES -----------------------------------------
 
     ledControl.addEventListener("click", () => {
       CrComLib.publishEvent("n", "controlPages.page", 4);
@@ -3291,6 +3315,7 @@ const localuseModule = (() => {
 
     cameraControl.addEventListener("click", () => {
       CrComLib.publishEvent("n", "controlPages.page", 6);
+      camControlPageControl();
     });
 
     homeButton.addEventListener("click", () => {
@@ -3300,6 +3325,11 @@ const localuseModule = (() => {
     backButton.addEventListener("click", () => {
       CrComLib.publishEvent("n", "controlPages.page", 2);
     });
+
+    function camControlPageControl() {
+      CrComLib.publishEvent("b", "controlPages.camControlActivated", true);
+      CrComLib.publishEvent("b", "controlPages.camControlActivated", false);
+    }
   }
 
   let loadedSubId = CrComLib.subscribeState("o", "ch5-import-htmlsnippet:localuse-import-page", (value) => {
@@ -3399,13 +3429,35 @@ const meetingModule = (() => {
 
     // ----------------------------- VOLUME --------------------------------------------------------------------------------------
 
-    // SEND VOLUME HAS CHANGED EVENTS
-    CrComLib.subscribeState("n", "meetingControl.roomSoundVolumeFb", (value) => {
+    const volumeDelay = 50;
+
+    // General-purpose debounce function
+    function debounce(func, wait) {
+      let timeout;
+      return function executedFunction(...args) {
+        const later = () => {
+          clearTimeout(timeout);
+          func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+      };
+    }
+
+    // Function to handle volume changes
+    function handleVolumeChange(volumeType, value) {
       if (value >= 0 && value <= 65535) {
-        CrComLib.publishEvent("b", "meetingControl.volumeChangedRoomSoundVolume", true);
-        CrComLib.publishEvent("b", "meetingControl.volumeChangedRoomSoundVolume", false);
+        CrComLib.publishEvent("b", `meetingControl.${volumeType}`, true);
+        // Assuming you need to reset the volumeChanged state immediately after setting it to true
+        setTimeout(() => CrComLib.publishEvent("b", `meetingControl.${volumeType}`, false), 0);
       }
-    });
+    }
+
+    // Debounced handlers
+    const roomSoundVolumeHandler = debounce(handleVolumeChange.bind(null, "volumeChangedRoomSoundVolume"), volumeDelay);
+
+    // Subscribe state changes
+    CrComLib.subscribeState("n", "meetingControl.roomSoundVolumeFb", roomSoundVolumeHandler);
 
     // ----------------------------- ZOOM CONTROL --------------------------------------------------------------------------------------
 
@@ -3480,12 +3532,19 @@ const meetingModule = (() => {
     // LISTEN ON HOME BUTTON
     homeButton.addEventListener("click", function () {
       CrComLib.publishEvent("n", "controlPages.page", 1);
+      meetingPageControl();
     });
 
     // LISTEN ON BACK BUTTON
     backButton.addEventListener("click", function () {
       CrComLib.publishEvent("n", "controlPages.page", 2);
+      meetingPageControl();
     });
+
+    function meetingPageControl() {
+      CrComLib.publishEvent("b", "controlPages.meetingDeactivated", true);
+      CrComLib.publishEvent("b", "controlPages.meetingDeactivated", false);
+    }
   }
 
   let loadedSubId = CrComLib.subscribeState("o", "ch5-import-htmlsnippet:meeting-import-page", (value) => {
@@ -3563,9 +3622,9 @@ const monitorcontrolModule = (() => {
     // ACTIVATION / DEACTIVATION OF YEALINK BUTTON
     CrComLib.subscribeState("b", "monitorControl.videoConPermittedFb", (isActive) => {
       if (!isActive) {
-        document.getElementById(sourceButtons[3].id).classList.add("inactive");
+        monitorControlPage.querySelector(`#${sourceButtons[3].id}`).classList.add("inactive");
       } else if (isActive) {
-        document.getElementById(sourceButtons[3].id).classList.remove("inactive");
+        monitorControlPage.querySelector(`#${sourceButtons[3].id}`).classList.remove("inactive");
       }
     });
 
@@ -3806,42 +3865,43 @@ const page1Module = (() => {
     // END::CHANGEAREA
 
 })();
-
 const selectlocalityModule = (() => {
-    'use strict';
+  "use strict";
 
-    function onInit() {
-        const page1 = document.getElementById("selectlocality-page");
-        const localUseButton = page1.querySelector('#' + "localUseColumn");
-        const meetingButton = page1.querySelector('#' + "meetingColumn");
-        const homeButton = page1.querySelector('#' + "navButton");
+  function onInit() {
+    const page1 = document.getElementById("selectlocality-page");
+    const localUseButton = page1.querySelector("#" + "localUseColumn");
+    const meetingButton = page1.querySelector("#" + "meetingColumn");
+    const homeButton = page1.querySelector("#" + "navButton");
 
-        localUseButton.addEventListener('click', () => {
-            CrComLib.publishEvent('n', 'controlPages.page', 3);
-        });
-
-        meetingButton.addEventListener('click', () => {
-            CrComLib.publishEvent('n', 'controlPages.page', 7);
-        });
-
-        homeButton.addEventListener('click', () => {
-            CrComLib.publishEvent('n', 'controlPages.page', 1);
-        });
-    }
-
-
-    let loadedSubId = CrComLib.subscribeState('o', 'ch5-import-htmlsnippet:selectlocality-import-page', (value) => {
-        if (value['loaded']) {
-            onInit();
-            setTimeout(() => {
-                CrComLib.unsubscribeState('o', 'ch5-import-htmlsnippet:selectlocality-import-page', loadedSubId);
-                loadedSubId = '';
-            });
-        }
+    localUseButton.addEventListener("click", () => {
+      CrComLib.publishEvent("n", "controlPages.page", 3);
     });
 
-    return {
-    };
+    meetingButton.addEventListener("click", () => {
+      CrComLib.publishEvent("n", "controlPages.page", 7);
+      meetingPageControl();
+    });
 
+    homeButton.addEventListener("click", () => {
+      CrComLib.publishEvent("n", "controlPages.page", 1);
+    });
 
+    function meetingPageControl() {
+      CrComLib.publishEvent("b", "controlPages.meetingActivated", true);
+      CrComLib.publishEvent("b", "controlPages.meetingActivated", false);
+    }
+  }
+
+  let loadedSubId = CrComLib.subscribeState("o", "ch5-import-htmlsnippet:selectlocality-import-page", (value) => {
+    if (value["loaded"]) {
+      onInit();
+      setTimeout(() => {
+        CrComLib.unsubscribeState("o", "ch5-import-htmlsnippet:selectlocality-import-page", loadedSubId);
+        loadedSubId = "";
+      });
+    }
+  });
+
+  return {};
 })();

@@ -60,9 +60,9 @@ const monitorcontrolModule = (() => {
     // ACTIVATION / DEACTIVATION OF YEALINK BUTTON
     CrComLib.subscribeState("b", "monitorControl.videoConPermittedFb", (isActive) => {
       if (!isActive) {
-        document.getElementById(sourceButtons[3].id).classList.add("inactive");
+        monitorControlPage.querySelector(`#${sourceButtons[3].id}`).classList.add("inactive");
       } else if (isActive) {
-        document.getElementById(sourceButtons[3].id).classList.remove("inactive");
+        monitorControlPage.querySelector(`#${sourceButtons[3].id}`).classList.remove("inactive");
       }
     });
 

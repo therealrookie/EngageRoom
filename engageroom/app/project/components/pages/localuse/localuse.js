@@ -11,26 +11,41 @@ const localuseModule = (() => {
 
     // --------- SEND VOLUME HAS CHANGED EVENTS -----------------------------------------
 
-    CrComLib.subscribeState("n", "localUse.brandMusicVolumeFb", (value) => {
-      if (value >= 0 && value <= 65535) {
-        CrComLib.publishEvent("b", "localUse.volumeChangedBrandMusic", true);
-        CrComLib.publishEvent("b", "localUse.volumeChangedBrandMusic", false);
-      }
-    });
+    const volumeDelay = 50;
 
-    CrComLib.subscribeState("n", "localUse.micVolumeFb", (value) => {
-      if (value >= 0 && value <= 65535) {
-        CrComLib.publishEvent("b", "localUse.volumeChangedMicVolume", true);
-        CrComLib.publishEvent("b", "localUse.volumeChangedMicVolume", false);
-      }
-    });
+    // General-purpose debounce function
+    function debounce(func, wait) {
+      let timeout;
+      return function executedFunction(...args) {
+        const later = () => {
+          clearTimeout(timeout);
+          func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+      };
+    }
 
-    CrComLib.subscribeState("n", "localUse.mediaLevelFb", (value) => {
+    // Function to handle volume changes
+    function handleVolumeChange(volumeType, value) {
       if (value >= 0 && value <= 65535) {
-        CrComLib.publishEvent("b", "localUse.volumeChangedMediaLevel", true);
-        CrComLib.publishEvent("b", "localUse.volumeChangedMediaLevel", false);
+        CrComLib.publishEvent("b", `localUse.volumeChanged${volumeType}`, true);
+        // Assuming you need to reset the volumeChanged state immediately after setting it to true
+        setTimeout(() => CrComLib.publishEvent("b", `localUse.volumeChanged${volumeType}`, false), 0);
       }
-    });
+    }
+
+    // Debounced handlers
+    const brandMusicVolumeHandler = debounce(handleVolumeChange.bind(null, "BrandMusic"), volumeDelay);
+    const micVolumeHandler = debounce(handleVolumeChange.bind(null, "MicVolume"), volumeDelay);
+    const mediaLevelHandler = debounce(handleVolumeChange.bind(null, "MediaLevel"), volumeDelay);
+
+    // Subscribe state changes
+    CrComLib.subscribeState("n", "localUse.brandMusicVolumeFb", brandMusicVolumeHandler);
+    CrComLib.subscribeState("n", "localUse.micVolumeFb", micVolumeHandler);
+    CrComLib.subscribeState("n", "localUse.mediaLevelFb", mediaLevelHandler);
+
+    // --------- SWITCH PAGES -----------------------------------------
 
     ledControl.addEventListener("click", () => {
       CrComLib.publishEvent("n", "controlPages.page", 4);
@@ -42,6 +57,7 @@ const localuseModule = (() => {
 
     cameraControl.addEventListener("click", () => {
       CrComLib.publishEvent("n", "controlPages.page", 6);
+      camControlPageControl();
     });
 
     homeButton.addEventListener("click", () => {
@@ -51,6 +67,11 @@ const localuseModule = (() => {
     backButton.addEventListener("click", () => {
       CrComLib.publishEvent("n", "controlPages.page", 2);
     });
+
+    function camControlPageControl() {
+      CrComLib.publishEvent("b", "controlPages.camControlActivated", true);
+      CrComLib.publishEvent("b", "controlPages.camControlActivated", false);
+    }
   }
 
   let loadedSubId = CrComLib.subscribeState("o", "ch5-import-htmlsnippet:localuse-import-page", (value) => {

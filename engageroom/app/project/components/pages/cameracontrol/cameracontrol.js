@@ -70,6 +70,16 @@ const cameracontrolModule = (() => {
           CrComLib.publishEvent("b", "cameraControl.setBtn", false);
           setPresetButtonsToZero();
         });
+      } else if (button.id === "callButton") {
+        btnElement.addEventListener("touchstart", () => {
+          CrComLib.publishEvent("b", "cameraControl.call", true);
+        });
+        btnElement.addEventListener("touchend", () => {
+          CrComLib.publishEvent("b", "cameraControl.call", false);
+        });
+        btnElement.addEventListener("touchcancel", () => {
+          CrComLib.publishEvent("b", "cameraControl.call", false);
+        });
       } else {
         btnElement.addEventListener("click", () => {
           sendPressedPresetButton(button.id);
@@ -92,11 +102,6 @@ const cameracontrolModule = (() => {
             CrComLib.publishEvent("b", button.event, false);
           }
           // if button = preview button
-        } else if (index == 3) {
-          // if button is pressed
-          if (button.id === buttonId) {
-            CrComLib.publishEvent("b", button.event, !button.value);
-          }
         }
       });
     }
@@ -190,12 +195,19 @@ const cameracontrolModule = (() => {
     // LISTEN ON HOME BUTTON
     homeButton.addEventListener("click", function () {
       CrComLib.publishEvent("n", "controlPages.page", 1);
+      camControlPageControl();
     });
 
     // LISTEN ON BACK BUTTON
     backButton.addEventListener("click", function () {
       CrComLib.publishEvent("n", "controlPages.page", 3);
+      camControlPageControl();
     });
+
+    function camControlPageControl() {
+      CrComLib.publishEvent("b", "controlPages.camControlDeactivated", true);
+      CrComLib.publishEvent("b", "controlPages.camControlDeactivated", false);
+    }
   }
 
   let loadedSubId = CrComLib.subscribeState("o", "ch5-import-htmlsnippet:cameracontrol-import-page", (value) => {

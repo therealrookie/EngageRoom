@@ -1,6 +1,6 @@
 {
 	"name": "EngageRoomContract",
-	"timestamp": "2024-04-02 11:08:55.871",
+	"timestamp": "2024-04-15 12:38:21.605",
 	"version": "1.0.0.0",
 	"schema_version": 1,
 	"extra_value": "",
@@ -8,7 +8,11 @@
 		"states": {
 			"boolean": {
 				"1": {
-					"1": "controlPages.isLoadingFb"
+					"1": "controlPages.isLoadingFb",
+					"2": "controlPages.meetingActivatedFb",
+					"3": "controlPages.meetingDeactivatedFb",
+					"4": "controlPages.camControlActivatedFb",
+					"5": "controlPages.camControlDeactivatedFb"
 				},
 				"2": {
 					"1": "selectLanguage.isEnglishFb"
@@ -120,6 +124,22 @@
 			"boolean": {
 				"controlPages.isLoading": {
 					"joinId": 1,
+					"smartObjectId": 1
+				},
+				"controlPages.meetingActivated": {
+					"joinId": 2,
+					"smartObjectId": 1
+				},
+				"controlPages.meetingDeactivated": {
+					"joinId": 3,
+					"smartObjectId": 1
+				},
+				"controlPages.camControlActivated": {
+					"joinId": 4,
+					"smartObjectId": 1
+				},
+				"controlPages.camControlDeactivated": {
+					"joinId": 5,
 					"smartObjectId": 1
 				},
 				"selectLanguage.isEnglish": {

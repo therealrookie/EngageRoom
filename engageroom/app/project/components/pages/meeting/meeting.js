@@ -82,13 +82,35 @@ const meetingModule = (() => {
 
     // ----------------------------- VOLUME --------------------------------------------------------------------------------------
 
-    // SEND VOLUME HAS CHANGED EVENTS
-    CrComLib.subscribeState("n", "meetingControl.roomSoundVolumeFb", (value) => {
+    const volumeDelay = 50;
+
+    // General-purpose debounce function
+    function debounce(func, wait) {
+      let timeout;
+      return function executedFunction(...args) {
+        const later = () => {
+          clearTimeout(timeout);
+          func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+      };
+    }
+
+    // Function to handle volume changes
+    function handleVolumeChange(volumeType, value) {
       if (value >= 0 && value <= 65535) {
-        CrComLib.publishEvent("b", "meetingControl.volumeChangedRoomSoundVolume", true);
-        CrComLib.publishEvent("b", "meetingControl.volumeChangedRoomSoundVolume", false);
+        CrComLib.publishEvent("b", `meetingControl.${volumeType}`, true);
+        // Assuming you need to reset the volumeChanged state immediately after setting it to true
+        setTimeout(() => CrComLib.publishEvent("b", `meetingControl.${volumeType}`, false), 0);
       }
-    });
+    }
+
+    // Debounced handlers
+    const roomSoundVolumeHandler = debounce(handleVolumeChange.bind(null, "volumeChangedRoomSoundVolume"), volumeDelay);
+
+    // Subscribe state changes
+    CrComLib.subscribeState("n", "meetingControl.roomSoundVolumeFb", roomSoundVolumeHandler);
 
     // ----------------------------- ZOOM CONTROL --------------------------------------------------------------------------------------
 
@@ -163,12 +185,19 @@ const meetingModule = (() => {
     // LISTEN ON HOME BUTTON
     homeButton.addEventListener("click", function () {
       CrComLib.publishEvent("n", "controlPages.page", 1);
+      meetingPageControl();
     });
 
     // LISTEN ON BACK BUTTON
     backButton.addEventListener("click", function () {
       CrComLib.publishEvent("n", "controlPages.page", 2);
+      meetingPageControl();
     });
+
+    function meetingPageControl() {
+      CrComLib.publishEvent("b", "controlPages.meetingDeactivated", true);
+      CrComLib.publishEvent("b", "controlPages.meetingDeactivated", false);
+    }
   }
 
   let loadedSubId = CrComLib.subscribeState("o", "ch5-import-htmlsnippet:meeting-import-page", (value) => {

@@ -12,7 +12,7 @@
 		{
 			"uri": "channelListContract.cce",
 			"parentContractId": "_y68nohgrp",
-			"id": "_qsbmqrho7",
+			"id": "_mdn06zs8r",
 			"date": "2024-2-27"
 		}
 	],
@@ -370,6 +370,46 @@
 					"id": "_gm09temeb",
 					"parentId": "_cuu27uuxd",
 					"attributeType": 0
+				},
+				{
+					"Errors": [],
+					"name": "meetingActivatedFb",
+					"siblingId": "_jwx3y37d3",
+					"dataType": 1,
+					"notes": "",
+					"id": "_dqo7kdx5r",
+					"parentId": "_cuu27uuxd",
+					"attributeType": 0
+				},
+				{
+					"Errors": [],
+					"name": "meetingDeactivatedFb",
+					"siblingId": "_skoaeacpx",
+					"dataType": 1,
+					"notes": "",
+					"id": "_ytfjoh4e5",
+					"parentId": "_cuu27uuxd",
+					"attributeType": 0
+				},
+				{
+					"Errors": [],
+					"name": "camControlActivatedFb",
+					"siblingId": "_skhge89fj",
+					"dataType": 1,
+					"notes": "",
+					"id": "_se5h37499",
+					"parentId": "_cuu27uuxd",
+					"attributeType": 0
+				},
+				{
+					"Errors": [],
+					"name": "camControlDeactivatedFb",
+					"siblingId": "_uzbo8q98d",
+					"dataType": 1,
+					"notes": "",
+					"id": "_p1c54euz2",
+					"parentId": "_cuu27uuxd",
+					"attributeType": 0
 				}
 			],
 			"feedbacks": [
@@ -400,6 +440,46 @@
 					"dataType": 1,
 					"notes": "",
 					"id": "_8nfcn4u7n",
+					"parentId": "_cuu27uuxd",
+					"attributeType": 1
+				},
+				{
+					"Errors": [],
+					"name": "meetingActivated",
+					"siblingId": "_dqo7kdx5r",
+					"dataType": 1,
+					"notes": "",
+					"id": "_jwx3y37d3",
+					"parentId": "_cuu27uuxd",
+					"attributeType": 1
+				},
+				{
+					"Errors": [],
+					"name": "meetingDeactivated",
+					"siblingId": "_ytfjoh4e5",
+					"dataType": 1,
+					"notes": "",
+					"id": "_skoaeacpx",
+					"parentId": "_cuu27uuxd",
+					"attributeType": 1
+				},
+				{
+					"Errors": [],
+					"name": "camControlActivated",
+					"siblingId": "_se5h37499",
+					"dataType": 1,
+					"notes": "",
+					"id": "_skhge89fj",
+					"parentId": "_cuu27uuxd",
+					"attributeType": 1
+				},
+				{
+					"Errors": [],
+					"name": "camControlDeactivated",
+					"siblingId": "_p1c54euz2",
+					"dataType": 1,
+					"notes": "",
+					"id": "_uzbo8q98d",
 					"parentId": "_cuu27uuxd",
 					"attributeType": 1
 				}

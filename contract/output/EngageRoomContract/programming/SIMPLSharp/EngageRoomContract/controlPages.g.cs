@@ -11,10 +11,18 @@ namespace EngageRoomContract
         object UserObject { get; set; }
 
         event EventHandler<UIEventArgs> isLoading;
+        event EventHandler<UIEventArgs> meetingActivated;
+        event EventHandler<UIEventArgs> meetingDeactivated;
+        event EventHandler<UIEventArgs> camControlActivated;
+        event EventHandler<UIEventArgs> camControlDeactivated;
         event EventHandler<UIEventArgs> page;
         event EventHandler<UIEventArgs> codeInput;
 
         void isLoadingFb(controlPagesBoolInputSigDelegate callback);
+        void meetingActivatedFb(controlPagesBoolInputSigDelegate callback);
+        void meetingDeactivatedFb(controlPagesBoolInputSigDelegate callback);
+        void camControlActivatedFb(controlPagesBoolInputSigDelegate callback);
+        void camControlDeactivatedFb(controlPagesBoolInputSigDelegate callback);
         void pageFb(controlPagesUShortInputSigDelegate callback);
         void codeInputFb(controlPagesStringInputSigDelegate callback);
 
@@ -46,8 +54,16 @@ namespace EngageRoomContract
             internal static class Booleans
             {
                 public const uint isLoading = 1;
+                public const uint meetingActivated = 2;
+                public const uint meetingDeactivated = 3;
+                public const uint camControlActivated = 4;
+                public const uint camControlDeactivated = 5;
 
                 public const uint isLoadingFb = 1;
+                public const uint meetingActivatedFb = 2;
+                public const uint meetingDeactivatedFb = 3;
+                public const uint camControlActivatedFb = 4;
+                public const uint camControlDeactivatedFb = 5;
             }
             internal static class Numerics
             {
@@ -80,6 +96,10 @@ namespace EngageRoomContract
             _devices = new List<BasicTriListWithSmartObject>(); 
  
             ComponentMediator.ConfigureBooleanEvent(controlJoinId, Joins.Booleans.isLoading, onisLoading);
+            ComponentMediator.ConfigureBooleanEvent(controlJoinId, Joins.Booleans.meetingActivated, onmeetingActivated);
+            ComponentMediator.ConfigureBooleanEvent(controlJoinId, Joins.Booleans.meetingDeactivated, onmeetingDeactivated);
+            ComponentMediator.ConfigureBooleanEvent(controlJoinId, Joins.Booleans.camControlActivated, oncamControlActivated);
+            ComponentMediator.ConfigureBooleanEvent(controlJoinId, Joins.Booleans.camControlDeactivated, oncamControlDeactivated);
             ComponentMediator.ConfigureNumericEvent(controlJoinId, Joins.Numerics.page, onpage);
             ComponentMediator.ConfigureStringEvent(controlJoinId, Joins.Strings.codeInput, oncodeInput);
 
@@ -109,12 +129,76 @@ namespace EngageRoomContract
                 handler(this, UIEventArgs.CreateEventArgs(eventArgs));
         }
 
+        public event EventHandler<UIEventArgs> meetingActivated;
+        private void onmeetingActivated(SmartObjectEventArgs eventArgs)
+        {
+            EventHandler<UIEventArgs> handler = meetingActivated;
+            if (handler != null)
+                handler(this, UIEventArgs.CreateEventArgs(eventArgs));
+        }
+
+        public event EventHandler<UIEventArgs> meetingDeactivated;
+        private void onmeetingDeactivated(SmartObjectEventArgs eventArgs)
+        {
+            EventHandler<UIEventArgs> handler = meetingDeactivated;
+            if (handler != null)
+                handler(this, UIEventArgs.CreateEventArgs(eventArgs));
+        }
+
+        public event EventHandler<UIEventArgs> camControlActivated;
+        private void oncamControlActivated(SmartObjectEventArgs eventArgs)
+        {
+            EventHandler<UIEventArgs> handler = camControlActivated;
+            if (handler != null)
+                handler(this, UIEventArgs.CreateEventArgs(eventArgs));
+        }
+
+        public event EventHandler<UIEventArgs> camControlDeactivated;
+        private void oncamControlDeactivated(SmartObjectEventArgs eventArgs)
+        {
+            EventHandler<UIEventArgs> handler = camControlDeactivated;
+            if (handler != null)
+                handler(this, UIEventArgs.CreateEventArgs(eventArgs));
+        }
+
 
         public void isLoadingFb(controlPagesBoolInputSigDelegate callback)
         {
             for (int index = 0; index < Devices.Count; index++)
             {
                 callback(Devices[index].SmartObjects[ControlJoinId].BooleanInput[Joins.Booleans.isLoadingFb], this);
+            }
+        }
+
+        public void meetingActivatedFb(controlPagesBoolInputSigDelegate callback)
+        {
+            for (int index = 0; index < Devices.Count; index++)
+            {
+                callback(Devices[index].SmartObjects[ControlJoinId].BooleanInput[Joins.Booleans.meetingActivatedFb], this);
+            }
+        }
+
+        public void meetingDeactivatedFb(controlPagesBoolInputSigDelegate callback)
+        {
+            for (int index = 0; index < Devices.Count; index++)
+            {
+                callback(Devices[index].SmartObjects[ControlJoinId].BooleanInput[Joins.Booleans.meetingDeactivatedFb], this);
+            }
+        }
+
+        public void camControlActivatedFb(controlPagesBoolInputSigDelegate callback)
+        {
+            for (int index = 0; index < Devices.Count; index++)
+            {
+                callback(Devices[index].SmartObjects[ControlJoinId].BooleanInput[Joins.Booleans.camControlActivatedFb], this);
+            }
+        }
+
+        public void camControlDeactivatedFb(controlPagesBoolInputSigDelegate callback)
+        {
+            for (int index = 0; index < Devices.Count; index++)
+            {
+                callback(Devices[index].SmartObjects[ControlJoinId].BooleanInput[Joins.Booleans.camControlDeactivatedFb], this);
             }
         }
 
@@ -180,6 +264,10 @@ namespace EngageRoomContract
             IsDisposed = true;
 
             isLoading = null;
+            meetingActivated = null;
+            meetingDeactivated = null;
+            camControlActivated = null;
+            camControlDeactivated = null;
             page = null;
             codeInput = null;
         }

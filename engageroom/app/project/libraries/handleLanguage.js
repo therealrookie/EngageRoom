@@ -21,7 +21,7 @@ function onInit() {
       txtTime: "Time",
 
       localUseHeader: "Local Use",
-      meetingHeader: "Meeting",
+      meetingHeader: "Video Conference",
       zoomHeader: "Zoom",
 
       controlHeader: "Control",
@@ -59,6 +59,7 @@ function onInit() {
       setButton: "SET",
 
       channelHeader: "Channels",
+      channelHint: "Choose channel",
 
       homeButtonHeader: "Home",
       backButtonHeader: "Back",
@@ -75,7 +76,7 @@ function onInit() {
       txtTime: "Heure",
 
       localUseHeader: "Utilisation locale",
-      meetingHeader: "Réunion",
+      meetingHeader: "Conférence vidéo",
 
       controlHeader: "Contrôle",
       controlHint: "Cliquez pour contrôler l'appareil",
@@ -85,7 +86,7 @@ function onInit() {
       sourceHeader: "Source",
       sourceHint: "Choisissez une source vidéo",
       zoomHeader: "Zoom",
-      tvPlayerButton: "Chaînes TV",
+      tvPlayerButton: "Lecteur TV",
       signageButton: "adiTV",
       laptopInputButton: "Entrée Ordinateur portable",
       videoConButton: "Video Conference",
@@ -94,8 +95,8 @@ function onInit() {
       roomSoundVolume: "Volume du son de la salle",
       ledButtonsHeader: "LEDs",
       ledButtonsHint: "Allumez ou éteignez les LEDs",
-      monitorButtonsHeader: "Moniteur",
-      monitorButtonsHint: "Allumez ou éteignez le moniteur",
+      monitorButtonsHeader: "Écran",
+      monitorButtonsHint: "Allumez ou éteignez le écran",
       brandMusicHeader: "Musique de marque",
       mediaLevelHeader: "Niveau des médias",
       micLevelHeader: "Niveau du microphone",
@@ -107,9 +108,10 @@ function onInit() {
       preset02Button: "PRÉRÉGLAGE 2",
       preset03Button: "PRÉRÉGLAGE 3",
       channelHeader: "Chaînes",
+      channelHint: "Choisir une chaîne",
       homeButtonHeader: "Accueil",
       backButtonHeader: "Retour",
-      displayHeader: "Affichage",
+      displayHeader: "Écran",
       on: "ON",
       off: "OFF",
     },

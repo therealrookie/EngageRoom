@@ -1,224 +1,205 @@
 $main-background-color: #1a1a1a;
 $secondary-background-color: #2a2a2a;
 
-
 // ------------------------------- GENERAL -------------------------------
 
-
 #meeting-page {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+
+  .column {
+    background-color: $secondary-background-color;
+    color: white;
+    text-align: center;
+    float: left;
+    padding: 10px;
+    margin: 1% 0 0 1%;
+    border-radius: 20px;
+  }
+
+  #sourceColumn {
+    height: 75% !important;
+    width: 48.5%;
+  }
+
+  #cameraColumn {
+    height: 75% !important;
+    width: 48.5%;
+  }
+
+  h1 {
+    font-family: "adineuePROBold";
+    padding-top: 8px;
+  }
+
+  p {
+    font-family: "AdiHausDIN";
+    padding-top: 10px;
+    font-size: 130%;
+  }
+
+  .buttonPressed {
+    background-color: white !important;
+    color: $main-background-color !important;
+
+    img {
+      filter: invert(100%);
+    }
+
+    transition: background-color 0.1s ease;
+  }
+
+  // ------------------------------- SOURCE BUTTONS -------------------------------
+
+  .sourceButton {
+    font-family: "AdiHausDIN";
+    margin-top: 35px;
+    margin-left: 5%;
+    width: 90%;
+    height: auto;
+    display: block;
+    padding: 30px 20px;
+    border-radius: 10px;
+    background-color: $main-background-color;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    font-size: 140%;
+  }
+
+  .sourceButton.inactive {
+    pointer-events: none;
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  #camControllerContainer {
+    margin: 35px 0 0 15%;
+    width: 70%;
+    height: 350px;
+  }
+
+  // ------------------------------- SLIDERS -------------------------------
+
+  .sliderContainer {
     width: 100%;
+    float: left;
+  }
+
+  .sliderContainer p {
+    margin-bottom: 0;
+    height: 70px; /* Adjust the height as needed */
+    overflow: hidden; /* Hide overflow text if content exceeds the fixed height */
+  }
+
+  .slider-wrapper {
+    position: relative;
+    height: 400px;
+  }
+
+  .tick-values {
+    font-family: "AdiHausDIN";
+    margin-top: 10px;
+    position: absolute;
+    top: 0;
+    left: 55%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 94%;
+    font-size: 20px;
+    color: white;
+  }
+
+  .noUi-base {
+    background-color: #1a1a1a;
+    box-shadow: none !important;
+    border: none !important;
+    outline: none !important;
+  }
+
+  .noUi-connect {
+    background-color: white;
+    border-radius: 0;
+    box-shadow: none !important;
+    border: none !important;
+    outline: none !important;
+  }
+
+  .noUi-connects {
+    background-color: #1a1a1a;
+    box-shadow: none !important;
+    border: none !important;
+    outline: none !important;
+  }
+
+  // ------------------------------- NAV BUTTONS -------------------------------
+
+  #backButtonColumn,
+  #homeButtonColumn {
+    width: 48.5%;
+    height: 20%;
+  }
+
+  #backButtonColumn:active,
+  #homeButtonColumn:active {
+    background-color: white !important;
+    color: $main-background-color !important;
+
+    img {
+      filter: invert(100%);
+    }
+
+    transition: background-color 0.1s ease;
+  }
+
+  #backButtonImgContainer,
+  #homeButtonImgContainer {
+    float: left;
+    margin-left: 5%;
+    width: 90%;
     height: 100%;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
+    color: white;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+  }
 
-    .column {
-        background-color: $secondary-background-color;
-        color: white;
-        text-align: center;
-        float: left;
-        padding: 10px;
-        margin: 1% 0 0 1%;
-        border-radius: 20px;
-    }
+  .navButtonIcon {
+    height: 50px !important;
+    padding: 5px;
+  }
 
-    #sourceColumn {
-        height: 75% !important;
-        width: 38.4%;
+  // ------------------------------- ZOOM BUTTONS -------------------------------
 
-    }
+  h3 {
+    margin-top: 10px;
+    font-family: "adineuePROBold";
+  }
 
-    #cameraColumn {
-        height: 75% !important;
-        width: 38.4%;
-
-    }
-
-    #volumeColumn {
-        height: 75% !important;
-        width: 19.2%;
-
-    }
-
-    h1 {
-        font-family: 'adineuePROBold';
-        padding-top: 8px;
-    }
-
-    p {
-        font-family: 'AdiHausDIN';
-        padding-top: 10px;
-        font-size: 130%;
-    }
-
-    .buttonPressed {
-        background-color: white !important;
-        color: $main-background-color !important;
-
-        img {
-            filter: invert(100%);
-        }
-
-        transition: background-color 0.1s ease;
-
-    }
-
-
-    // ------------------------------- SOURCE BUTTONS -------------------------------
-
-
-    .sourceButton {
-        font-family: 'AdiHausDIN';
-        margin-top: 35px;
-        margin-left: 5%;
-        width: 90%;
-        height: auto;
-        display: block;
-        padding: 30px 20px;
-        border-radius: 10px;
-        background-color: $main-background-color;
-        color: white;
-        text-align: center;
-        cursor: pointer;
-        text-decoration: none;
-        transition: background-color 0.3s ease;
-        font-size: 140%;
-    }
-
-    .sourceButton.inactive {
-        pointer-events: none;
-        opacity: 0.5;
-        cursor: not-allowed;
-    }
-
-
-    #camControllerContainer {
-        margin: 35px 0 0 15%;
-        width: 70%;
-        height: 350px;
-    }
-
-
-    // ------------------------------- SLIDERS -------------------------------
-
-
-    .sliderContainer {
-        width: 100%;
-        float: left;
-    }
-
-    .sliderContainer p {
-        margin-bottom: 0;
-        height: 70px; /* Adjust the height as needed */
-        overflow: hidden; /* Hide overflow text if content exceeds the fixed height */
-    }
-
-    .slider-wrapper {
-        position: relative;
-        height: 400px;
-    }
-
-    .tick-values {
-        font-family: 'AdiHausDIN';
-        margin-top: 10px;
-        position: absolute;
-        top: 0;
-        left: 55%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-between;
-        height: 94%;
-        font-size: 20px;
-        color: white;
-    }
-
-    .noUi-base {
-        background-color: #1a1a1a;
-        box-shadow: none !important;
-        border: none !important;
-        outline: none !important;
-    }
-
-    .noUi-connect {
-        background-color: white;
-        border-radius: 0;
-        box-shadow: none !important;
-        border: none !important;
-        outline: none !important;
-    }
-
-    .noUi-connects {
-        background-color: #1a1a1a;
-        box-shadow: none !important;
-        border: none !important;
-        outline: none !important;
-    }
-
-
-
-    // ------------------------------- NAV BUTTONS -------------------------------
-
-    #backButtonColumn,
-    #homeButtonColumn {
-        width: 48.5%;
-        height: 20%;
-    }
-
-    #backButtonColumn:active,
-    #homeButtonColumn:active {
-        background-color: white !important;
-        color: $main-background-color !important;
-
-        img {
-            filter: invert(100%);
-        }
-
-        transition: background-color 0.1s ease;
-    }
-
-    #backButtonImgContainer,
-    #homeButtonImgContainer {
-        float: left;
-        margin-left: 5%;
-        width: 90%;
-        height: 100%;
-        color: white;
-        text-align: center;
-        transition: background-color 0.3s ease;
-        cursor: pointer;
-    }
-
-    .navButtonIcon {
-        height: 50px !important;
-        padding: 5px;
-    }
-
-
-    // ------------------------------- ZOOM BUTTONS -------------------------------
-
-    h3 {
-        font-family: 'adineuePROBold';
-    }
-
-    #zoomButtons div {
-        font-family: 'adineuePROBold';
-        width: 33.33%;
-        display: flex;
-        float: left !important;
-        text-align: center;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        background-color: $main-background-color;
-        color: #FFF;
-        padding: 18px 10px;
-        margin: 5px 0 0 11.11%;
-        border-radius: 10px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: background-color 0.1s ease;
-        font-size: 160%;
-    }
-
+  #zoomButtons div {
+    font-family: "adineuePROBold";
+    width: 33.33%;
+    display: flex;
+    float: left !important;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: $main-background-color;
+    color: #fff;
+    padding: 18px 10px;
+    margin: 5px 0 0 11.11%;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.1s ease;
+    font-size: 160%;
+  }
 }
